@@ -6,7 +6,7 @@ const Navbar = () => {
             <div className="w-3/4 mx-auto hidden lg:block">
                 <div className="flex items-center justify-between ">
                     <Link className="w-[90px]">
-                        <img src="logo.jpg" alt="" />
+                        <img className="rounded-full" src="logo.jpg" alt="" />
                     </Link>
                     <div className="flex flex-row gap-4 font-semibold">
                         <Link>Home</Link>
@@ -34,7 +34,7 @@ const Navbar = () => {
                             </div>
                         </div>
                         <div className="w-[60px]">
-                            <img src="logo.jpg" alt="" />
+                            <img className="rounded-full" src="logo.jpg" alt="" />
                         </div>
                     </div>
                     <div className="flex gap-4 font-semibold navbar-end">
