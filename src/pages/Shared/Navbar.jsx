@@ -5,7 +5,7 @@ const Navbar = () => {
         <div className="bg-[#edf7f4]">
             <div className="w-3/4 mx-auto hidden lg:block">
                 <div className="flex items-center justify-between ">
-                    <Link className="w-[70px]">
+                    <Link className="w-[90px]">
                         <img src="logo.jpg" alt="" />
                     </Link>
                     <div className="flex flex-row gap-4 font-semibold">
