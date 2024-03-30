@@ -2,7 +2,9 @@
 const Footer = () => {
     return (
         <div>
-            This is footer
+            <div className="w-3/4 mx-auto">
+                This is footer
+            </div>
         </div>
     );
 };
