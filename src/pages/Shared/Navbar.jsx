@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
     return (
         <div className="bg-[#edf7f4]">
-            <div className="w-3/4 mx-auto hidden lg:block">
+            <div className="w-3/4 mx-auto hidden lg:block py-4">
                 <div className="flex items-center justify-between ">
-                    <Link className="w-[90px]">
+                    <Link className="w-[60px] flex items-center">
                         <img className="rounded-full" src="logo.jpg" alt="" />
+                        <h3 className="text-3xl font-semibold">airTalX</h3>
                     </Link>
                     <div className="flex flex-row gap-4 font-semibold">
                         <Link>Home</Link>
@@ -14,8 +15,8 @@ const Navbar = () => {
                         <Link>Find Job</Link>
                     </div>
                     <div className="flex gap-4 font-semibold">
-                        <button>Login</button>
-                        <button className="bg-[#1d9cb5] text-white rounded px-2 py-1">Signup</button>
+                        <Link to={'/login'}><button>Login</button></Link>
+                        <Link><button className="bg-[#1d9cb5] text-white rounded px-2 py-1">Signup</button></Link>
                     </div>
                 </div>
             </div>
@@ -33,13 +34,14 @@ const Navbar = () => {
                                 <Link>Find Job</Link>
                             </div>
                         </div>
-                        <div className="w-[60px]">
+                        <div className="w-[60px] flex items-center">
                             <img className="rounded-full" src="logo.jpg" alt="" />
+                            <h3 className="text-2xl font-semibold">airTalX</h3>
                         </div>
                     </div>
                     <div className="flex gap-4 font-semibold navbar-end">
-                        <button>Login</button>
-                        <button className="bg-[#1d9cb5] text-white rounded px-2 py-1">Signup</button>
+                        <Link to={'/login'}><button>Login</button></Link>
+                        <Link><button className="bg-[#1d9cb5] text-white rounded px-2 py-1">Signup</button></Link>
                     </div>
                 </div>
             </div>
