@@ -6,7 +6,7 @@ import { FaGoogle } from "react-icons/fa";
 const Login = () => {
     return (
         <div className="lg:w-1/2 w-11/12 mx-auto">
-            <div className="flex justify-between gap-20 md:py-36 py-10">
+            <div className="flex justify-between gap-20 md:py-36 py-12">
                 <div className="w-full md:block hidden">
                     <Lottie animationData={LoginModel} />
                 </div>
@@ -35,7 +35,7 @@ const Login = () => {
                         </button>
                     </div>
                     <div className='text-center'>
-                        <small>Don't have an account? <Link to='/signup' className='text-[#1d7edd] font-semibold'>Signup now</Link></small>
+                        <small>Do not have an account? <Link to='/signup' className='text-[#1d7edd] font-semibold'>Signup now</Link></small>
                     </div>
                 </div>
             </div>

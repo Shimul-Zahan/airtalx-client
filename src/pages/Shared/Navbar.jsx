@@ -16,7 +16,7 @@ const Navbar = () => {
                     </div>
                     <div className="flex gap-4 font-semibold">
                         <Link to={'/login'}><button>Login</button></Link>
-                        <Link><button className="bg-[#1d9cb5] text-white rounded px-2 py-1">Signup</button></Link>
+                        <Link to={'/signup'}><button className="bg-[#1d9cb5] text-white rounded px-2 py-1">Signup</button></Link>
                     </div>
                 </div>
             </div>
@@ -41,7 +41,7 @@ const Navbar = () => {
                     </div>
                     <div className="flex gap-4 font-semibold navbar-end">
                         <Link to={'/login'}><button>Login</button></Link>
-                        <Link><button className="bg-[#1d9cb5] text-white rounded px-2 py-1">Signup</button></Link>
+                        <Link to={'/signup'}><button className="bg-[#1d9cb5] text-white rounded px-2 py-1">Signup</button></Link>
                     </div>
                 </div>
             </div>
