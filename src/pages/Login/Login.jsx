@@ -1,30 +1,50 @@
 import Lottie from "lottie-react";
-import LoginModel from "../../../public/login-model.json"
+import LoginModel from "../../../public/login-model.json";
 import { Link, useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../providers/AuthProviders";
 
 const Login = () => {
-    const {user, signin, signinWithGoogle} = useContext(AuthContext);
+    const { signin, signinWithGoogle } = useContext(AuthContext);
+    const [error, setError] = useState('');
     const navigate = useNavigate();
-    const handleLogin = (event) => {
+
+    const handleLogin = async (event) => {
         event.preventDefault();
+
         const form = event.target;
         const email = form.email.value;
         const password = form.password.value;
-        signin(email, password)
-        .then(result => {
-            const user = result.user;
-            console.log(user);
-        })
-        user && navigate('/');
-    }
+
+        try {
+            const result = await signin(email, password);
+            console.log(result.user);
+            navigate('/');
+        } catch (error) {
+            setError(customErrorMessage(error));
+        }
+    };
 
     const handleGoogleLogin = () => {
-        signinWithGoogle();
-        user && navigate('/');
-    }
+        signinWithGoogle()
+            .then(() => navigate('/')) // Navigate on successful Google login
+            .catch((error) => setError(customErrorMessage(error)));
+    };
+
+    const customErrorMessage = (error) => {
+        if (error.message.includes('auth/invalid-credential')) {
+            return 'Please check your email and password combination.';
+        } else if (error.message.includes('auth/wrong-password')) {
+            return 'The password you entered is incorrect.';
+        } else if (error.message.includes('auth/too-many-requests')) {
+            return 'Too many failed attempts. Please try again later or reset your password.';
+        } else if (error.message.includes('Firebase: Error (auth/email-already-in-use).')) {
+            return 'This email address is already in use.'; // Added email in use error
+        } else {
+            return 'An error occurred while logging in. Please try again.';
+        }
+    };
     return (
         <div className="lg:w-1/2 w-11/12 mx-auto">
             <div className="flex justify-between gap-20 md:py-36 py-12">
@@ -58,6 +78,7 @@ const Login = () => {
                     <div className='text-center'>
                         <small>Do not have an account? <Link to='/signup' className='text-[#1d7edd] font-semibold'>Signup now</Link></small>
                     </div>
+                    <p className="text-center pt-8 text-red-700 font-semibold">{error}</p>
                 </div>
             </div>
         </div>

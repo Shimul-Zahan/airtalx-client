@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 const img_hosting_token = import.meta.env.VITE_Image_Upload_token;
 const Signup = () => {
     const [activeTab, setActiveTab] = useState(0);
-
+    const [error, setError] = useState('');
     const { register, handleSubmit, formState: { errors } } = useForm();
     const img_hosting_url = `https://api.imgbb.com/1/upload?expiration=600&key=${img_hosting_token}`;
     const { createUser, logOut } = useContext(AuthContext);
@@ -19,9 +19,19 @@ const Signup = () => {
         const form = e.target;
         const name = form.name.value;
         const email = form.email.value;
-
+        const password = form.password.value;
+        const confirmPassword = form.confirmPassword.value;
         const formData = new FormData();
         formData.append('image', data.photoURL[0]);
+
+        if(!/(?=.*[A-Z]).*[a-z]/.test(password)){
+            setError('Please add at least one uppercase and one lowercase letter');
+            return;
+        }
+        if(password !== confirmPassword){
+            setError('Password and Confirm Password does not match')
+            return;
+        }
 
         fetch(img_hosting_url, {
             method: 'POST',
@@ -67,12 +77,33 @@ const Signup = () => {
                     })
                     .catch(error => {
                         console.error('Error creating user:', error);
+                        setError(customErrorMessage(error));
                     });
             })
             .catch(error => {
                 console.error('Image upload error:', error);
             });
     }
+
+    const customErrorMessage = (error, password) => {
+        if (error.message.includes('auth/email-already-in-use')) {
+            return 'This email address is already in use. Please use a different email address.';
+        } 
+        else if (error.message.includes('auth/weak-password')) {
+            return 'The password provided is too weak. Please choose a stronger password.';
+        } 
+        else if (error.message.includes('auth/invalid-email')) {
+            return 'The email address you entered is not valid. Please enter a valid email address.';
+        }
+        else if(!/(?=.*[A-Z])/.test(password)){
+            setError('Please add at least one uppercase letter');
+            return;
+        } 
+        else {
+            return 'An error occurred while signing up. Please try again.';
+        }
+    };
+
 
     return (
         <div className="lg:w-1/2 w-11/12 mx-auto lg:my-28 my-12">
@@ -131,6 +162,7 @@ const Signup = () => {
                         <div className='text-center'>
                             <small>Already have an account? <Link to='/login' className='text-[#1d7edd] font-semibold'>Login now</Link></small>
                         </div>
+                        <p className="text-center pt-8 text-red-700 font-semibold">{error}</p>
                     </div>
                 </div> :
                 <div className="flex justify-between items-center gap-20 py-12">
@@ -141,7 +173,7 @@ const Signup = () => {
                         <h2 className='text-xl text-center font-semibold mb-3 uppercase'>Jobseeker Signup</h2>
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <div className='flex flex-col gap-5'>
-                            <div className='pb-2'>
+                                <div className='pb-2'>
                                     <label htmlFor="email">Name</label><br />
                                     <input className='bg-[#f5f5f5] rounded p-2 border-slate-300 border w-full' type="text" name="name" {...register("name")} id="" required />
                                 </div>
@@ -151,11 +183,11 @@ const Signup = () => {
                                 </div>
                                 <div className='pb-2'>
                                     <label htmlFor="password">Password</label><br />
-                                    <input className='bg-[#f5f5f5] rounded p-2 border-slate-300 border w-full' type="password" name="password" {...register("password")}  id="" required />
+                                    <input className='bg-[#f5f5f5] rounded p-2 border-slate-300 border w-full' type="password" name="password" {...register("password")} id="" required />
                                 </div>
                                 <div className='pb-2'>
                                     <label htmlFor="password">Confirm Password</label><br />
-                                    <input className='bg-[#f5f5f5] rounded p-2 border-slate-300 border w-full' type="password" name="password" id="" required />
+                                    <input className='bg-[#f5f5f5] rounded p-2 border-slate-300 border w-full' type="password" name="confirmPassword" {...register("confirmPassword")} id="" required />
                                 </div>
                                 <div className='pb-2'>
                                     <label htmlFor="email">Photo</label><br />
@@ -169,6 +201,7 @@ const Signup = () => {
                         <div className='text-center'>
                             <small>Already have an account? <Link to='/login' className='text-[#1d7edd] font-semibold'>Login Now</Link></small>
                         </div>
+                        <p className="text-center pt-8 text-red-700 font-semibold">{error}</p>
                     </div>
                 </div>}
         </div>
