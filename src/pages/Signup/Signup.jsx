@@ -10,7 +10,7 @@ const img_hosting_token = import.meta.env.VITE_Image_Upload_token;
 const Signup = () => {
     const [activeTab, setActiveTab] = useState(0);
     const [error, setError] = useState('');
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit } = useForm();
     const img_hosting_url = `https://api.imgbb.com/1/upload?expiration=600&key=${img_hosting_token}`;
     const { createUser, logOut } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -24,11 +24,11 @@ const Signup = () => {
         const formData = new FormData();
         formData.append('image', data.photoURL[0]);
 
-        if(!/(?=.*[A-Z]).*[a-z]/.test(password)){
+        if (!/(?=.*[A-Z]).*[a-z]/.test(password)) {
             setError('Please add at least one uppercase and one lowercase letter');
             return;
         }
-        if(password !== confirmPassword){
+        if (password !== confirmPassword) {
             setError('Password and Confirm Password does not match')
             return;
         }
@@ -44,38 +44,36 @@ const Signup = () => {
                 return res.json();
             })
             .then(imgResponse => {
-                // Handle the response from ImgBB here
-                console.log('Image uploaded:', imgResponse.data.display_url);
-
                 const userDataWithImage = {
                     name, email,
                     image: imgResponse.data.display_url
                 };
 
-                fetch('http://localhost:5000/users', {
-                    method: 'POST',
-                    headers: {
-                        'content-type': 'application/json'
-                    },
-                    body: JSON.stringify(userDataWithImage)
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        console.log(data);
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-
-                // Once the image is uploaded, proceed with creating the user
                 createUser(data.email, data.password)
                     .then(result => {
                         const loggedUser = result.user;
                         console.log(loggedUser);
                         logOut();
                         navigate('/login');
+
+                        // Store user data in the database
+                        fetch('http://localhost:5000/users', {
+                            method: 'POST',
+                            headers: {
+                                'content-type': 'application/json'
+                            },
+                            body: JSON.stringify(userDataWithImage)
+                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                console.log('User data stored:', data);
+                            })
+                            .catch(error => {
+                                console.error('Error storing user data:', error);
+                            });
                     })
                     .catch(error => {
+                        // Error creating user
                         console.error('Error creating user:', error);
                         setError(customErrorMessage(error));
                     });
@@ -88,17 +86,17 @@ const Signup = () => {
     const customErrorMessage = (error, password) => {
         if (error.message.includes('auth/email-already-in-use')) {
             return 'This email address is already in use. Please use a different email address.';
-        } 
+        }
         else if (error.message.includes('auth/weak-password')) {
             return 'The password provided is too weak. Please choose a stronger password.';
-        } 
+        }
         else if (error.message.includes('auth/invalid-email')) {
             return 'The email address you entered is not valid. Please enter a valid email address.';
         }
-        else if(!/(?=.*[A-Z])/.test(password)){
+        else if (!/(?=.*[A-Z])/.test(password)) {
             setError('Please add at least one uppercase letter');
             return;
-        } 
+        }
         else {
             return 'An error occurred while signing up. Please try again.';
         }
