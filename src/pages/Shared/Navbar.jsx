@@ -40,7 +40,7 @@ const Navbar = () => {
                     </Link>
                     <div className="flex flex-row gap-4 font-semibold">
                         <Link>Home</Link>
-                        <Link>About</Link>
+                        <Link to={'/admin/users'}>Users</Link>
                         <Link>Find Job</Link>
                     </div>
                     <div>
