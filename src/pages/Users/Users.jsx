@@ -58,14 +58,14 @@ const Users = () => {
                                 <td>{user.name}</td>
                                 <td>{user.email}</td>
                                 <td>{user.role === 'admin' ? 'admin' : <div className="flex gap-4">
-                                    <p>user</p>
+                                    <p>Jobseeker</p>
                                 </div>}
                                 </td>
                                 <td >
                                     <div className="flex items-center gap-4">
                                         <div className="text-red-600 text-xl cursor-pointer"><RiDeleteBin6Line /></div>
                                         {
-                                            user.role === 'admin' ? <button>Make user</button> :
+                                            user.role === 'admin' ? <button></button> :
                                                 <button onClick={() => handleMakeAdmin(user)}>Make Admin</button>
                                         }
                                     </div>

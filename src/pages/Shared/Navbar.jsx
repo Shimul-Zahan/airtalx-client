@@ -38,10 +38,12 @@ const Navbar = () => {
                         <img className="rounded-full" src="logo.jpg" alt="" />
                         <h3 className="text-3xl font-semibold">airTalX</h3>
                     </Link>
-                    <div className="flex flex-row gap-4 font-semibold">
+                    <div className="flex flex-row gap-8 font-semibold">
                         <Link>Home</Link>
                         <Link to={'/admin/users'}>Users</Link>
+                        <Link>Post Job</Link>
                         <Link>Find Job</Link>
+                        <Link to={'/jobseeker/dashboard'}>Dashboard</Link>
                     </div>
                     <div>
                         {
