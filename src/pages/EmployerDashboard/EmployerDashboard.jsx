@@ -1,13 +1,13 @@
 import { useContext, useState } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import Dashboard from "./Components/Dashboard";
 import { AuthContext } from '../../providers/AuthProviders';
 import { AiOutlineHome } from "react-icons/ai";
 import { BiMessageDetail } from "react-icons/bi";
 import { MdWorkOutline, MdLogout } from "react-icons/md";
 import { BsPersonVcard } from "react-icons/bs"
+import Dashboard from './Components/Dashboard';
 
-const JobseekerDashboard = () => {
+const EmployerDashboard = () => {
     const [activeTab, setActiveTab] = useState(0);
 
     const { user, logOut } = useContext(AuthContext);
@@ -16,7 +16,6 @@ const JobseekerDashboard = () => {
             .then(() => { })
             .catch(error => console.log(error))
     }
-
     return (
         <div className="grid grid-cols-10">
             <div className="col-span-1 flex flex-col my-6 p-4 custom-shadow rounded-md">
@@ -75,4 +74,4 @@ const JobseekerDashboard = () => {
     );
 };
 
-export default JobseekerDashboard;
+export default EmployerDashboard;

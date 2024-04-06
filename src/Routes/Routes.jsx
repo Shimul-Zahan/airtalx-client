@@ -7,6 +7,7 @@ import Login from "../pages/Login/Login";
 import Signup from "../pages/Signup/Signup";
 import Users from "../pages/Users/Users";
 import JobseekerDashboard from "../pages/JobseekerDashboard/JobseekerDashboard";
+import EmployerDashboard from "../pages/EmployerDashboard/EmployerDashboard";
 
 export const router = createBrowserRouter([
     {
@@ -24,6 +25,10 @@ export const router = createBrowserRouter([
             {
                 path: '/jobseeker/dashboard',
                 element: <JobseekerDashboard/>
+            },
+            {
+                path: '/employer/dashboard',
+                element: <EmployerDashboard/>
             },
             {
                 path: '/login',

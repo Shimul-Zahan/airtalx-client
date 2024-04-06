@@ -1,21 +1,28 @@
 import { useEffect, useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import useAdmin from "../../hooks/useAdmin";
 
 const Users = () => {
     const [users, setUsers] = useState([]);
+    const token = localStorage.getItem('access-token');
     useEffect(() => {
-        const url = `http://localhost:5000/users`;
-        fetch(url)
-            .then(res => res.json())
-            .then(data => {
-                setUsers(data);
-                console.log(data);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }, [])
+        const url = 'http://localhost:5000/users';
+        fetch(url, {
+            headers: {
+                authorization: `bearer ${token}`
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            setUsers(data);
+            console.log(data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }, [token]);
 
+    const [isAdmin] = useAdmin();
     const handleMakeAdmin = (user) => {
         fetch(`http://localhost:5000/users/admin/${user._id}`, {
             method: 'PATCH'

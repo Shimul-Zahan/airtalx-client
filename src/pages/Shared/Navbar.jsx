@@ -43,7 +43,8 @@ const Navbar = () => {
                         <Link to={'/admin/users'}>Users</Link>
                         <Link>Post Job</Link>
                         <Link>Find Job</Link>
-                        <Link to={'/jobseeker/dashboard'}>Dashboard</Link>
+                        <Link to={'/jobseeker/dashboard'}>Dashboard (j)</Link>
+                        <Link to={'/employer/dashboard'}>Dashboard (e)</Link>
                     </div>
                     <div>
                         {
@@ -56,6 +57,9 @@ const Navbar = () => {
                                             ) : (
                                                 <img src={userData?.length > 0 ? userData[0]?.image : user?.photoURL} alt="User Photo" />
                                             )}
+                                            <div>
+                                                <p>{userData?.length > 0 ? userData[0]?.name : user?.name}</p>
+                                            </div>
                                         </div>
                                     </label>
                                     <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52" >
