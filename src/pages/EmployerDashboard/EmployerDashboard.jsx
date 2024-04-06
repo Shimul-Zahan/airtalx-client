@@ -6,6 +6,7 @@ import { BiMessageDetail } from "react-icons/bi";
 import { MdWorkOutline, MdLogout } from "react-icons/md";
 import { BsPersonVcard } from "react-icons/bs"
 import Dashboard from './Components/Dashboard';
+import PostJob from './Components/PostJob';
 
 const EmployerDashboard = () => {
     const [activeTab, setActiveTab] = useState(0);
@@ -38,15 +39,15 @@ const EmployerDashboard = () => {
                         className={`font-semibold cursor-pointer flex gap-2 items-center ${activeTab === 2 ? 'text-[#1d9cb5]' : 'text-black'}`}
                         onClick={() => setActiveTab(2)}
                     >
-                        <MdWorkOutline className='text-xl'/>
-                        <span>All Jobs</span>
+                        <BsPersonVcard className='text-xl'/>
+                        <span>Post a Job</span>
                     </Tab>
                     <Tab
                         className={`font-semibold cursor-pointer flex gap-2 items-center ${activeTab === 3 ? 'text-[#1d9cb5]' : 'text-black'}`}
                         onClick={() => setActiveTab(3)}
                     >
-                        <BsPersonVcard className='text-xl'/>
-                        <span>My Jobs</span>
+                        <MdWorkOutline className='text-xl'/>
+                        <span>All Jobs</span>
                     </Tab>
                     <div onClick={handleLogOut} className='font-semibold cursor-pointer flex gap-2 items-center text-red-500'>
                         <MdLogout className='text-xl'/>
@@ -63,7 +64,7 @@ const EmployerDashboard = () => {
                         <div>2</div>
                     </TabPanel>
                     <TabPanel>
-                        <div>3</div>
+                        <PostJob/>
                     </TabPanel>
                     <TabPanel>
                         <div>4</div>
