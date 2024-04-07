@@ -1,0 +1,41 @@
+import { useEffect, useState } from "react";
+import { SlWallet } from "react-icons/sl";
+
+const AllJobs = () => {
+    const [allJobs, setAllJobs] = useState([]);
+    useEffect(() => {
+        const url = 'http://localhost:5000/newJobPost';
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                setAllJobs(data);
+                console.log(data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }, []);
+    return (
+        <div className="grid grid-cols-3 m-3">
+            {
+                allJobs.map(singleJob => <div key={singleJob._id}>
+                    <div className="custom-shadow m-3 p-4 rounded-md">
+                        <div className="flex justify-between">
+                            <h3 className="text-2xl font-semibold">{singleJob.jobTitle}</h3>
+                            <p className="border border-black rounded-md font-semibold p-2">{singleJob.jobType}</p>
+                        </div>
+                        <div className="flex gap-2 items-center text-lg">
+                            <SlWallet/>
+                            <p>{singleJob.salary}</p>
+                        </div>
+                        <div>
+                            <p>{singleJob.jobDescription}</p>
+                        </div>
+                    </div>
+                </div>)
+            }
+        </div>
+    );
+};
+
+export default AllJobs;

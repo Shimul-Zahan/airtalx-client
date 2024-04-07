@@ -7,6 +7,7 @@ import { MdWorkOutline, MdLogout } from "react-icons/md";
 import { BsPersonVcard } from "react-icons/bs"
 import Dashboard from './Components/Dashboard';
 import PostJob from './Components/PostJob';
+import AllJobs from './Components/AllJobs';
 
 const EmployerDashboard = () => {
     const [activeTab, setActiveTab] = useState(0);
@@ -67,7 +68,7 @@ const EmployerDashboard = () => {
                         <PostJob/>
                     </TabPanel>
                     <TabPanel>
-                        <div>4</div>
+                        <AllJobs/>
                     </TabPanel>
                 </Tabs>
             </div>
