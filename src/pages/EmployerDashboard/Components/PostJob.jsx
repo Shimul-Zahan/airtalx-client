@@ -1,15 +1,21 @@
+import { useContext } from "react";
+import { AuthContext } from "../../../providers/AuthProviders";
 
 const PostJob = () => {
+    const { user } = useContext(AuthContext);
+    console.log(user)
     const PostAJob = (e) => {
         e.preventDefault();
         const form = e.target;
         const headline = form.headline.value;
         const jobType = form.jobType.value;
+        const email = form.email.value;
+        const companyName = form.companyName.value;
         const jobTitle = form.jobTitle.value;
         const salary = form.salary.value;
         const jobDescription = form.jobDescription.value;
 
-        const newJobPost = {headline, jobType, jobTitle, salary, jobDescription}
+        const newJobPost = { headline, jobType, email, companyName, jobTitle, salary, jobDescription }
         fetch('http://localhost:5000/newJobPost', {
             method: 'POST',
             headers: {
@@ -17,17 +23,23 @@ const PostJob = () => {
             },
             body: JSON.stringify(newJobPost)
         })
-        .then(res => res.json())
-        .then(data => {
-            console.log('new job is created',data);
-        })
-        .catch(error => {
-            console.error('Error storing user data:', error);
-        });
+            .then(res => res.json())
+            .then(data => {
+                console.log('new job is created', data);
+            })
+            .catch(error => {
+                console.error('Error storing user data:', error);
+            });
     }
     return (
         <form onSubmit={PostAJob} className="p-6 pb-0">
             <div className="custom-shadow p-4 rounded-md mb-7">
+                <div className="py-8">
+                    <h4 className="text-2xl font-semibold">Job Title</h4>
+                    <div>
+                        <input name='jobTitle' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4 w-full" placeholder='e.g: "Virtual Assistant", "Graphic Designer", "Bookkeeper"' type="text" />
+                    </div>
+                </div>
                 <div className="">
                     <h4 className="text-2xl font-semibold">Job Headline</h4>
                     <p>Write a compelling headline</p>
@@ -43,15 +55,21 @@ const PostJob = () => {
                         <option value="Part Time">Part Time</option>
                     </select>
                 </div>
-                <div className="pt-8">
-                    <h4 className="text-2xl font-semibold">Job Title</h4>
+                <div className="pt-8 hidden">
+                    <h4 className="text-2xl font-semibold">Job holder email</h4>
                     <div>
-                        <input name='jobTitle' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4 w-full" placeholder='e.g: "Virtual Assistant", "Graphic Designer", "Bookkeeper"' type="text" />
+                        <input name='email' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4 w-full" placeholder='e.g: "example@gmail.com"' value={user?.email} disabled type="email" />
+                    </div>
+                </div>
+                <div className="pt-8">
+                    <h4 className="text-2xl font-semibold">Company/Job holder's name</h4>
+                    <div>
+                        <input name='companyName' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4 w-full" placeholder='e.g: "airTalX", "John Doe"' type="text" />
                     </div>
                 </div>
                 <div className="pt-8">
                     <h4 className="text-2xl font-semibold">Salary</h4>
-                    <p>How much do you want to pay per hour?</p>
+                    <p>How much (US Dollar) do you want to pay per hour?</p>
                     <div>
                         <input name='salary' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4 w-[15%]" placeholder='e.g: "$6.00/hr", "$5.00/hr-$8.00/hr"' type="text" />
                     </div>

@@ -1,13 +1,14 @@
 import { useContext, useState } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { AuthContext } from '../../providers/AuthProviders';
-import { AiOutlineHome } from "react-icons/ai";
+import { AiOutlineHome, AiOutlineProfile } from "react-icons/ai";
 import { BiMessageDetail } from "react-icons/bi";
 import { MdWorkOutline, MdLogout } from "react-icons/md";
 import { BsPersonVcard } from "react-icons/bs"
 import Dashboard from './Components/Dashboard';
 import PostJob from './Components/PostJob';
 import AllJobs from './Components/AllJobs';
+import MyJobs from './Components/MyJobs';
 
 const EmployerDashboard = () => {
     const [activeTab, setActiveTab] = useState(0);
@@ -40,7 +41,7 @@ const EmployerDashboard = () => {
                         className={`font-semibold cursor-pointer flex gap-2 items-center ${activeTab === 2 ? 'text-[#1d9cb5]' : 'text-black'}`}
                         onClick={() => setActiveTab(2)}
                     >
-                        <BsPersonVcard className='text-xl'/>
+                        <AiOutlineProfile className='text-xl'/>
                         <span>Post a Job</span>
                     </Tab>
                     <Tab
@@ -49,6 +50,13 @@ const EmployerDashboard = () => {
                     >
                         <MdWorkOutline className='text-xl'/>
                         <span>All Jobs</span>
+                    </Tab>
+                    <Tab
+                        className={`font-semibold cursor-pointer flex gap-2 items-center ${activeTab === 4 ? 'text-[#1d9cb5]' : 'text-black'}`}
+                        onClick={() => setActiveTab(4)}
+                    >
+                        <BsPersonVcard className='text-xl'/>
+                        <span>My Jobs</span>
                     </Tab>
                     <div onClick={handleLogOut} className='font-semibold cursor-pointer flex gap-2 items-center text-red-500'>
                         <MdLogout className='text-xl'/>
@@ -69,6 +77,9 @@ const EmployerDashboard = () => {
                     </TabPanel>
                     <TabPanel>
                         <AllJobs/>
+                    </TabPanel>
+                    <TabPanel>
+                        <MyJobs/>
                     </TabPanel>
                 </Tabs>
             </div>
