@@ -16,7 +16,7 @@ const AllJobs = () => {
             });
     }, []);
     return (
-        <div className="grid grid-cols-3 m-3">
+        <div className="grid lg:grid-cols-3 grid-cols-1 m-3">
             {
                 allJobs.map(singleJob => <div key={singleJob._id}>
                     <div className="custom-shadow m-3 p-4 rounded-md">

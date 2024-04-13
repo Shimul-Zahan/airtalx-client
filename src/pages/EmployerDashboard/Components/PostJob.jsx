@@ -62,7 +62,7 @@ const PostJob = () => {
                     </div>
                 </div>
                 <div className="pt-8">
-                    <h4 className="text-2xl font-semibold">Company/Job holder's name</h4>
+                    <h4 className="text-2xl font-semibold">{"Company/Job holder's name"}</h4>
                     <div>
                         <input name='companyName' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4 w-full" placeholder='e.g: "airTalX", "John Doe"' type="text" />
                     </div>
