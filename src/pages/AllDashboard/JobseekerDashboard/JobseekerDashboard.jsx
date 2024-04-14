@@ -1,16 +1,14 @@
 import { useContext, useState } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { AuthContext } from '../../providers/AuthProviders';
-import { AiOutlineHome, AiOutlineProfile } from "react-icons/ai";
+import { AuthContext } from '../../../providers/AuthProviders';
+import { AiOutlineHome } from "react-icons/ai";
 import { BiMessageDetail } from "react-icons/bi";
 import { MdWorkOutline, MdLogout } from "react-icons/md";
 import { BsPersonVcard } from "react-icons/bs"
 import Dashboard from './Components/Dashboard';
-import PostJob from './Components/PostJob';
-import AllJobs from './Components/AllJobs';
-import MyJobs from './Components/MyJobs';
+import AllJobs from '../SharedComponents/AllJobs';
 
-const EmployerDashboard = () => {
+const JobseekerDashboard = () => {
     const [activeTab, setActiveTab] = useState(0);
 
     const { user, logOut } = useContext(AuthContext);
@@ -19,6 +17,7 @@ const EmployerDashboard = () => {
             .then(() => { })
             .catch(error => console.log(error))
     }
+
     return (
         <div className="grid grid-cols-10">
             <div className="col-span-1 flex flex-col my-6 p-4 custom-shadow rounded-md">
@@ -41,19 +40,12 @@ const EmployerDashboard = () => {
                         className={`font-semibold cursor-pointer flex gap-2 items-center ${activeTab === 2 ? 'text-[#1d9cb5]' : 'text-black'}`}
                         onClick={() => setActiveTab(2)}
                     >
-                        <AiOutlineProfile className='text-xl'/>
-                        <span>Post a Job</span>
-                    </Tab>
-                    <Tab
-                        className={`font-semibold cursor-pointer flex gap-2 items-center ${activeTab === 3 ? 'text-[#1d9cb5]' : 'text-black'}`}
-                        onClick={() => setActiveTab(3)}
-                    >
                         <MdWorkOutline className='text-xl'/>
                         <span>All Jobs</span>
                     </Tab>
                     <Tab
-                        className={`font-semibold cursor-pointer flex gap-2 items-center ${activeTab === 4 ? 'text-[#1d9cb5]' : 'text-black'}`}
-                        onClick={() => setActiveTab(4)}
+                        className={`font-semibold cursor-pointer flex gap-2 items-center ${activeTab === 3 ? 'text-[#1d9cb5]' : 'text-black'}`}
+                        onClick={() => setActiveTab(3)}
                     >
                         <BsPersonVcard className='text-xl'/>
                         <span>My Jobs</span>
@@ -73,13 +65,10 @@ const EmployerDashboard = () => {
                         <div>2</div>
                     </TabPanel>
                     <TabPanel>
-                        <PostJob/>
-                    </TabPanel>
-                    <TabPanel>
                         <AllJobs/>
                     </TabPanel>
                     <TabPanel>
-                        <MyJobs/>
+                        <div>4</div>
                     </TabPanel>
                 </Tabs>
             </div>
@@ -87,4 +76,4 @@ const EmployerDashboard = () => {
     );
 };
 
-export default EmployerDashboard;
+export default JobseekerDashboard;

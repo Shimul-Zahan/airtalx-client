@@ -6,8 +6,8 @@ import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Signup from "../pages/Signup/Signup";
 import Users from "../pages/Users/Users";
-import JobseekerDashboard from "../pages/JobseekerDashboard/JobseekerDashboard";
-import EmployerDashboard from "../pages/EmployerDashboard/EmployerDashboard";
+import JobseekerDashboard from "../pages/AllDashboard/JobseekerDashboard/JobseekerDashboard";
+import EmployerDashboard from "../pages/AllDashboard/EmployerDashboard/EmployerDashboard";
 
 export const router = createBrowserRouter([
     {

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AuthContext } from "../../../providers/AuthProviders";
+import { AuthContext } from "../../../../providers/AuthProviders";
 
 const PostJob = () => {
     const { user } = useContext(AuthContext);

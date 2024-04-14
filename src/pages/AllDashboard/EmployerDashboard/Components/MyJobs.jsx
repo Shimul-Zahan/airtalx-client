@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../../../providers/AuthProviders";
+import { AuthContext } from "../../../../providers/AuthProviders";
 import { SlWallet } from "react-icons/sl";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaRegEdit } from "react-icons/fa";
