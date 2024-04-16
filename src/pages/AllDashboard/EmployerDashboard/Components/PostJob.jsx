@@ -1,9 +1,25 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../providers/AuthProviders";
 
 const PostJob = () => {
     const { user } = useContext(AuthContext);
+    const [userData, setUserData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     console.log(user)
+    useEffect(() => {
+        const url = `http://localhost:5000/users?email=${user?.email}`;
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                setUserData(data);
+                setIsLoading(false)
+                console.log(data[0].image);
+            })
+            .catch(error => {
+                setIsLoading(false);
+                console.log(error);
+            });
+    }, [user])
     const PostAJob = (e) => {
         e.preventDefault();
         const form = e.target;
@@ -64,7 +80,7 @@ const PostJob = () => {
                 <div className="pt-8 hidden">
                     <h4 className="text-2xl font-semibold">{"Company/Job holder's name"}</h4>
                     <div>
-                        <input name='companyName' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4 w-full" placeholder='e.g: "airTalX", "John Doe"' value={user?.displayName} disabled type="text" />
+                        <input name='companyName' className="bg-gray-100 capitalize border border-gray-200 p-3 rounded-md mt-4 w-full" placeholder='e.g: "airTalX", "John Doe"' value={userData[0]?.name} disabled type="text" />
                     </div>
                 </div>
                 <div className="pt-8">
