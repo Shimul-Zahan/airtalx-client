@@ -61,10 +61,10 @@ const PostJob = () => {
                         <input name='email' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4 w-full" placeholder='e.g: "example@gmail.com"' value={user?.email} disabled type="email" />
                     </div>
                 </div>
-                <div className="pt-8">
+                <div className="pt-8 hidden">
                     <h4 className="text-2xl font-semibold">{"Company/Job holder's name"}</h4>
                     <div>
-                        <input name='companyName' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4 w-full" placeholder='e.g: "airTalX", "John Doe"' type="text" />
+                        <input name='companyName' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4 w-full" placeholder='e.g: "airTalX", "John Doe"' value={user?.displayName} disabled type="text" />
                     </div>
                 </div>
                 <div className="pt-8">

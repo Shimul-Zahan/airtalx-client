@@ -5,8 +5,9 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
-const MyJobs = () => {
+const MyJobs = (_id) => {
     const [allJobs, setAllJobs] = useState([]);
     const { user } = useContext(AuthContext);
     useEffect(() => {
@@ -21,6 +22,39 @@ const MyJobs = () => {
                 console.log(error);
             });
     }, []);
+
+    const handleDelete = (_id) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`http://localhost:5000/myJobPosts/${_id}`, {
+                    method: 'DELETE'
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.deletedCount > 0) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            )
+                            const remaining = allJobs.filter(myJob => myJob._id !== _id);
+                            setAllJobs(remaining);
+                        }
+                    })
+                    .catch(error => console.log(error))
+            }
+        })
+    }
+    
     return (
         <div className="grid grid-cols-3 m-3">
             {
@@ -41,7 +75,7 @@ const MyJobs = () => {
                                                 <FaRegEdit className="bg-[#1d9cb5] text-white p-1 text-3xl rounded-md" />
                                             </span>
                                         </li>
-                                        <li className="flex">
+                                        <li onClick={() => handleDelete(_id)} className="flex">
                                             <span>
                                                 <RiDeleteBin2Line className="bg-red-500 text-white p-1 text-3xl rounded-md" />
                                             </span>
@@ -55,7 +89,7 @@ const MyJobs = () => {
                             <p>{singleJob.salary}</p>
                         </div>
                         <div>
-                            <p>{singleJob.jobDescription}...<Link className="text-[#1d9cb5]">know more</Link></p>
+                            <p>{singleJob.jobDescription}...<Link to={`/${singleJob._id}`} className="text-[#1d9cb5]">know more</Link></p>
                         </div>
                     </div>
                 </div>)

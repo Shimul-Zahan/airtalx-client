@@ -79,7 +79,7 @@ const EmployerDashboard = () => {
                         <AllJobs/>
                     </TabPanel>
                     <TabPanel>
-                        <MyJobs/>
+                        <MyJobs />
                     </TabPanel>
                 </Tabs>
             </div>

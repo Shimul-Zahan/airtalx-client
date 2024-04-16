@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { SlWallet } from "react-icons/sl";
+import { Link } from "react-router-dom";
 
 const AllJobs = () => {
     const [allJobs, setAllJobs] = useState([]);
@@ -32,7 +33,7 @@ const AllJobs = () => {
                             <p>{singleJob.salary}</p>
                         </div>
                         <div>
-                            <p>{singleJob.jobDescription}</p>
+                            <p>{singleJob.jobDescription}...<Link to={`/${singleJob._id}`} className="text-[#1d9cb5]">know more</Link></p>
                         </div>
                     </div>
                 </div>)
