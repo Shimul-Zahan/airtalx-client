@@ -6,7 +6,8 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../providers/AuthProviders";
 
 const Login = () => {
-    const { signin, signinWithGoogle } = useContext(AuthContext);
+    const { signin, signinWithGoogle, user } = useContext(AuthContext);
+
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
@@ -19,18 +20,49 @@ const Login = () => {
 
         try {
             const result = await signin(email, password);
-            console.log(result.user);
+            // console.log(result.user);
             navigate('/');
         } catch (error) {
             setError(customErrorMessage(error));
         }
     };
 
-    const handleGoogleLogin = () => {
-        signinWithGoogle()
-            .then(() => navigate('/')) // Navigate on successful Google login
-            .catch((error) => setError(customErrorMessage(error)));
+    const handleGoogleLogin = async () => {
+        try {
+            await signinWithGoogle();
+
+            const name = user?.displayName;
+            const email = user?.email;
+            const image = user?.photoURL;
+            const role = 'jobseeker';
+            const saveUser = { name, email, image, role };
+            console.log(saveUser);
+
+            const response = await fetch('http://localhost:5000/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(saveUser)
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to store user data');
+            }
+
+            const data = await response.json();
+            console.log('User data stored:', data);
+        } catch (error) {
+            console.error('Error storing user data:', error);
+        }
     };
+
+
+    // const handleGoogleLogin = () => {
+    //     signinWithGoogle()
+    //         .then(() => navigate('/')) // Navigate on successful Google login
+    //         .catch((error) => setError(customErrorMessage(error)));
+    // };
 
     const customErrorMessage = (error) => {
         if (error.message.includes('auth/invalid-credential')) {
