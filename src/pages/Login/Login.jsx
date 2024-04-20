@@ -5,26 +5,25 @@ import { FaGoogle } from "react-icons/fa";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../providers/AuthProviders";
 import axios from "axios";
+import { message } from "antd";
 
 const Login = () => {
-  const { signinWithGoogle,login, user } = useContext(AuthContext);
+  const { signinWithGoogle, login, user } = useContext(AuthContext);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  
-  const handleLogin =  async(event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
 
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(email,password)
+    console.log(email, password);
 
     try {
       await login(email, password);
-      
     } catch (error) {
-      console.error("Login failed:", error);
+      message.error(error.response.data.message);
     }
   };
 
@@ -32,40 +31,29 @@ const Login = () => {
     signinWithGoogle()
       .then((result) => {
         const user = result.user;
-
         axios
           .get(`http://localhost:5000/users/google/${user?.email}`)
           .then((response) => {
-            if (!response.ok) {
-              console.log("Failed to retrieve user data");
+            if (!response.data.user) {
+              message.error("Failed to retrieve user data");
+              return; 
             }
             console.log("resss", response.data.user.role);
+            message.success("Login Successful!");
             localStorage.setItem("access-token", response.data.token);
-            if (response?.data?.user?.role == "jobseeker") navigate("/jobseeker/dashboard");
-            if (response?.data?.user?.role == "employer") navigate("/employer/dashboard");
+            if (response?.data?.user?.role === "jobseeker") {
+              navigate("/jobseeker/dashboard");
+            } else if (response?.data?.user?.role === "employer") {
+              navigate("/employer/dashboard");
+            }
           })
-          .catch((error) => {
-            console.error("Error retrieving user data:", error.message);
+          .catch((error) => {           
+            message.error(error.response.data.message);
           });
       })
       .catch((error) => {
         console.error("Google sign-in error:", error.message);
       });
-  };
-  const customErrorMessage = (error) => {
-    if (error.message.includes("auth/invalid-credential")) {
-      return "Please check your email and password combination.";
-    } else if (error.message.includes("auth/wrong-password")) {
-      return "The password you entered is incorrect.";
-    } else if (error.message.includes("auth/too-many-requests")) {
-      return "Too many failed attempts. Please try again later or reset your password.";
-    } else if (
-      error.message.includes("Firebase: Error (auth/email-already-in-use).")
-    ) {
-      return "This email address is already in use."; // Added email in use error
-    } else {
-      return "An error occurred while logging in. Please try again.";
-    }
   };
 
   if (user) {

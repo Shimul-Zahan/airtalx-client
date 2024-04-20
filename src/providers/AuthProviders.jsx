@@ -9,6 +9,7 @@ import {
 } from "firebase/auth";
 import { app } from "../firebase/firebase.config";
 import axios from "axios";
+import { message } from "antd";
 
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
@@ -30,11 +31,10 @@ const AuthProviders = ({ children }) => {
       const { token,user } = response.data;
       localStorage.setItem("access-token", token);
       setUser(user);
-      // message.success("Login successful");
+      message.success("Login successful");
       
     } catch (error) {
-      console.error("Login failed:", error.message);
-      // message.error("Invalid Email and Password")
+      message.error(error.response.data.error);
     } finally {
       setLoading(false);
     }
