@@ -1,11 +1,15 @@
 import { IoSearchOutline } from "react-icons/io5";
+import { AuthContext } from "../../../../providers/AuthProviders";
+import { useContext } from "react";
 
 const Dashboard = () => {
+    const { user } = useContext(AuthContext);
+    console.log("🚀 ~ Dashboard ~ user:", user)
     return (
         <div className="p-6">
             <div className="flex justify-between custom-shadow p-4 rounded-md mb-7">
                 <div className="">
-                    <h4 className="text-2xl font-semibold">Hello {'{user}'}</h4>
+                    <h4 className="text-2xl font-semibold">Hello {user?.name}</h4>
                     <p>{"Here's what's going on"}</p>
                 </div>
                 <div className="flex items-center border border-gray-300 rounded-md">

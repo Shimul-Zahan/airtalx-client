@@ -6,16 +6,26 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../../providers/AuthProviders";
 import { FaGoogle } from "react-icons/fa";
 import axios from "axios";
+import { message } from "antd";
 
 const img_hosting_token = import.meta.env.VITE_Image_Upload_token;
 const EmployerSignup = () => {
   const [error, setError] = useState("");
   const { register, handleSubmit } = useForm();
-  const { signinWithGoogle, createUser, logOut } = useContext(AuthContext);
+  const { signinWithGoogle, user } = useContext(AuthContext);
+  console.log("🚀 ~ EmployerSignup ~ user:", user);
   const img_hosting_url = `https://api.imgbb.com/1/upload?expiration=600&key=${img_hosting_token}`;
   const navigate = useNavigate();
 
-  const onSubmitE = (data, e) => {
+  if (user) {
+    console.log("roleE", user?.role);
+    if (user?.role == "jobseeker") navigate("/jobseeker/dashboard");
+    if (user?.role == "employer") navigate("/employer/dashboard");
+  }
+
+  const onSubmitE = async (data, e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+
     const form = e.target;
     const name = form.name.value;
     const email = form.email.value;
@@ -25,67 +35,50 @@ const EmployerSignup = () => {
     const formData = new FormData();
     formData.append("image", data.photoURL[0]);
 
+    // Validate password
     if (!/(?=.*[A-Z]).*[a-z]/.test(password)) {
       setError("Please add at least one uppercase and one lowercase letter");
       return;
     }
+    // Check if passwords match
     if (password !== confirmPassword) {
-      setError("Password and Confirm Password does not match");
+      setError("Password and Confirm Password do not match");
       return;
     }
 
-    fetch(img_hosting_url, {
-      method: "POST",
-      body: formData,
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Image upload failed");
-        }
-        return res.json();
-      })
-      .then((imgResponse) => {
-        const userDataWithImage = {
-          name,
-          email,
-          role,
-          password: "",
-          photoURL: imgResponse.data.display_url,
-        };
-
-        createUser(data.email, data.password)
-          .then((result) => {
-            const loggedUser = result.user;
-            console.log(loggedUser);
-            logOut();
-            navigate("/login");
-
-            // Store user data in the database
-            fetch("http://localhost:5000/users", {
-              method: "POST",
-              headers: {
-                "content-type": "application/json",
-              },
-              body: JSON.stringify(userDataWithImage),
-            })
-              .then((res) => res.json())
-              .then((data) => {
-                console.log("User data stored:", data);
-              })
-              .catch((error) => {
-                console.error("Error storing user data:", error);
-              });
-          })
-          .catch((error) => {
-            // Error creating user
-            console.error("Error creating user:", error);
-            setError(customErrorMessage(error));
-          });
-      })
-      .catch((error) => {
-        console.error("Image upload error:", error);
+    // Fetch image upload
+    try {
+      const imgResponse = await fetch(img_hosting_url, {
+        method: "POST",
+        body: formData,
       });
+      if (!imgResponse.ok) {
+        message.error("Image upload failed");
+      }
+      const imgData = await imgResponse.json();
+      const userDataWithImage = {
+        name,
+        email,
+        role,
+        password,
+        photoURL: imgData.data.display_url,
+      };
+
+      // Send user data to signup endpoint
+      const url = "http://localhost:5000/signup";
+      const response = await axios.post(url, userDataWithImage);
+      if (response.status === 200) {
+        message.success("Signup successful");
+        navigate("/login", { replace: true });
+      } else {
+        message.error("Signup failed");
+      }
+    } catch (error) {
+      console.error("Signup failed:", error);
+      message.error("Failed to signup. Please try again later.");
+    }
   };
+
   const handleGoogleLogin = () => {
     signinWithGoogle()
       .then((result) => {
@@ -102,14 +95,22 @@ const EmployerSignup = () => {
           };
 
           axios
-            .post("http://localhost:5000/users", userData, {
+            .post("http://localhost:5000/google/signup", userData, {
               headers: {
                 "Content-Type": "application/json",
               },
             })
-            .then(() => {
-              console.log("Login successful");
-              navigate("/login");
+            .then((response) => {
+              console.log("🚀 ~ .then ~ response:", response.data);
+              if (!response) {
+                message.error("Failed to Signup");
+              }
+              message.success("Login successful");
+              localStorage.setItem("access-token", response.data?.token);
+              if (response?.data?.user?.role == "jobseeker")
+                navigate("/jobseeker/dashboard");
+              if (response?.data?.user?.role == "employer")
+                navigate("/employer/dashboard");
             })
             .catch((error) => {
               console.error("Error posting user data:", error);
@@ -120,20 +121,7 @@ const EmployerSignup = () => {
         console.error("Google sign-in error:", error.message);
       });
   };
-  const customErrorMessage = (error, password) => {
-    if (error.message.includes("auth/email-already-in-use")) {
-      return "This email address is already in use. Please use a different email address.";
-    } else if (error.message.includes("auth/weak-password")) {
-      return "The password provided is too weak. Please choose a stronger password.";
-    } else if (error.message.includes("auth/invalid-email")) {
-      return "The email address you entered is not valid. Please enter a valid email address.";
-    } else if (!/(?=.*[A-Z])/.test(password)) {
-      setError("Please add at least one uppercase letter");
-      return;
-    } else {
-      return "An error occurred while signing up. Please try again.";
-    }
-  };
+
   return (
     <div>
       <div className="flex justify-between gap-20 py-24">
