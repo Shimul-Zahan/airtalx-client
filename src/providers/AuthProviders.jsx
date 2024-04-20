@@ -3,10 +3,7 @@ import { useState } from "react";
 import { createContext } from "react";
 import {
   GoogleAuthProvider,
-  createUserWithEmailAndPassword,
   getAuth,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
 } from "firebase/auth";
@@ -18,23 +15,29 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 const AuthProviders = ({ children }) => {
   const [user, setUser] = useState(null);
+  console.log("🚀 ~ AuthProviders ~ user:", user)
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const createUser = (name, email, password, photoURL) => {
-    setLoading(true);
-    return createUserWithEmailAndPassword(
-      auth,
-      name,
-      email,
-      password,
-      photoURL
-    );
-  };
-
-  const signin = (email, password) => {
-    setLoading(true);
-    return signInWithEmailAndPassword(auth, email, password);
+  const login = async (email, password) => {
+    console.log("🚀 ~ login ~ email, password:", email, password)
+    try {
+      const response = await axios.post("http://localhost:5000/login", {
+        email,
+        password,
+      });
+      console.log("Loginssss",response)
+      const { token,user } = response.data;
+      localStorage.setItem("access-token", token);
+      setUser(user);
+      // message.success("Login successful");
+      
+    } catch (error) {
+      console.error("Login failed:", error.message);
+      // message.error("Invalid Email and Password")
+    } finally {
+      setLoading(false);
+    }
   };
 
   const signinWithGoogle = () => {
@@ -85,9 +88,8 @@ const AuthProviders = ({ children }) => {
     user,
     loading,
     error,
-    createUser,
-    signin,
     signinWithGoogle,
+    login,
     logOut,
   };
   return (

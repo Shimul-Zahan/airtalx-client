@@ -7,28 +7,24 @@ import { AuthContext } from "../../providers/AuthProviders";
 import axios from "axios";
 
 const Login = () => {
-  const { signin, signinWithGoogle, user } = useContext(AuthContext);
+  const { signinWithGoogle,login, user } = useContext(AuthContext);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  if (user) {
-    console.log("role", user?.role);
-    if (user?.role == "jobseeker") navigate("/jobseeker/dashboard");
-    if (user?.role == "employer") navigate("/employer/dashboard");
-  }
-  const handleLogin = async (event) => {
+  
+  const handleLogin =  async(event) => {
     event.preventDefault();
 
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
+    console.log(email,password)
 
     try {
-      const result = await signin(email, password);
-      // console.log(result.user);
-      navigate("/");
+      await login(email, password);
+      
     } catch (error) {
-      setError(customErrorMessage(error));
+      console.error("Login failed:", error);
     }
   };
 
@@ -56,43 +52,6 @@ const Login = () => {
         console.error("Google sign-in error:", error.message);
       });
   };
-
-  // const handleGoogleLogin = async () => {
-  //     try {
-  //         await signinWithGoogle();
-
-  //         const name = user?.displayName;
-  //         const email = user?.email;
-  //         const image = user?.photoURL;
-  //         const role = 'jobseeker';
-  //         const saveUser = { name, email, image, role };
-  //         console.log(saveUser);
-
-  //         const response = await fetch('http://localhost:5000/users', {
-  //             method: 'POST',
-  //             headers: {
-  //                 'Content-Type': 'application/json'
-  //             },
-  //             body: JSON.stringify(saveUser)
-  //         });
-
-  //         if (!response.ok) {
-  //             throw new Error('Failed to store user data');
-  //         }
-
-  //         const data = await response.json();
-  //         console.log('User data stored:', data);
-  //     } catch (error) {
-  //         console.error('Error storing user data:', error);
-  //     }
-  // };
-
-  // const handleGoogleLogin = () => {
-  //     signinWithGoogle()
-  //         .then(() => navigate('/')) // Navigate on successful Google login
-  //         .catch((error) => setError(customErrorMessage(error)));
-  // };
-
   const customErrorMessage = (error) => {
     if (error.message.includes("auth/invalid-credential")) {
       return "Please check your email and password combination.";
@@ -108,6 +67,12 @@ const Login = () => {
       return "An error occurred while logging in. Please try again.";
     }
   };
+
+  if (user) {
+    console.log("role", user?.role);
+    if (user?.role == "jobseeker") navigate("/jobseeker/dashboard");
+    if (user?.role == "employer") navigate("/employer/dashboard");
+  }
   return (
     <div className="lg:w-1/2 w-11/12 mx-auto">
       <div className="flex justify-between gap-20 md:py-36 py-12">
