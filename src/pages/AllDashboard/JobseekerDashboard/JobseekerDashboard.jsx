@@ -7,11 +7,12 @@ import { MdWorkOutline, MdLogout } from "react-icons/md";
 import { BsPersonVcard } from "react-icons/bs";
 import Dashboard from "./Components/Dashboard";
 import AllJobs from "../SharedComponents/AllJobs";
+import MyRunningJobs from "./Components/MyRunningJobs";
 
 const JobseekerDashboard = () => {
   const [activeTab, setActiveTab] = useState(0);
 
-  const { user, logOut } = useContext(AuthContext);
+  const { logOut } = useContext(AuthContext);
   const handleLogOut = () => {
     logOut()
       .then(() => {})
@@ -79,7 +80,7 @@ const JobseekerDashboard = () => {
             <AllJobs />
           </TabPanel>
           <TabPanel>
-            <div>4</div>
+            <MyRunningJobs/>
           </TabPanel>
         </Tabs>
       </div>

@@ -9,6 +9,7 @@ import Users from "../pages/Users/Users";
 import JobseekerDashboard from "../pages/AllDashboard/JobseekerDashboard/JobseekerDashboard";
 import EmployerDashboard from "../pages/AllDashboard/EmployerDashboard/EmployerDashboard";
 import JobDetails from "../pages/AllDashboard/SharedComponents/JobDetails";
+import Profile from "../pages/Profile/Profile";
 
 export const router = createBrowserRouter([
     {
@@ -22,6 +23,10 @@ export const router = createBrowserRouter([
             {
                 path: '/admin/users',
                 element: <Users/>
+            },
+            {
+                path: '/profile',
+                element: <Profile/>
             },
             {
                 path: '/jobseeker/dashboard',
