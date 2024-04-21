@@ -33,7 +33,7 @@ const AllJobs = () => {
                             <p>{singleJob.salary}</p>
                         </div>
                         <div>
-                            <p>{singleJob.jobDescription}...<Link to={`/${singleJob._id}`} className="text-[#1d9cb5]">know more</Link></p>
+                        <p>{singleJob.jobDescription.substring(0, 40)}...<Link to={`/${singleJob._id}`} className="text-[#1d9cb5]">know more</Link></p>
                         </div>
                     </div>
                 </div>)

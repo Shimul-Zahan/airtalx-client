@@ -39,7 +39,7 @@ const JobDetails = () => {
                 <div className="flex justify-center gap-10">
                     <div className="text-center custom-shadow p-10 rounded-md w-96">
                         <p>JOB TITLE</p>
-                        <h4 className="text-2xl font-semibold">{jobData?.jobTitle}</h4>
+                        <h4 className="text-2xl font-semibold capitalize">{jobData?.jobTitle}</h4>
                     </div>
                     <div className="text-center custom-shadow p-10 rounded-md w-96">
                         <p>JOB RATE PER HOUR</p>
@@ -47,7 +47,7 @@ const JobDetails = () => {
                     </div>
                     <div className="text-center custom-shadow p-10 rounded-md w-96">
                         <p>EMPLOYMENT</p>
-                        <h4 className="text-2xl font-semibold">{jobData?.jobType}</h4>
+                        <h4 className="text-2xl font-semibold capitalize">{jobData?.jobType}</h4>
                     </div>
                 </div>
             </div>
