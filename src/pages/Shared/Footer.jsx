@@ -3,8 +3,8 @@ import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
 
 const Footer = () => {
     return (
-        <div className="absolute w-full bottom-0">
-            <div className="bg-[#2792a8] text-white py-4">
+        <div className="absolute bottom-0 w-full">
+            <div className="flex-grow bg-[#2792a8] text-white py-4">
                 <div className="lg:w-3/4 w-11/12 mx-auto">
                     <div className="md:flex md:justify-between grid grid-cols-2 gap-8">
                         <div>
