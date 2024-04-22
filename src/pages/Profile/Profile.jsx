@@ -4,6 +4,7 @@ import { MdOutlineEmail } from "react-icons/md";
 import { LuGraduationCap } from "react-icons/lu";
 import { SlLocationPin } from "react-icons/sl";
 import { FaRegEdit } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const Profile = () => {
     const [userData, setUserData] = useState([]);
@@ -21,6 +22,38 @@ const Profile = () => {
                 console.log(error);
             });
     }, []);
+
+    const updateProfile = (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const name = form.name.value;
+        const location = form.location.value;
+        const study = form.study.value;
+        const about = form.about.value;
+        const password = form.newPassword.value;
+        const updatedProfile = {name, location, study, about, password}
+
+        fetch(`http://localhost:5000/update/${user?.email}`, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(updatedProfile)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.modifiedCount > 0) {
+                    Swal.fire({
+                        title: 'Success!!',
+                        text: 'Your profile is updated successfully',
+                        icon: 'success',
+                        confirmButtonText: 'Cool'
+                      })
+                }
+            })
+            .catch(error => console.log(error))
+    }
 
     return (
         <div className="lg:w-3/4 w-11/12 mx-auto my-12">
@@ -68,7 +101,7 @@ const Profile = () => {
                                                 <h2 className="text-4xl text-center font-semibold mb-3">
                                                     Update Your Profile
                                                 </h2>
-                                                <form>
+                                                <form onSubmit={updateProfile}>
                                                     <div className="pb-4">
                                                         <label htmlFor="email">User Name</label>
                                                         <br />
@@ -90,6 +123,7 @@ const Profile = () => {
                                                             type="text"
                                                             name="location"
                                                             id=""
+                                                            value={myProfile.location}
                                                             required
                                                         />
                                                     </div>
@@ -99,7 +133,8 @@ const Profile = () => {
                                                         <input
                                                             className="bg-[#f5f5f5] p-2 border-slate-300 border w-full"
                                                             type="text"
-                                                            name="education"
+                                                            name="study"
+                                                            value={myProfile.study}
                                                             id=""
                                                             required
                                                         />
@@ -121,9 +156,10 @@ const Profile = () => {
                                                         <br />
                                                         <textarea
                                                             className="bg-[#f5f5f5] p-2 border-slate-300 border w-full"
-                                                            name="bio"
+                                                            name="about"
                                                             id=""
                                                             cols="30"
+                                                            value={myProfile.about}
                                                             rows="5"
                                                         ></textarea>
                                                     </div>
@@ -154,6 +190,7 @@ const Profile = () => {
                                                         <input
                                                             className="bg-[#f5f5f5] p-2 border-slate-300 border w-full"
                                                             type="password"
+                                                            name="newPassword"
                                                             id=""
                                                             required
                                                         />
