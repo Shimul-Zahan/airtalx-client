@@ -22,13 +22,14 @@ const Navbar = () => {
           <div className="flex flex-row gap-8 font-semibold">
             <Link>Home</Link>
             <Link to={"/admin/users"}>Users</Link>
-            <Link>Find Job</Link>
             {user && user.role === "jobseeker" && (
               <Link to={"/jobseeker/dashboard"}>Dashboard</Link>
             )}
             {user && user.role === "employer" && (
               <Link to={"/employer/dashboard"}>Dashboard</Link>
             )}
+            {!user && <Link to={"/findJob"}>Find Job</Link>
+            }
           </div>
           <div>
             {user ? (
