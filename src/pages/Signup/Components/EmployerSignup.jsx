@@ -182,7 +182,7 @@ const EmployerSignup = () => {
                   required
                 />
               </div>
-              <div className="pb-2 hidden">
+              <div className="pb-2" hidden>
                 <label htmlFor="password">Role</label>
                 <br />
                 <input

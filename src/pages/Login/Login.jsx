@@ -46,6 +46,9 @@ const Login = () => {
             } else if (response?.data?.user?.role === "employer") {
               navigate("/employer/dashboard");
             }
+            else if (response?.data?.user?.role === "admin") {
+              navigate("/admin/dashboard");
+            }
           })
           .catch((error) => {           
             message.error(error.response.data.message);
@@ -60,6 +63,7 @@ const Login = () => {
     console.log("role", user?.role);
     if (user?.role == "jobseeker") navigate("/jobseeker/dashboard");
     if (user?.role == "employer") navigate("/employer/dashboard");
+    if (user?.role == "admin") navigate("/admin/dashboard");
   }
   return (
     <div className="lg:w-1/2 w-11/12 mx-auto">

@@ -1,22 +1,20 @@
+import axios from "axios";
 import { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../../../providers/AuthProviders";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import axios from "axios";
-import { Link } from "react-router-dom";
 import { message } from "antd";
 
-const Dashboard = () => {
+const Applicant = () => {
   const { user } = useContext(AuthContext);
-  const [approveJob, setApproveJob] = useState([]);
-  const [jobPost, setJobPost] = useState([]);
-
+  const [pendingJob, setPendingJob] = useState([]);
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/job/employe/${user?.email}`
+        `http://localhost:5000/job/employe/pending/${user?.email}`
       );
       if (response.status === 200) {
-        setApproveJob(response.data);
+        setPendingJob(response.data);
       } else {
         console.error("Failed to fetch staff data");
       }
@@ -25,43 +23,48 @@ const Dashboard = () => {
     }
   };
 
-  const fetchJobPostData = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:5000/jobPost/employe/${user?.email}`
-      );
-      if (response.status === 200) {
-        setJobPost(response.data);
-      } else {
-        console.error("Failed to fetch job posts");
-      }
-    } catch (error) {
-      console.error("Error fetching job posts:", error);
-    }
-  };
-
-  const handleDeleteBtn = (email) => {
+  const handleMakeApproved = (email, jobId) => {
     axios
-      .delete(`http://localhost:5000/user/delete/${email}`)
+      .patch(`http://localhost:5000/appliedJob/updateStatus/${email}`, {
+        jobId: jobId,
+        status: "approved",
+      })
       .then((response) => {
-        const { data } = response;
-        console.log("🚀 ~ .then ~ response:", response);
-        if (data.message) {
-          message.success("User deleted successfully");
+        console.log("🚀 ~ .then ~ response:", response)
+        if (response.status === 200) {
+          message.success(response.data.message);
+          fetchData();
         } else {
-          message.error("Failed to delete user");
+          message.error("Failed to approve application");
         }
       })
       .catch((error) => {
-        console.error("Error deleting user:", error);
-        message.error("An error occurred while deleting user");
+        console.error("Error updating application status:", error);
+        message.error("Failed to approve application");
+      });
+  };
+  const handleMakeReject = (email, jobId) => {
+    axios.patch(`http://localhost:5000/appliedJob/updateStatus/${email}`, {
+      jobId: jobId,
+      status: "rejected",
+    })
+      .then((response) => {
+        if (response.status === 200) {
+            message.error("Job application Rejected!");
+          fetchData();
+        } else {
+          message.error("Failed to reject application");
+        }
+      })
+      .catch((error) => {
+        console.error("Error updating application status:", error);
+        message.error("Failed to reject application");
       });
   };
 
   useEffect(() => {
     fetchData();
-    fetchJobPostData();
-  }, [approveJob,jobPost]);
+  }, [pendingJob]);
 
   const getBadgeClass = (role) => {
     switch (role) {
@@ -73,27 +76,8 @@ const Dashboard = () => {
         return "";
     }
   };
-
   return (
     <div className="p-6">
-      <div className="grid lg:grid-cols-3 grid-cols-1 lg:gap-7">
-        <div className="flex justify-between custom-shadow p-4 rounded-md mb-7">
-          <div className="">
-            <h4 className="text-2xl font-semibold">Hello {user?.name}</h4>
-            <p>{"Here's what's going on"}</p>
-          </div>
-        </div>
-        <div className="flex justify-between items-center custom-shadow p-4 rounded-md mb-7">
-          <h4 className="text-2xl font-semibold">
-            Total Staff: {approveJob.length}
-          </h4>
-        </div>
-        <div className="flex justify-between items-center custom-shadow p-4 rounded-md mb-7">
-          <h4 className="text-2xl font-semibold">
-            Total Job Posted: {jobPost.length}
-          </h4>
-        </div>
-      </div>
       <div className="custom-shadow p-4 rounded-md">
         <div className="flex justify-between">
           <h4 className="text-2xl font-semibold">Staff Pannel</h4>
@@ -115,7 +99,7 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody className="text-center">
-              {approveJob.map((job, index) => (
+              {pendingJob.map((job, index) => (
                 <tr key={job?.jobData?._id}>
                   <td>{index + 1}</td>
                   <td>{job?.userEmail}</td>
@@ -139,12 +123,23 @@ const Dashboard = () => {
                     </Link>
                   </td>
                   <td>
-                    <button
-                      className="btn btn-error btn-md text-white"
-                      onClick={() => handleDeleteBtn(user.email)}
-                    >
-                      <RiDeleteBin6Line size="1.2em" />
-                    </button>
+                    <div className="flex  justify-center">
+                      <div className="text-red-700 text-xl cursor-pointer"></div>
+                      <div className=" flex flex-col gap-2">
+                        <button
+                          className="btn btn-success btn-sm text-white w-32"
+                          onClick={() => handleMakeApproved(job.userEmail, job.jobId)}
+                        >
+                          Approved
+                        </button>
+                        <button
+                          className="btn btn-error btn-sm text-white w-32"
+                          onClick={() => handleMakeReject(job.userEmail, job.jobId)}
+                        >
+                          Rejected
+                        </button>
+                      </div>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -156,4 +151,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Applicant;

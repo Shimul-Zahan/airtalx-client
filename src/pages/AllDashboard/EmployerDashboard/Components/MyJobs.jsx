@@ -11,7 +11,7 @@ const MyJobs = (_id) => {
   const [allJobs, setAllJobs] = useState([]);
   const { user } = useContext(AuthContext);
   useEffect(() => {
-    const url = `http://localhost:5000/myJobPosts?email=${user.email}`;
+    const url = `http://localhost:5000/myJobPosts?email=${user?.email}`;
     fetch(url)
       .then((res) => res.json())
       .then((data) => {

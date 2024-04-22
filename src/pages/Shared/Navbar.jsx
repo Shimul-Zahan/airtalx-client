@@ -28,6 +28,9 @@ const Navbar = () => {
             {user && user.role === "employer" && (
               <Link to={"/employer/dashboard"}>Dashboard</Link>
             )}
+            {user && user.role === "admin" && (
+              <Link to={"/admin/dashboard"}>Dashboard</Link>
+            )}
             {!user && <Link to={"/findJob"}>Find Job</Link>
             }
           </div>
