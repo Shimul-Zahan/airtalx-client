@@ -1,9 +1,15 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProviders";
+import Spinner from "./Spinner";
 
 const Navbar = () => {
   const { user, logOut, loading } = useContext(AuthContext);
+
+  if(loading)
+  {
+     return <Spinner />
+  }
 
   const handleLogOut = () => {
     logOut()
@@ -21,7 +27,6 @@ const Navbar = () => {
           </Link>
           <div className="flex flex-row gap-8 font-semibold">
             <Link>Home</Link>
-            <Link to={"/admin/users"}>Users</Link>
             {user && user.role === "jobseeker" && (
               <Link to={"/jobseeker/dashboard"}>Dashboard</Link>
             )}

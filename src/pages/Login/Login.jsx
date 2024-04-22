@@ -6,9 +6,10 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../providers/AuthProviders";
 import axios from "axios";
 import { message } from "antd";
+import Spinner from "../Shared/Spinner";
 
 const Login = () => {
-  const { signinWithGoogle, login, user } = useContext(AuthContext);
+  const { signinWithGoogle, login, user,loading } = useContext(AuthContext);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -58,6 +59,7 @@ const Login = () => {
         console.error("Google sign-in error:", error.message);
       });
   };
+
 
   if (user) {
     console.log("role", user?.role);
