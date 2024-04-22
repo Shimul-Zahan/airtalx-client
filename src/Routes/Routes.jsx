@@ -10,6 +10,7 @@ import JobseekerDashboard from "../pages/AllDashboard/JobseekerDashboard/Jobseek
 import EmployerDashboard from "../pages/AllDashboard/EmployerDashboard/EmployerDashboard";
 import JobDetails from "../pages/AllDashboard/SharedComponents/JobDetails";
 import Profile from "../pages/Profile/Profile";
+import FindJob from "../pages/Find Job/FindJob";
 
 export const router = createBrowserRouter([
     {
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
             {
                 path: '/profile',
                 element: <Profile/>
+            },
+            {
+                path: '/findJob',
+                element: <FindJob/>
             },
             {
                 path: '/jobseeker/dashboard',

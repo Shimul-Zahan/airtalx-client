@@ -70,7 +70,7 @@ const MyJobs = (_id) => {
                 <p className="border border-black rounded-md font-semibold p-3">
                   {singleJob.jobType}
                 </p>
-                <details className="dropdown">
+                {/* <details className="dropdown">
                   <summary className="btn p-0 bg-white text-xl font-semibold border-black hover:border-black hover:bg-white rounded-md w-min">
                     <BsThreeDotsVertical />
                   </summary>
@@ -86,7 +86,7 @@ const MyJobs = (_id) => {
                       </span>
                     </li>
                   </ul>
-                </details>
+                </details> */}
               </div>
             </div>
             <div className="flex gap-2 items-center text-lg font-semibold">
@@ -94,12 +94,7 @@ const MyJobs = (_id) => {
               <p>{singleJob.salary}</p>
             </div>
             <div>
-              <p>
-                {singleJob.jobDescription}...
-                <Link to={`/${singleJob._id}`} className="text-[#1d9cb5]">
-                  know more
-                </Link>
-              </p>
+            <p>{singleJob.jobDescription.substring(0, 40)}...<Link to={`/${singleJob._id}`} className="text-[#1d9cb5]">know more</Link></p>
             </div>
           </div>
         </div>

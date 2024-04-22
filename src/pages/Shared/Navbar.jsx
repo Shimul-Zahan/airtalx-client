@@ -7,12 +7,12 @@ const Navbar = () => {
 
   const handleLogOut = () => {
     logOut()
-      .then(() => {})
+      .then(() => { })
       .catch((error) => console.log(error));
   };
 
   return (
-    <div className="bg-[#edf7f4]">
+    <div className="bg-[#edf7f4] fixed w-full z-10 mb-20">
       <div className="w-3/4 mx-auto hidden lg:block py-4">
         <div className="flex items-center justify-between">
           <Link className="w-[60px] flex items-center">
@@ -21,7 +21,7 @@ const Navbar = () => {
           </Link>
           <div className="flex flex-row gap-8 font-semibold">
             <Link>Home</Link>
-            <Link>Find Job</Link>
+            <Link to={"/admin/users"}>Users</Link>
             {user && user.role === "jobseeker" && (
               <Link to={"/jobseeker/dashboard"}>Dashboard</Link>
             )}
@@ -31,6 +31,8 @@ const Navbar = () => {
             {user && user.role === "admin" && (
               <Link to={"/admin/dashboard"}>Dashboard</Link>
             )}
+            {!user && <Link to={"/findJob"}>Find Job</Link>
+            }
           </div>
           <div>
             {user ? (
@@ -56,14 +58,6 @@ const Navbar = () => {
                       <div className="flex items-center gap-2">
                         {/* <CgProfile className="text-lg" /> */}
                         <p>Profile</p>
-                      </div>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/settings" className="justify-between">
-                      <div className="flex items-center gap-2">
-                        {/* <FiSettings className="text-lg" /> */}
-                        <p>Settings</p>
                       </div>
                     </Link>
                   </li>
@@ -123,8 +117,13 @@ const Navbar = () => {
                 className="menu menu-sm dropdown-content font-semibold mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
               >
                 <Link>Home</Link>
-                <Link>About</Link>
                 <Link>Find Job</Link>
+                {user && user.role === "jobseeker" && (
+                  <Link to={"/jobseeker/dashboard"}>Dashboard</Link>
+                )}
+                {user && user.role === "employer" && (
+                  <Link to={"/employer/dashboard"}>Dashboard</Link>
+                )}
                 <p></p>
               </div>
             </div>
@@ -153,14 +152,6 @@ const Navbar = () => {
                     <div className="flex items-center gap-2">
                       {/* <CgProfile className="text-lg" /> */}
                       <p>Profile</p>
-                    </div>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/settings" className="justify-between">
-                    <div className="flex items-center gap-2">
-                      {/* <FiSettings className="text-lg" /> */}
-                      <p>Settings</p>
                     </div>
                   </Link>
                 </li>

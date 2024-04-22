@@ -1,10 +1,19 @@
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
 
 const Footer = () => {
+    const [hasScrollbar, setHasScrollbar] = useState(false);
+
+    useEffect(() => {
+        const hasVerticalScrollbar = document.body.clientHeight > window.innerHeight;
+        setHasScrollbar(hasVerticalScrollbar);
+        setHasScrollbar(true);
+    }, []);
+
     return (
-        <div className="absolute w-full bottom-0">
-            <div className="bg-[#2792a8] text-white py-4">
+        <div className={hasScrollbar ? "" : "absolute bottom-0 w-full"}>
+            <div className="flex-grow bg-[#2792a8] text-white py-4">
                 <div className="lg:w-3/4 w-11/12 mx-auto">
                     <div className="md:flex md:justify-between grid grid-cols-2 gap-8">
                         <div>
