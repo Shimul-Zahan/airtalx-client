@@ -4,11 +4,12 @@ import { AuthContext } from "../../../providers/AuthProviders";
 import { AiOutlineHome, AiOutlineProfile } from "react-icons/ai";
 import { BiMessageDetail } from "react-icons/bi";
 import { MdWorkOutline, MdLogout } from "react-icons/md";
-import { BsPersonVcard } from "react-icons/bs";
+import { BsFilePerson, BsPersonVcard } from "react-icons/bs";
 import Dashboard from "./Components/Dashboard";
 import PostJob from "./Components/PostJob";
 import AllJobs from "../SharedComponents/AllJobs";
 import MyJobs from "./Components/MyJobs";
+import Applicant from "./Components/Applicant";
 
 const EmployerDashboard = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -56,14 +57,23 @@ const EmployerDashboard = () => {
             }`}
             onClick={() => setActiveTab(3)}
           >
-            <MdWorkOutline className="text-xl" />
-            <span>All Jobs</span>
+            <BsFilePerson className="text-xl" />
+            <span>Applicant</span>
           </Tab>
           <Tab
             className={`font-semibold cursor-pointer flex gap-2 items-center ${
               activeTab === 4 ? "text-[#1d9cb5]" : "text-black"
             }`}
             onClick={() => setActiveTab(4)}
+          >
+            <MdWorkOutline className="text-xl" />
+            <span>All Jobs</span>
+          </Tab>
+          <Tab
+            className={`font-semibold cursor-pointer flex gap-2 items-center ${
+              activeTab === 5 ? "text-[#1d9cb5]" : "text-black"
+            }`}
+            onClick={() => setActiveTab(5)}
           >
             <BsPersonVcard className="text-xl" />
             <span>My Jobs</span>
@@ -87,6 +97,9 @@ const EmployerDashboard = () => {
           </TabPanel>
           <TabPanel>
             <PostJob />
+          </TabPanel>
+          <TabPanel>
+            <Applicant />
           </TabPanel>
           <TabPanel>
             <AllJobs />

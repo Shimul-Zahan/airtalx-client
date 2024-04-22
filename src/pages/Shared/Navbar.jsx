@@ -21,14 +21,15 @@ const Navbar = () => {
           </Link>
           <div className="flex flex-row gap-8 font-semibold">
             <Link>Home</Link>
-            <Link to={"/admin/users"}>Users</Link>
-            <Link>Post Job</Link>
             <Link>Find Job</Link>
             {user && user.role === "jobseeker" && (
               <Link to={"/jobseeker/dashboard"}>Dashboard</Link>
             )}
             {user && user.role === "employer" && (
               <Link to={"/employer/dashboard"}>Dashboard</Link>
+            )}
+            {user && user.role === "admin" && (
+              <Link to={"/admin/dashboard"}>Dashboard</Link>
             )}
           </div>
           <div>

@@ -16,7 +16,6 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 const AuthProviders = ({ children }) => {
   const [user, setUser] = useState(null);
-  console.log("🚀 ~ AuthProviders ~ user:", user)
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
