@@ -65,14 +65,14 @@ const JobDetails = () => {
           <div>
             <button
               className={`text-xl rounded mt-3 px-6 py-1 ${
-                user?.role === "employer" || user?.role === "admin"
+                user?.role === "employer" || user?.role === "admin" || !user
                   ? "bg-gray-500 text-gray-300 cursor-not-allowed"
                   : "bg-[#1d9cb5] text-white"
               }`}
               onClick={() => handleApply(jobData)}
-              disabled={user?.role === "employer" || user?.role === "admin"}
+              disabled={user?.role === "employer" || user?.role === "admin" || !user}
             >
-              Apply
+              {user ? "Apply" : "Login for Apply Job"}
             </button>
           </div>
         </div>

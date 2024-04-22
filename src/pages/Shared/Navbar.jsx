@@ -31,8 +31,7 @@ const Navbar = () => {
             {user && user.role === "admin" && (
               <Link to={"/admin/dashboard"}>Dashboard</Link>
             )}
-            {!user && <Link to={"/findJob"}>Find Job</Link>
-            }
+           <Link to={"/findJob"}>Find Job</Link>
           </div>
           <div>
             {user ? (
