@@ -24,7 +24,7 @@ const AllJobs = () => {
                         <div className="flex justify-between items-center pb-4">
                             <div>
                                 <h3 className="text-2xl font-semibold">{singleJob.jobTitle}</h3>
-                                <p>by <span className="text-[#1d9cb5] font-semibold cursor-pointer">{singleJob.companyName}</span></p>
+                                <p>by <Link to={`/${singleJob.email}`}><span className="text-[#1d9cb5] font-semibold cursor-pointer">{singleJob.companyName}</span></Link></p>
                             </div>
                             <p className="border border-black rounded-md font-semibold p-2">{singleJob.jobType}</p>
                         </div>

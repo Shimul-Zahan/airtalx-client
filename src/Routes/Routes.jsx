@@ -11,6 +11,7 @@ import EmployerDashboard from "../pages/AllDashboard/EmployerDashboard/EmployerD
 import JobDetails from "../pages/AllDashboard/SharedComponents/JobDetails";
 import Profile from "../pages/Profile/Profile";
 import FindJob from "../pages/Find Job/FindJob";
+import UserProfile from "../pages/Users/UserProfile";
 
 export const router = createBrowserRouter([
     {
@@ -28,6 +29,10 @@ export const router = createBrowserRouter([
             {
                 path: '/profile',
                 element: <Profile/>
+            },
+            {
+                path: '/:email',
+                element: <UserProfile/>
             },
             {
                 path: '/findJob',
