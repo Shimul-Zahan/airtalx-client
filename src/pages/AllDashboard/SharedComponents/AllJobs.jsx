@@ -38,9 +38,9 @@ const AllJobs = () => {
                   </h3>
                   <p>
                     by{" "}
-                    <span className="text-[#1d9cb5] font-semibold cursor-pointer">
+                    <Link to={`/${singleJob.email}`}><span className="text-[#1d9cb5] font-semibold cursor-pointer">
                       {singleJob.companyName}
-                    </span>
+                    </span></Link>
                   </p>
                 </div>
                 <p className="border border-black rounded-md font-semibold p-2">
@@ -78,9 +78,8 @@ const AllJobs = () => {
             <button
               key={i}
               onClick={() => paginate(i + 1)}
-              className={`join-item btn btn-outline mr-2 ${
-                currentPage === i + 1 ? "bg-green-400 text-white" : ""
-              }`}
+              className={`join-item btn btn-outline mr-2 ${currentPage === i + 1 ? "bg-green-400 text-white" : ""
+                }`}
             >
               {i + 1}
             </button>
