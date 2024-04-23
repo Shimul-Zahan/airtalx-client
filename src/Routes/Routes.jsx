@@ -1,6 +1,4 @@
-import {
-    createBrowserRouter,
-} from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layout/Main";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
@@ -12,52 +10,53 @@ import JobDetails from "../pages/AllDashboard/SharedComponents/JobDetails";
 import Profile from "../pages/Profile/Profile";
 import FindJob from "../pages/Find Job/FindJob";
 import UserProfile from "../pages/Users/UserProfile";
+import PrivateRouter from "./PrivateRouter";
 
 export const router = createBrowserRouter([
-    {
+  {
+    path: "/",
+    element: <Main />,
+    children: [
+      {
         path: "/",
-        element: <Main/>,
-        children: [
-            {
-                path: '/',
-                element: <Home/>
-            },
-            {
-                path: '/admin/dashboard',
-                element: <Users/>
-            },
-            {
-                path: '/profile',
-                element: <Profile/>
-            },
-            {
-                path: '/:email',
-                element: <UserProfile/>
-            },
-            {
-                path: '/findJob',
-                element: <FindJob/>
-            },
-            {
-                path: '/jobseeker/dashboard',
-                element: <JobseekerDashboard/>
-            },
-            {
-                path: '/employer/dashboard',
-                element: <EmployerDashboard/>
-            },
-            {
-                path: '/:_id',
-                element: <JobDetails/>
-            },
-            {
-                path: '/login',
-                element: <Login/>
-            },
-            {
-                path: '/signup',
-                element: <Signup/>
-            },
-        ]
-    },
+        element: <Home />,
+      },
+      {
+        path: "/admin/dashboard",
+        element: <PrivateRouter><Users /></PrivateRouter>,
+      },
+      {
+        path: "/profile",
+        element: <PrivateRouter><Profile /></PrivateRouter>,
+      },
+      {
+        path: '/:email',
+        element: <UserProfile />
+      },
+      {
+        path: "/findJob",
+        element: <FindJob />,
+      },
+      {
+        path: "/jobseeker/dashboard",
+        element: <PrivateRouter><JobseekerDashboard /></PrivateRouter>,
+      },
+      {
+        path: "/employer/dashboard",
+        element: <PrivateRouter><EmployerDashboard /></PrivateRouter>,
+      },
+      {
+        path: "/:_id",
+        element: <PrivateRouter><JobDetails /></PrivateRouter>,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/signup",
+        element: <Signup />,
+      },
+    ],
+  },
 ]);

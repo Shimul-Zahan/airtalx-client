@@ -16,6 +16,7 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 const AuthProviders = ({ children }) => {
   const [user, setUser] = useState(null);
+  console.log("🚀 ~ AuthProviders ~ user:", user)
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -26,7 +27,6 @@ const AuthProviders = ({ children }) => {
         email,
         password,
       });
-      console.log("Loginssss",response)
       const { token,user } = response.data;
       localStorage.setItem("access-token", token);
       setUser(user);
@@ -59,6 +59,7 @@ const AuthProviders = ({ children }) => {
     try {
       const token = localStorage.getItem("access-token");
       if (token) {
+        setLoading(true)
         const response = await axios.get("http://localhost:5000/verifyToken", {
           headers: {
             "Content-Type": "application/json",
@@ -89,6 +90,7 @@ const AuthProviders = ({ children }) => {
     error,
     signinWithGoogle,
     login,
+    setUser,
     logOut,
   };
   return (
