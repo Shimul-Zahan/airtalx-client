@@ -4,9 +4,9 @@ import Navbar from '../pages/Shared/Navbar';
 
 const Main = () => {
     return (
-        <div className='flex flex-col justify-between'>
+        <div>
             <Navbar />
-            <div className='pt-24'>
+            <div className='pt-24 min-h-[81vh]'>
                 <Outlet />
             </div>
             <Footer/>
