@@ -9,6 +9,8 @@ const Dashboard = () => {
   const { user } = useContext(AuthContext);
   const [approveJob, setApproveJob] = useState([]);
   const [jobPost, setJobPost] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [ApproveJobsPerPage] = useState(6);
 
   const fetchData = async () => {
     try {
@@ -48,6 +50,8 @@ const Dashboard = () => {
         console.log("🚀 ~ .then ~ response:", response);
         if (data.message) {
           message.success("User deleted successfully");
+          fetchData();
+          fetchJobPostData();
         } else {
           message.error("Failed to delete user");
         }
@@ -61,7 +65,7 @@ const Dashboard = () => {
   useEffect(() => {
     fetchData();
     fetchJobPostData();
-  }, [approveJob,jobPost]);
+  }, []);
 
   const getBadgeClass = (role) => {
     switch (role) {
@@ -73,6 +77,14 @@ const Dashboard = () => {
         return "";
     }
   };
+
+  // Logic for pagination
+  const indexOfLastFlat = currentPage * ApproveJobsPerPage;
+  const indexOfFirstFlat = indexOfLastFlat - ApproveJobsPerPage;
+  const currentJobs = approveJob.slice(indexOfFirstFlat, indexOfLastFlat);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="p-6">
@@ -97,7 +109,6 @@ const Dashboard = () => {
       <div className="custom-shadow p-4 rounded-md">
         <div className="flex justify-between">
           <h4 className="text-2xl font-semibold">Staff Pannel</h4>
-          <p>view all</p>
         </div>
         <div className="overflow-x-auto">
           <table className="table w-full">
@@ -115,7 +126,7 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody className="text-center">
-              {approveJob.map((job, index) => (
+              {currentJobs.map((job, index) => (
                 <tr key={job?.jobData?._id}>
                   <td>{index + 1}</td>
                   <td>{job?.userEmail}</td>
@@ -150,6 +161,39 @@ const Dashboard = () => {
               ))}
             </tbody>
           </table>
+        </div>
+        {/* for pagination */}
+        <div className=" flex flex-wrap justify-center mb-10 mt-5">
+          <button
+            className="join-item btn btn-outline mr-2"
+            onClick={() => paginate(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            &larr; Previous page
+          </button>
+          {Array.from(
+            { length: Math.ceil(approveJob.length / ApproveJobsPerPage) },
+            (_, i) => (
+              <button
+                key={i}
+                onClick={() => paginate(i + 1)}
+                className={`join-item btn btn-outline mr-2 ${
+                  currentPage === i + 1 ? "bg-green-400 text-white" : ""
+                }`}
+              >
+                {i + 1}
+              </button>
+            )
+          )}
+          <button
+            className="join-item btn btn-outline mr-2"
+            onClick={() => paginate(currentPage + 1)}
+            disabled={
+              currentPage === Math.ceil(approveJob.length / ApproveJobsPerPage)
+            }
+          >
+            Next &rarr;
+          </button>
         </div>
       </div>
     </div>

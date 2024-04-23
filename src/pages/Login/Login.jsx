@@ -8,7 +8,7 @@ import axios from "axios";
 import { message } from "antd";
 
 const Login = () => {
-  const { signinWithGoogle, login, user } = useContext(AuthContext);
+  const { signinWithGoogle, login, user, setUser } = useContext(AuthContext);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -27,36 +27,34 @@ const Login = () => {
     }
   };
 
-  const handleGoogleLogin = () => {
-    signinWithGoogle()
-      .then((result) => {
-        const user = result.user;
-        axios
-          .get(`http://localhost:5000/users/google/${user?.email}`)
-          .then((response) => {
-            if (!response.data.user) {
-              message.error("Failed to retrieve user data");
-              return; 
-            }
-            console.log("resss", response.data.user.role);
-            message.success("Login Successful!");
-            localStorage.setItem("access-token", response.data.token);
-            if (response?.data?.user?.role === "jobseeker") {
-              navigate("/jobseeker/dashboard");
-            } else if (response?.data?.user?.role === "employer") {
-              navigate("/employer/dashboard");
-            }
-            else if (response?.data?.user?.role === "admin") {
-              navigate("/admin/dashboard");
-            }
-          })
-          .catch((error) => {           
-            message.error(error.response.data.message);
-          });
-      })
-      .catch((error) => {
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await signinWithGoogle();
+      const user = result.user;
+      const response = await axios.get(
+        `http://localhost:5000/users/google/${user?.email}`
+      );
+      const { token, user: userData } = response.data;
+      if (userData) {
+        console.log("🚀 ~ handleGoogleLogin ~ userData:", userData)
+        setUser(userData);
+        localStorage.setItem("access-token", token);
+        if (userData?.role === "jobseeker") {
+          navigate("/jobseeker/dashboard");
+        } else if (userData?.role === "employer") {
+          navigate("/employer/dashboard");
+        } else if (userData?.role === "admin") {
+          navigate("/admin/dashboard");
+        }
+      }
+      // message.success("Login Successful!"); // Uncomment if you want to show a success message
+    } catch (error) {
+      if (error.response) {
+        message.error(error.response.data.message);
+      } else {
         console.error("Google sign-in error:", error.message);
-      });
+      }
+    }
   };
 
   if (user) {

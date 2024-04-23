@@ -13,8 +13,7 @@ import Applicant from "./Components/Applicant";
 
 const EmployerDashboard = () => {
   const [activeTab, setActiveTab] = useState(0);
-
-  const { user, logOut } = useContext(AuthContext);
+  const { logOut } = useContext(AuthContext);
   const handleLogOut = () => {
     logOut()
       .then(() => {})
