@@ -1,13 +1,14 @@
 import { useContext, useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { AuthContext } from "../../../providers/AuthProviders";
-import { AiOutlineHome } from "react-icons/ai";
 import { BiMessageDetail } from "react-icons/bi";
 import { MdWorkOutline, MdLogout } from "react-icons/md";
 import { BsPersonVcard } from "react-icons/bs";
 import Dashboard from "./Components/Dashboard";
 import AllJobs from "../SharedComponents/AllJobs";
 import MyRunningJobs from "./Components/MyRunningJobs";
+import { FaHistory, FaHome } from "react-icons/fa";
+import History from "./Components/History";
 
 const JobseekerDashboard = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -29,7 +30,7 @@ const JobseekerDashboard = () => {
             }`}
             onClick={() => setActiveTab(0)}
           >
-            <AiOutlineHome className="text-xl" />
+            <FaHome  size="1em" />
             <span>Dashboard</span>
           </Tab>
           <Tab
@@ -59,6 +60,15 @@ const JobseekerDashboard = () => {
             <BsPersonVcard className="text-xl" />
             <span>My Jobs</span>
           </Tab>
+          <Tab
+            className={`font-semibold cursor-pointer flex gap-2 items-center ${
+              activeTab === 4 ? "text-[#1d9cb5]" : "text-black"
+            }`}
+            onClick={() => setActiveTab(4)}
+          >
+            <FaHistory  className="text-xl" />
+            <span>History</span>
+          </Tab>
           <div
             onClick={handleLogOut}
             className="font-semibold cursor-pointer flex gap-2 items-center text-red-500"
@@ -81,6 +91,9 @@ const JobseekerDashboard = () => {
           </TabPanel>
           <TabPanel>
             <MyRunningJobs/>
+          </TabPanel>
+          <TabPanel>
+            <History/>
           </TabPanel>
         </Tabs>
       </div>

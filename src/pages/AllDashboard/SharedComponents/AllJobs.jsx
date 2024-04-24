@@ -1,11 +1,31 @@
 import { useEffect, useState } from "react";
 import { SlWallet } from "react-icons/sl";
 import { Link } from "react-router-dom";
+import { IoMdSearch } from "react-icons/io";
+import axios from "axios";
 
 const AllJobs = () => {
   const [allJobs, setAllJobs] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [allJobsPerPage] = useState(6);
+  const [searchValue, setSearchValue] = useState("");
+  const [typeSelect, seTypeSelect] = useState("");
+
+  // Function to fetch filtered job data
+  const fetchFilteredJobs = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/filterJob", {
+        params: {
+          searchValue: searchValue,
+          typeSelect: typeSelect,
+        },
+      });
+      setAllJobs(response.data);
+    } catch (error) {
+      console.error("Error fetching filtered job data:", error);
+    }
+  };
+
   useEffect(() => {
     const url = "http://localhost:5000/newJobPost";
     fetch(url)
@@ -18,6 +38,10 @@ const AllJobs = () => {
       });
   }, []);
 
+  useEffect(() => {
+    // Call the function to fetch filtered job data
+    fetchFilteredJobs();
+  }, [searchValue, typeSelect]);
   // Logic for pagination
   const indexOfLastFlat = currentPage * allJobsPerPage;
   const indexOfFirstFlat = indexOfLastFlat - allJobsPerPage;
@@ -25,8 +49,39 @@ const AllJobs = () => {
 
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const handleSearchChange = (e) => {
+    setSearchValue(e.target.value);
+  };
+  const handleTypeSelect = (e) => {
+    seTypeSelect(e.target.value);
+  };
   return (
     <>
+      {/* search functionality */}
+      <div className="flex items-center gap-2 justify-center">
+        <label className="input input-bordered flex items-center gap-2">
+          <input
+            type="text"
+            className="grow"
+            placeholder="Search"
+            value={searchValue}
+            onChange={handleSearchChange}
+          />
+          <IoMdSearch size="1.5em" />
+        </label>
+        <select
+          className="select select-bordered w-full max-w-xs font-semibold"
+          value={typeSelect}
+          onChange={handleTypeSelect}
+        >
+          <option value="" disabled>
+            Select Type
+          </option>
+          <option value="Job">Job</option>
+          <option value="Employer">Employer</option>
+        </select>
+      </div>
       <div className="grid lg:grid-cols-3 grid-cols-1 m-3">
         {currentJobs.map((singleJob) => (
           <div key={singleJob._id}>
@@ -63,6 +118,7 @@ const AllJobs = () => {
           </div>
         ))}
       </div>
+
       {/* for pagination */}
       <div className=" flex flex-wrap justify-center mb-10 mt-5">
         <button
