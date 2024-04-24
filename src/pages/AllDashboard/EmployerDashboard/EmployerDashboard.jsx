@@ -7,9 +7,9 @@ import { MdWorkOutline, MdLogout } from "react-icons/md";
 import { BsFilePerson, BsPersonVcard } from "react-icons/bs";
 import Dashboard from "./Components/Dashboard";
 import PostJob from "./Components/PostJob";
-import AllJobs from "../SharedComponents/AllJobs";
 import MyJobs from "./Components/MyJobs";
 import Applicant from "./Components/Applicant";
+import Alljobseekers from "./Components/Alljobseekers";
 
 const EmployerDashboard = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -57,7 +57,7 @@ const EmployerDashboard = () => {
             onClick={() => setActiveTab(3)}
           >
             <BsFilePerson className="text-xl" />
-            <span>Applicant</span>
+            <span>Applicants</span>
           </Tab>
           <Tab
             className={`font-semibold cursor-pointer flex gap-2 items-center ${
@@ -66,7 +66,7 @@ const EmployerDashboard = () => {
             onClick={() => setActiveTab(4)}
           >
             <MdWorkOutline className="text-xl" />
-            <span>All Jobs</span>
+            <span>All Jobseekers</span>
           </Tab>
           <Tab
             className={`font-semibold cursor-pointer flex gap-2 items-center ${
@@ -101,7 +101,7 @@ const EmployerDashboard = () => {
             <Applicant />
           </TabPanel>
           <TabPanel>
-            <AllJobs />
+            <Alljobseekers/>
           </TabPanel>
           <TabPanel>
             <MyJobs />

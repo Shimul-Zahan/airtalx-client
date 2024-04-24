@@ -90,7 +90,7 @@ const Applicant = () => {
     <div className="p-6">
       <div className="custom-shadow p-4 rounded-md">
         <div className="flex justify-between">
-          <h4 className="text-2xl font-semibold">Staff Pannel</h4>
+          <h4 className="text-2xl font-semibold pb-4">Pending Job Applicants</h4>
 
         </div>
         <div className="overflow-x-auto">
@@ -126,8 +126,8 @@ const Applicant = () => {
                     </div>
                   </td>
                   <td>
-                    <Link to={`/${job?.jobId}`} className="text-[#1d9cb5]">
-                      <button className="btn btn-warning btn-md text-white">
+                    <Link to={`/${job?.userEmail}`} className="text-[#1d9cb5] font-semibold">
+                      <button className="">
                         Details
                       </button>
                     </Link>
@@ -140,13 +140,13 @@ const Applicant = () => {
                           className="btn btn-success btn-sm text-white w-32"
                           onClick={() => handleMakeApproved(job.userEmail, job.jobId)}
                         >
-                          Approved
+                          Approve
                         </button>
                         <button
                           className="btn btn-error btn-sm text-white w-32"
                           onClick={() => handleMakeReject(job.userEmail, job.jobId)}
                         >
-                          Rejected
+                          Cancel
                         </button>
                       </div>
                     </div>

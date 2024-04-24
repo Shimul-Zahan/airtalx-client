@@ -46,7 +46,7 @@ export const router = createBrowserRouter([
         element: <PrivateRouter><EmployerDashboard /></PrivateRouter>,
       },
       {
-        path: "/:_id",
+        path: "/jobdetails/:_id",
         element: <PrivateRouter><JobDetails /></PrivateRouter>,
       },
       {

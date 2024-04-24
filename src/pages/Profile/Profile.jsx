@@ -5,9 +5,10 @@ import { LuGraduationCap } from "react-icons/lu";
 import { SlLocationPin } from "react-icons/sl";
 import { FaRegEdit } from "react-icons/fa";
 import { message } from "antd";
+import { TbMessage2 } from "react-icons/tb";
 
 const Profile = () => {
-  const { user,setUser } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   // console.log("🚀 ~ Profile ~ user:", user)
 
   const updateProfile = (e) => {
@@ -38,11 +39,11 @@ const Profile = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log("🚀 ~ .then ~ data:", data)
-        
+
         if (data) {
           message.success("Profile Updated!");
           setUser(data.user)
-          localStorage.setItem("access-token",data.token)
+          localStorage.setItem("access-token", data.token)
         }
       })
       .catch((error) => console.log(error));
@@ -68,19 +69,15 @@ const Profile = () => {
           </div>
           <div className="custom-shadow rounded-md p-4 col-span-7">
             <div>
-              <div className="flex justify-between item relative">
-                <h3 className="font-semibold text-3xl pb-2 capitalize">
-                  {user?.name}
-                </h3>
+              <div className="flex justify-between item">
+                <h3 className="font-semibold text-3xl pb-2 capitalize">{user?.name}</h3>
                 {/* You can open the modal using document.getElementById('ID').showModal() method */}
-                <button
-                  className="btn bg-transparent border-0 hover:bg-transparent hover:border-0"
-                  onClick={() =>
-                    document.getElementById("my_modal_3").showModal()
-                  }
-                >
-                  <FaRegEdit className="text-3xl pt-1 absolute right-0" />
-                </button>
+                <div className="flex items-center">
+                  <div className="flex items-center gap-2">
+                    <button className="border border-black py-1 px-2 rounded-md">Resume</button>
+                    <FaRegEdit className="text-4xl p-1 cursor-pointer rounded-md border border-black right-0" onClick={() => document.getElementById("my_modal_3").showModal()} />
+                  </div>
+                </div>
                 <dialog id="my_modal_3" className="modal">
                   <div className="modal-box">
                     <form method="dialog">
@@ -193,7 +190,7 @@ const Profile = () => {
                 {!user?.location && <p>N/A</p>}
               </div>
             </div>
-            <h4 className="font-semibold pt-6">Bio</h4>
+            <h4 className="font-semibold pt-6">About Me</h4>
             {user?.about && <p>{user?.about}</p>}
             {!user?.about && <p>N/A</p>}
           </div>

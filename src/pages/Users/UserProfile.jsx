@@ -45,7 +45,7 @@ const UserProfile = () => {
                                 <h3 className="font-semibold text-3xl pb-2 capitalize">
                                     {allUsers?.name}
                                 </h3>
-
+                                <button className="border border-black py-1 px-2 rounded-md">Resume</button>
                             </div>
                             <div className="flex gap-2 items-center">
                                 <MdOutlineEmail className="text-2xl pt-1" />
