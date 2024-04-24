@@ -87,9 +87,9 @@ const MyRunningJobs = () => {
                   </div>
                 </div>
                 <p>
-                  {singleJob?.jobData?.jobDescription}...
+                  {singleJob?.jobData?.jobDescription.substring(0, 120)}...
                   <Link
-                    to={`/${singleJob?.jobData?._id}`}
+                    to={`/jobdetails/${singleJob?.jobData?._id}`}
                     className="text-[#1d9cb5]"
                   >
                     know more

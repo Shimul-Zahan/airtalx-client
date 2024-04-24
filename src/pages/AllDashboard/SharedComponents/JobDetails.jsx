@@ -72,12 +72,12 @@ const JobDetails = () => {
               onClick={() => handleApply(jobData)}
               disabled={user?.role === "employer" || user?.role === "admin" || !user}
             >
-              {user ? "Apply" : "Login for Apply Job"}
+              {user ? "Apply" : "Login to Apply Job"}
             </button>
           </div>
         </div>
         <div className="w-1/4">
-          <img src="job-details-img.svg" alt="" />
+          <img src="/job-details-img.svg" alt="" />
         </div>
       </div>
       <div className="pb-12">

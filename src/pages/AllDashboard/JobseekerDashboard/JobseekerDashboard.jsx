@@ -9,11 +9,17 @@ import AllJobs from "../SharedComponents/AllJobs";
 import MyRunningJobs from "./Components/MyRunningJobs";
 import { FaHistory, FaHome } from "react-icons/fa";
 import History from "./Components/History";
+import { Navigate, useLocation } from "react-router";
 
 const JobseekerDashboard = () => {
   const [activeTab, setActiveTab] = useState(0);
+  const { user, logOut } = useContext(AuthContext);
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  if (user.role !== "jobseeker") {
+    return <Navigate to={from} />;
+  }
 
-  const { logOut } = useContext(AuthContext);
   const handleLogOut = () => {
     logOut()
       .then(() => {})

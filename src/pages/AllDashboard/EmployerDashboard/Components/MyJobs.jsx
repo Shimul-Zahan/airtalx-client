@@ -53,67 +53,67 @@ const MyJobs = (_id) => {
     });
   };
 
-    // Logic for pagination
-    const indexOfLastFlat = currentPage * allPostJobsPerPage;
-    const indexOfFirstFlat = indexOfLastFlat - allPostJobsPerPage;
-    const currentJobs = allJobs.slice(indexOfFirstFlat, indexOfLastFlat);
-  
-    // Change page
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  // Logic for pagination
+  const indexOfLastFlat = currentPage * allPostJobsPerPage;
+  const indexOfFirstFlat = indexOfLastFlat - allPostJobsPerPage;
+  const currentJobs = allJobs.slice(indexOfFirstFlat, indexOfLastFlat);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <>
       <div className="grid grid-cols-3 m-3">
         {currentJobs.map((singleJob) => (
-          <div key={singleJob._id}>
-            <div className="custom-shadow m-3 p-4 rounded-md">
-              <div className="flex justify-between items-center pb-4">
-                <div>
-                  <h3 className="text-2xl font-semibold">
-                    {singleJob.jobTitle}
-                  </h3>
-                  <p>
-                    by{" "}
+          <div className="custom-shadow m-3 p-4 rounded-md" key={singleJob._id}>
+            <div className="flex justify-between items-center pb-4">
+              <div>
+                <h3 className="text-2xl font-semibold">
+                  {singleJob.jobTitle}
+                </h3>
+                <p>
+                  by{" "}
+                  <Link to={`/jobseeker/${singleJob.email}`}>
                     <span className="text-[#1d9cb5] font-semibold cursor-pointer">
                       {singleJob.companyName}
                     </span>
-                  </p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <p className="border border-black rounded-md font-semibold p-3">
-                    {singleJob.jobType}
-                  </p>
-                  <details className="dropdown">
-                    <summary className="btn p-0 bg-white text-xl font-semibold border-black hover:border-black hover:bg-white rounded-md w-min">
-                      <BsThreeDotsVertical />
-                    </summary>
-                    <ul className="p-2 custom-shadow menu dropdown-content z-[1] rounded-md bg-white w-fit">
-                      <li className="flex">
-                        <span>
-                          <FaRegEdit className="bg-[#1d9cb5] text-white p-1 text-3xl rounded-md" />
-                        </span>
-                      </li>
-                      <li onClick={() => handleDelete(_id)} className="flex">
-                        <span>
-                          <RiDeleteBin2Line className="bg-red-500 text-white p-1 text-3xl rounded-md" />
-                        </span>
-                      </li>
-                    </ul>
-                  </details>
-                </div>
-              </div>
-              <div className="flex gap-2 items-center text-lg font-semibold">
-                <SlWallet />
-                <p>{singleJob.salary}</p>
-              </div>
-              <div>
-                <p>
-                  {singleJob.jobDescription}...
-                  <Link to={`/${singleJob._id}`} className="text-[#1d9cb5]">
-                    know more
                   </Link>
                 </p>
               </div>
+              <div className="flex items-center gap-2">
+                <p className="border border-black rounded-md font-semibold p-3">
+                  {singleJob.jobType}
+                </p>
+                <details className="dropdown">
+                  <summary className="btn p-0 bg-white text-xl font-semibold border-black hover:border-black hover:bg-white rounded-md w-min">
+                    <BsThreeDotsVertical />
+                  </summary>
+                  <ul className="p-2 custom-shadow menu dropdown-content z-[1] rounded-md bg-white w-fit">
+                    <li className="flex">
+                      <span>
+                        <FaRegEdit className="bg-[#1d9cb5] text-white p-1 text-3xl rounded-md" />
+                      </span>
+                    </li>
+                    <li onClick={() => handleDelete(_id)} className="flex">
+                      <span>
+                        <RiDeleteBin2Line className="bg-red-500 text-white p-1 text-3xl rounded-md" />
+                      </span>
+                    </li>
+                  </ul>
+                </details>
+              </div>
+            </div>
+            <div className="flex gap-2 items-center text-lg font-semibold">
+              <SlWallet />
+              <p>{singleJob.salary}</p>
+            </div>
+            <div>
+              <p>
+                {singleJob.jobDescription.substring(0, 120)}...
+                <Link to={`/${singleJob._id}`} className="text-[#1d9cb5]">
+                  know more
+                </Link>
+              </p>
             </div>
           </div>
         ))}
@@ -133,9 +133,8 @@ const MyJobs = (_id) => {
             <button
               key={i}
               onClick={() => paginate(i + 1)}
-              className={`join-item btn btn-outline mr-2 ${
-                currentPage === i + 1 ? "bg-green-400 text-white" : ""
-              }`}
+              className={`join-item btn btn-outline mr-2 ${currentPage === i + 1 ? "bg-green-400 text-white" : ""
+                }`}
             >
               {i + 1}
             </button>

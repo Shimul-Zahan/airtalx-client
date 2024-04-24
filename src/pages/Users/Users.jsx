@@ -1,12 +1,19 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { message } from "antd";
 import axios from "axios";
+import { Navigate, useLocation } from "react-router";
+import { AuthContext } from "../../providers/AuthProviders";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
+  const {user} = useContext(AuthContext);
   const token = localStorage.getItem("access-token");
-
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  if (user.role !== "admin") {
+    return <Navigate to={from} />;
+  }
   const fetchUsers = () => {
     const url = "http://localhost:5000/users";
     fetch(url, {
