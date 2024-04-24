@@ -73,9 +73,11 @@ const MyJobs = (_id) => {
                 </h3>
                 <p>
                   by{" "}
-                  <span className="text-[#1d9cb5] font-semibold cursor-pointer">
-                    {singleJob.companyName}
-                  </span>
+                  <Link to={`/jobseeker/${singleJob.email}`}>
+                    <span className="text-[#1d9cb5] font-semibold cursor-pointer">
+                      {singleJob.companyName}
+                    </span>
+                  </Link>
                 </p>
               </div>
               <div className="flex items-center gap-2">

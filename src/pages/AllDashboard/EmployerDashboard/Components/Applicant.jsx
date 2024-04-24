@@ -90,7 +90,7 @@ const Applicant = () => {
     <div className="p-6">
       <div className="custom-shadow p-4 rounded-md">
         <div className="flex justify-between">
-          <h4 className="text-2xl font-semibold pb-4">Pending Job Applicants</h4>
+          <h4 className="text-2xl font-semibold pb-4">Applicant</h4>
 
         </div>
         <div className="overflow-x-auto">
@@ -99,7 +99,7 @@ const Applicant = () => {
             <thead>
               <tr className="font-semibold text-base text-center">
                 <th>No.</th>
-                <th>Staff Email</th>
+                <th>Applicant Email</th>
                 <th>Job Title</th>
                 <th>Job Type</th>
                 <th>Salary</th>

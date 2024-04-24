@@ -1,54 +1,83 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../providers/AuthProviders";
 import { MdOutlineEmail } from "react-icons/md";
 import { LuGraduationCap } from "react-icons/lu";
 import { SlLocationPin } from "react-icons/sl";
 import { FaRegEdit } from "react-icons/fa";
-import { message } from "antd";
+import { message, Form, Input, Upload, Button } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import axios from "axios";
 import { TbMessage2 } from "react-icons/tb";
 
 const Profile = () => {
   const { user, setUser } = useContext(AuthContext);
-  // console.log("🚀 ~ Profile ~ user:", user)
+  const [fileList, setFileList] = useState([]);
+  const [form] = Form.useForm();
 
-  const updateProfile = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const name = form.name.value;
-    const location = form.location.value;
-    const studies = form.study.value;
-    const photoURL = form.photoURL.value;
-    const about = form.about.value;
-    const password = form.newPassword.value;
-    const updatedProfile = {
-      name,
-      location,
-      studies,
-      photoURL,
-      about,
-      password,
-    };
+  const onFinish = async (values) => {
+    console.log("🚀 ~ onFinish ~ values:", values);
+    try {
+      const { name, location, studies, about, newPassword } = values || {};
 
-    fetch(`http://localhost:5000/update/${user?.email}`, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(updatedProfile),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("🚀 ~ .then ~ data:", data)
-
-        if (data) {
+      const data = new FormData();
+      data.append("name", name);
+      data.append("password", newPassword);
+      data.append("location", location);
+      data.append("studies", studies);
+      data.append("about", about);
+      data.append("images", fileList[0]?.originFileObj || "");
+      const config = {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      };
+      const url = `http://localhost:5000/update/${user?.email}`;
+      try {
+        const response = await axios.put(url, data, config);
+        console.log("🚀 ~ onFinish ~ response:", response)
+        if (response.data.user) {
           message.success("Profile Updated!");
-          setUser(data.user)
-          localStorage.setItem("access-token", data.token)
+          setUser(response.data.user);
+          localStorage.setItem("access-token", response.data.token);
+          form.resetFields();
+        } else {
+          message.error(response.data.message || "Failed to update profile");
         }
-      })
-      .catch((error) => console.log(error));
+      } catch (error) {
+        console.error("Update failed:", error);
+        message.error("Failed to update. Please try again later.");
+      }
+    } catch (error) {
+      console.error("Profile update failed:", error);
+      message.error("Failed to update profile. Please try again later.");
+    }
   };
 
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
+  const normFile = (e) => {
+    setFileList(e.fileList);
+    // console.log(e.fileList);
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e?.fileList;
+  };
+
+  const props = {
+    multiple: false,
+    onRemove: (file) => {
+      const index = fileList.indexOf(file);
+      const newFileList = fileList.slice();
+      newFileList.splice(index, 1);
+      setFileList(newFileList);
+    },
+    beforeUpload: () => {
+      return false;
+    },
+    fileList,
+  };
   return (
     <div className="lg:w-3/4 w-11/12 mx-auto my-12">
       <div>
@@ -89,88 +118,71 @@ const Profile = () => {
                       <h2 className="text-4xl text-center font-semibold mb-3">
                         Update Your Profile
                       </h2>
-                      <form onSubmit={updateProfile}>
-                        <div className="pb-4">
-                          <label htmlFor="email">User Name</label>
-                          <br />
-                          <input
-                            className="bg-[#f5f5f5] p-2 border-slate-300 border w-full capitalize"
-                            type="text"
-                            name="name"
-                            placeholder={user?.name}
-                          />
-                        </div>
-
-                        <div className="pb-4">
-                          <label htmlFor="email">Location</label>
-                          <br />
-                          <input
-                            className="bg-[#f5f5f5] p-2 border-slate-300 border w-full"
-                            type="text"
-                            name="location"
-                            id=""
-                            placeholder={user?.location}
-                          />
-                        </div>
-                        <div className="pb-4">
-                          <label htmlFor="email">Education</label>
-                          <br />
-                          <input
-                            className="bg-[#f5f5f5] p-2 border-slate-300 border w-full"
-                            type="text"
-                            name="study"
-                            placeholder={user?.studies}
-                            id=""
-                          />
-                        </div>
-                        <div className="pb-4">
-                          <label htmlFor="email">Profile Photo</label>
-                          <br />
-                          <input
-                            className="bg-[#f5f5f5] p-2 border-slate-300 border w-full"
-                            type="file"
-                            name="photoURL"
-                            id=""
-                          />
-                        </div>
-
-                        <div className="pb-4">
-                          <label htmlFor="email">Bio</label>
-                          <br />
-                          <textarea
-                            className="bg-[#f5f5f5] p-2 border-slate-300 border w-full"
-                            name="about"
-                            id=""
-                            cols="30"
-                            placeholder={user?.about}
-                            rows="5"
-                          ></textarea>
-                        </div>
-                        <div className="pb-4">
-                          <label htmlFor="email">New Password</label>
-                          <br />
-                          <input
-                            className="bg-[#f5f5f5] p-2 border-slate-300 border w-full"
-                            type="password"
-                            name="password"
-                            id=""
-                          />
-                        </div>
-                        <div className="pb-4">
-                          <label htmlFor="email">Confirm New Password</label>
-                          <br />
-                          <input
-                            className="bg-[#f5f5f5] p-2 border-slate-300 border w-full"
-                            type="password"
-                            name="newPassword"
-                            id=""
-                          />
-                        </div>
-                        <button className="w-full bg-[#287180] text-white font-semibold p-2 mt-4 mb-3">
-                          Update
-                        </button>
-                        <br />
-                      </form>
+                      <Form
+                        name="update_profile"
+                        initialValues={user}
+                        onFinish={onFinish}
+                        onFinishFailed={onFinishFailed}
+                        form={form} 
+                      >
+                        <Form.Item
+                          label="User Name"
+                          name="name"
+                          initialValue={user?.name}
+                        >
+                          <Input />
+                        </Form.Item>
+                        <Form.Item
+                          label="Location"
+                          name="location"
+                          initialValue={user?.location}
+                        >
+                          <Input />
+                        </Form.Item>
+                        <Form.Item
+                          label="Education"
+                          name="studies"
+                          initialValue={user?.studies}
+                        >
+                          <Input />
+                        </Form.Item>
+                        <Form.Item
+                          name="user_image"
+                          valuePropName="fileList"
+                          label="Image"
+                          getValueFromEvent={normFile}
+                        >
+                          <Upload
+                            name="logo"
+                            action="/upload.do"
+                            listType="picture"
+                            {...props}
+                          >
+                            <Button icon={<UploadOutlined />}>
+                              Click to upload Image
+                            </Button>
+                          </Upload>
+                        </Form.Item>
+                        <Form.Item
+                          label="Bio"
+                          name="about"
+                          initialValue={user?.about}
+                        >
+                          <Input.TextArea />
+                        </Form.Item>
+                        <Form.Item label="Password" name="newPassword">
+                          <Input.Password placeholder="Enter New Password" />
+                        </Form.Item>
+                        <Form.Item>
+                          <Button
+                            type="primary"
+                            htmlType="submit"
+                            className="w-full"
+                          >
+                            Update
+                          </Button>
+                        </Form.Item>
+                      </Form>
                     </div>
                   </div>
                 </dialog>

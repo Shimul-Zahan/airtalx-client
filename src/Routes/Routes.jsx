@@ -30,7 +30,7 @@ export const router = createBrowserRouter([
         element: <PrivateRouter><Profile /></PrivateRouter>,
       },
       {
-        path: '/:email',
+        path: '/jobseeker/:email',
         element: <UserProfile />
       },
       {

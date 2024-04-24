@@ -23,7 +23,7 @@ const Alljobseekers = () => {
         <div className="grid lg:grid-cols-3 grid-cols-1 m-3">
             {jobseekers.map(singleJobseeker => (
                 <div className="custom-shadow p-4 m-3 rounded-md" key={singleJobseeker._id}>
-                    <Link to={`/${singleJobseeker._id}`}>
+                    <Link to={`/jobseeker/${singleJobseeker._id}`}>
                         <div className="flex justify-between">
                             <div>
                                 <h3 className="text-2xl font-semibold text-[#287180] capitalize">{singleJobseeker.name}</h3>
@@ -51,7 +51,7 @@ const Alljobseekers = () => {
                         <div className="pt-3">
                             <h4 className="font-semibold">About Me</h4>
                             <div className="">
-                                {singleJobseeker?.about && <p>{singleJobseeker?.about.substring(0, 120)}...<Link to={`/${singleJobseeker._id}`} className="text-[#1d9cb5]">
+                                {singleJobseeker?.about && <p>{singleJobseeker?.about.substring(0, 120)}...<Link to={`/jobseeker/${singleJobseeker._id}`} className="text-[#1d9cb5]">
                                     know more
                                 </Link></p>}
                                 {!singleJobseeker?.about && <p>N/A</p>}

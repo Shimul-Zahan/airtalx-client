@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../providers/AuthProviders";
+import { message } from "antd";
 
 const PostJob = () => {
     const { user } = useContext(AuthContext);
     const [userData, setUserData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    console.log(user)
+
     useEffect(() => {
         const url = `http://localhost:5000/users?email=${user?.email}`;
         fetch(url)
@@ -41,7 +42,14 @@ const PostJob = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log('new job is created', data);
+                if(data.insertedId)
+                {
+                    message.success("Job Posted Sucessfully!");
+                    form.reset();
+                }
+                else{
+                    message.error("Job Cannot Posted!")
+                }
             })
             .catch(error => {
                 console.error('Error storing user data:', error);

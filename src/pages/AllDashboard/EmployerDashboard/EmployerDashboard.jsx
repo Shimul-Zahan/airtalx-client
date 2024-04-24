@@ -10,10 +10,17 @@ import PostJob from "./Components/PostJob";
 import MyJobs from "./Components/MyJobs";
 import Applicant from "./Components/Applicant";
 import Alljobseekers from "./Components/Alljobseekers";
-
+import History from "./Components/History";
+import { FaHistory } from "react-icons/fa";
+import { Navigate, useLocation } from "react-router";
 const EmployerDashboard = () => {
   const [activeTab, setActiveTab] = useState(0);
-  const { logOut } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  if (user.role !== "employer") {
+    return <Navigate to={from} />;
+  }
   const handleLogOut = () => {
     logOut()
       .then(() => {})
@@ -65,14 +72,23 @@ const EmployerDashboard = () => {
             }`}
             onClick={() => setActiveTab(4)}
           >
-            <MdWorkOutline className="text-xl" />
-            <span>All Jobseekers</span>
+            <FaHistory className="text-xl" />
+            <span>History</span>
           </Tab>
           <Tab
             className={`font-semibold cursor-pointer flex gap-2 items-center ${
               activeTab === 5 ? "text-[#1d9cb5]" : "text-black"
             }`}
             onClick={() => setActiveTab(5)}
+          >
+            <MdWorkOutline className="text-xl" />
+            <span>All Workers</span>
+          </Tab>
+          <Tab
+            className={`font-semibold cursor-pointer flex gap-2 items-center ${
+              activeTab === 6 ? "text-[#1d9cb5]" : "text-black"
+            }`}
+            onClick={() => setActiveTab(6)}
           >
             <BsPersonVcard className="text-xl" />
             <span>My Jobs</span>
@@ -101,7 +117,10 @@ const EmployerDashboard = () => {
             <Applicant />
           </TabPanel>
           <TabPanel>
-            <Alljobseekers/>
+            <History />
+          </TabPanel>
+          <TabPanel>
+            <Alljobseekers/> 
           </TabPanel>
           <TabPanel>
             <MyJobs />
