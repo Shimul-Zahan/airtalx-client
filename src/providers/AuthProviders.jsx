@@ -16,22 +16,20 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 const AuthProviders = ({ children }) => {
   const [user, setUser] = useState(null);
-  console.log("🚀 ~ AuthProviders ~ user:", user)
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   const login = async (email, password) => {
-    console.log("🚀 ~ login ~ email, password:", email, password)
+    console.log("🚀 ~ login ~ email, password:", email, password);
     try {
       const response = await axios.post("http://localhost:5000/login", {
         email,
         password,
       });
-      const { token,user } = response.data;
+      const { token, user } = response.data;
       localStorage.setItem("access-token", token);
       setUser(user);
       message.success("Login successful");
-      
     } catch (error) {
       message.error(error.response.data.error);
     } finally {
@@ -59,7 +57,7 @@ const AuthProviders = ({ children }) => {
     try {
       const token = localStorage.getItem("access-token");
       if (token) {
-        setLoading(true)
+        setLoading(true);
         const response = await axios.get("http://localhost:5000/verifyToken", {
           headers: {
             "Content-Type": "application/json",

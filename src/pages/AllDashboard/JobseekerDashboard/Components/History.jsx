@@ -1,39 +1,32 @@
 import axios from "axios";
-import { AuthContext } from "../../../../providers/AuthProviders";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../../providers/AuthProviders";
+import { message } from "antd";
 
-const Dashboard = () => {
+const History = () => {
   const { user } = useContext(AuthContext);
-  const [allJobs, setAllJobs] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [allJobsPerPage] = useState(6);
-  const fetchAppliedJobs = async () => {
+  const [historyJobsPerPage] = useState(6);
+  const [historyJob, setHistoryJob] = useState([]);
+
+  const fetchData = async () => {
     try {
-      const response = await axios.post(
-        `http://localhost:5000/appliedJob/jobseeker/${user?.email}`
+      const response = await axios.get(
+        `http://localhost:5000/job/jobseeker/history/${user?.email}`
       );
       if (response.status === 200) {
-        setAllJobs(response.data);
+        setHistoryJob(response.data);
       } else {
-        throw new Error("Failed to fetch applied jobs.");
+        message.error("Failed to fetch Applicant data");
       }
     } catch (error) {
-      console.error("Error fetching applied jobs:", error);
+      console.error("Error fetching staff data:", error);
     }
   };
-
   useEffect(() => {
-    fetchAppliedJobs();
-  }, [user]);
-
-  // Logic for pagination
-  const indexOfLastFlat = currentPage * allJobsPerPage;
-  const indexOfFirstFlat = indexOfLastFlat - allJobsPerPage;
-  const currentJobs = allJobs.slice(indexOfFirstFlat, indexOfLastFlat);
-
-  // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    fetchData();
+  }, []);
 
   const getBadgeClass = (role) => {
     switch (role) {
@@ -45,55 +38,46 @@ const Dashboard = () => {
         return "badge-success";
       case "pending":
         return "badge-warning";
-      case "Not Complete":
-        return "badge-warning";
       default:
         return "";
     }
   };
+
+  // Logic for pagination
+  const indexOfLastFlat = currentPage * historyJobsPerPage;
+  const indexOfFirstFlat = indexOfLastFlat - historyJobsPerPage;
+  const currentJobs = historyJob.slice(indexOfFirstFlat, indexOfLastFlat);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <div className="p-6">
-      <div className="grid lg:grid-cols-3 grid-cols-1 lg:gap-7">
-        <div className="flex justify-between custom-shadow p-4 rounded-md mb-7">
-          <div className="">
-            <h4 className="text-2xl font-semibold">Hello {user?.name}</h4>
-            <p>{"Here's what's going on"}</p>
-          </div>
-        </div>
-        <div className="flex justify-between items-center custom-shadow p-4 rounded-md mb-7">
-          <h4 className="text-2xl font-semibold">
-            Running Jobs: {allJobs.length}
-          </h4>
-        </div>
-        <div className="flex justify-between items-center custom-shadow p-4 rounded-md mb-7">
-          <h4 className="text-2xl font-semibold">Total completed jobs: 0</h4>
-        </div>
-      </div>
       <div className="custom-shadow p-4 rounded-md">
         <div className="flex justify-between">
-          <h4 className="text-2xl font-semibold">My Job Applications</h4>
-          {/* <p>view all</p> */}
+          <h4 className="text-2xl font-semibold">History</h4>
+
         </div>
         <div className="overflow-x-auto">
           <table className="table w-full">
             {/* head */}
             <thead>
-              <tr className="font-semibold text-base">
+              <tr className="font-semibold text-base text-center">
                 <th>No.</th>
-                <th>Owner</th>
+                <th>Applicant Email</th>
                 <th>Job Title</th>
                 <th>Job Type</th>
                 <th>Salary</th>
                 <th>Status</th>
                 <th>Project Status</th>
-                <th>Details</th>
+                <th>Applicant Details</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="text-center">
               {currentJobs.map((job, index) => (
                 <tr key={job?.jobData?._id}>
                   <td>{index + 1}</td>
-                  <td>{job?.jobData?.companyName}</td>
+                  <td>{job?.userEmail}</td>
                   <td>{job?.jobData?.jobTitle}</td>
                   <td>{job?.jobData?.jobType}</td>
                   <td>{job?.jobData?.salary}</td>
@@ -107,7 +91,7 @@ const Dashboard = () => {
                     </div>
                   </td>
                   <td>
-                  <div
+                    <div
                       className={`badge ${getBadgeClass(
                         job?.projectStatus
                       )} badge-md text-white`}
@@ -116,11 +100,8 @@ const Dashboard = () => {
                     </div>
                   </td>
                   <td>
-                    <Link
-                      to={`/${job?.jobData?._id}`}
-                      className="text-[#1d9cb5]"
-                    >
-                      <button className="btn btn-warning btn-md">
+                    <Link to={`/${job?.jobId}`} className="text-[#1d9cb5]">
+                      <button className="btn btn-warning btn-md text-white">
                         Details
                       </button>
                     </Link>
@@ -140,7 +121,7 @@ const Dashboard = () => {
             &larr; Previous page
           </button>
           {Array.from(
-            { length: Math.ceil(allJobs.length / allJobsPerPage) },
+            { length: Math.ceil(historyJob.length / historyJobsPerPage) },
             (_, i) => (
               <button
                 key={i}
@@ -157,7 +138,7 @@ const Dashboard = () => {
             className="join-item btn btn-outline mr-2"
             onClick={() => paginate(currentPage + 1)}
             disabled={
-              currentPage === Math.ceil(allJobs.length / allJobsPerPage)
+              currentPage === Math.ceil(historyJob.length / historyJobsPerPage)
             }
           >
             Next &rarr;
@@ -168,4 +149,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default History;

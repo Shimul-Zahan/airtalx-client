@@ -12,7 +12,7 @@ const MyRunningJobs = () => {
   const fetchAppliedJobs = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:5000/appliedJob/jobseeker/${user?.email}`
+        `http://localhost:5000/appliedJob/jobseeker/all/${user?.email}`
       );
       if (response.status === 200) {
         setAllJobs(response.data);
@@ -35,6 +35,21 @@ const MyRunningJobs = () => {
 
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const getBadgeClass = (role) => {
+    switch (role) {
+      case "approved":
+        return "badge-accent";
+      case "cancelled":
+        return "badge-error";
+      case "Completed":
+        return "badge-success";
+      case "pending":
+        return "badge-warning";
+      default:
+        return "";
+    }
+  };
   return (
     <>
       <div className="grid lg:grid-cols-3 grid-cols-1 m-3">
@@ -57,11 +72,20 @@ const MyRunningJobs = () => {
                   {singleJob?.jobData?.jobType}
                 </p>
               </div>
-              <div className="flex gap-2 items-center text-lg font-semibold">
-                <SlWallet />
-                <p>{singleJob?.jobData?.salary}</p>
-              </div>
               <div>
+                <div className="flex items-center justify-between">
+                  <div className="flex gap-2 items-center text-lg font-semibold">
+                    <SlWallet />
+                    <p>{singleJob?.jobData?.salary}</p>
+                  </div>
+                  <div
+                    className={`badge ${getBadgeClass(
+                      singleJob?.status
+                    )} badge-md text-white`}
+                  >
+                    {singleJob?.status}
+                  </div>
+                </div>
                 <p>
                   {singleJob?.jobData?.jobDescription}...
                   <Link
@@ -102,7 +126,9 @@ const MyRunningJobs = () => {
         <button
           className="join-item btn btn-outline mr-2"
           onClick={() => paginate(currentPage + 1)}
-          disabled={currentPage === Math.ceil(allJobs.length / MyAllJobsPerPage)}
+          disabled={
+            currentPage === Math.ceil(allJobs.length / MyAllJobsPerPage)
+          }
         >
           Next &rarr;
         </button>

@@ -42,23 +42,42 @@ const Dashboard = () => {
     }
   };
 
-  const handleDeleteBtn = (email) => {
+  const handleMakeCancelled = (email, jobId) => {
     axios
-      .delete(`http://localhost:5000/user/delete/${email}`)
+      .patch(`http://localhost:5000/appliedJob/updateProjectStatus/${email}`, {
+        jobId: jobId,
+        projectStatus: "cancelled",
+      })
       .then((response) => {
-        const { data } = response;
-        console.log("🚀 ~ .then ~ response:", response);
-        if (data.message) {
-          message.success("User deleted successfully");
+        if (response.status === 200) {
+          message.error("Job application Cancelled!");
           fetchData();
-          fetchJobPostData();
         } else {
-          message.error("Failed to delete user");
+          message.error("Failed to reject application");
         }
       })
       .catch((error) => {
-        console.error("Error deleting user:", error);
-        message.error("An error occurred while deleting user");
+        console.error("Error updating application status:", error);
+        message.error("Failed to reject application");
+      });
+  };
+  const handleProjectStatus = (email, jobId) => {
+    axios
+      .patch(`http://localhost:5000/appliedJob/updateProjectStatus/${email}`, {
+        jobId: jobId,
+        projectStatus: "Completed",
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          message.success("ProjectStatus Updated!");
+          fetchData();
+        } else {
+          message.error("Failed to update ProjectStatus application");
+        }
+      })
+      .catch((error) => {
+        console.error("Error updating application status:", error);
+        message.error("Failed to reject application");
       });
   };
 
@@ -121,7 +140,7 @@ const Dashboard = () => {
                 <th>Job Type</th>
                 <th>Salary</th>
                 <th>Status</th>
-                <th>Details</th>
+                <th>User Details</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -150,12 +169,24 @@ const Dashboard = () => {
                     </Link>
                   </td>
                   <td>
-                    <button
-                      className="btn btn-error btn-md text-white"
-                      onClick={() => handleDeleteBtn(user.email)}
-                    >
-                      <RiDeleteBin6Line size="1.2em" />
-                    </button>
+                    <div className="flex justify-center">
+                      <div className=" flex flex-col gap-2">
+                        <button
+                          className="btn btn-success btn-sm text-white w-32"
+                          onClick={() => handleProjectStatus(job?.userEmail, job?.jobId)}
+                        >
+                          Completed
+                        </button>
+                        <button
+                          className="btn btn-error btn-sm text-white"
+                          onClick={() =>
+                            handleMakeCancelled(job?.userEmail, job?.jobId)
+                          }
+                        >
+                          <RiDeleteBin6Line size="1.2em" />
+                        </button>
+                      </div>
+                    </div>
                   </td>
                 </tr>
               ))}
