@@ -2,13 +2,13 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProviders";
 import Spinner from "./Spinner";
+import { FaAngleDown } from "react-icons/fa";
 
 const Navbar = () => {
   const { user, logOut, loading } = useContext(AuthContext);
 
-  if(loading)
-  {
-     return <Spinner />
+  if (loading) {
+    return <Spinner />
   }
 
   const handleLogOut = () => {
@@ -36,23 +36,26 @@ const Navbar = () => {
             {user && user.role === "admin" && (
               <Link to={"/admin/dashboard"}>Dashboard</Link>
             )}
-           <Link to={"/findJob"}>Find Job</Link>
+            <Link to={"/findJob"}>Find Job</Link>
           </div>
           <div>
             {user ? (
               <div className="dropdown pt-1 dropdown-end">
-                <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                  <div className="w-16 rounded-full border-2 border-[#1d9cb5]">
-                    {loading ? (
-                      <p>Loading...</p>
-                    ) : (
-                      <img src={user?.photoURL} alt="User Photo" />
-                    )}
-                    <div>
-                      <p>{user?.name}</p>
+                <div tabIndex={0} className="flex cursor-pointer gap-2 bg-[#2792a8] rounded-full pl-3 pr-1 py-1 items-center">
+                  <p className="text-white font-semibold capitalize">{user?.name}</p>
+                  <label className="btn btn-ghost btn-circle avatar">
+                    <div className="rounded-full border-2 border-white">
+                      {loading ? (
+                        <p>Loading...</p>
+                      ) : (
+                        <div>
+                          <img src={user?.photoURL} alt="User Photo" />
+                        </div>
+                      )}
                     </div>
-                  </div>
-                </label>
+                  </label>
+                  <FaAngleDown className="absolute right-1 bottom-0 bg-white rounded-full border border-black" />
+                </div>
                 <ul
                   tabIndex={0}
                   className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
@@ -138,15 +141,21 @@ const Navbar = () => {
           </div>
           {user ? (
             <div className="dropdown pt-1 dropdown-end">
-              <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                <div className="w-16 rounded-full border-2 border-[#1d9cb5]">
-                  {loading ? (
-                    <p>Loading...</p>
-                  ) : (
-                    <img src={user?.photoURL} alt="User Photo" />
-                  )}
-                </div>
-              </label>
+              <div tabIndex={0} className="flex cursor-pointer gap-2 bg-[#2792a8] rounded-full pl-3 pr-1 py-1 items-center">
+                <p className="text-white font-semibold capitalize">{user?.name}</p>
+                <label className="btn btn-ghost btn-circle avatar">
+                  <div className="rounded-full border-2 border-white">
+                    {loading ? (
+                      <p>Loading...</p>
+                    ) : (
+                      <div>
+                        <img src={user?.photoURL} alt="User Photo" />
+                      </div>
+                    )}
+                  </div>
+                </label>
+                <FaAngleDown className="absolute right-1 bottom-0 bg-white rounded-full border border-black" />
+              </div>
               <ul
                 tabIndex={0}
                 className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
