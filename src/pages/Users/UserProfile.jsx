@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { LuGraduationCap } from "react-icons/lu";
-import { MdOutlineEmail } from "react-icons/md";
+import { MdDownload, MdOutlineEmail } from "react-icons/md";
 import { SlLocationPin } from "react-icons/sl";
+import { TbMessage2 } from "react-icons/tb";
 import { useParams } from "react-router-dom";
 
 const UserProfile = () => {
     const [allUsers, setAllUsers] = useState([]);
     const userDescription = useParams();
-    
+
     useEffect(() => {
         const url = "http://localhost:5000/users";
         fetch(url)
@@ -27,13 +28,13 @@ const UserProfile = () => {
                 <div className="grid lg:grid-cols-9 grid-cols-1 lg:gap-8 gap-y-7">
                     <div className="custom-shadow p-4 col-span-2 rounded-md relative">
                         <div className="flex justify-center">
-                            <div className="w-40 h-40 relative">
-                                <img
-                                    className="rounded-full w-full h-full object-cover"
-                                    src={allUsers?.photoURL}
-                                    alt=""
-                                />
-                            </div>
+                            <label className="avatar w-40">
+                                <div className="rounded-full border-2 border-white">
+                                    <div>
+                                        <img src={allUsers?.photoURL} alt="User Photo" />
+                                    </div>
+                                </div>
+                            </label>
                         </div>
                         <p className="text-xl lg:absolute bottom-0 mx-auto w-11/12 custom-shadow text-center p-1 my-4 capitalize">
                             {allUsers?.role}
@@ -45,7 +46,13 @@ const UserProfile = () => {
                                 <h3 className="font-semibold text-3xl pb-2 capitalize">
                                     {allUsers?.name}
                                 </h3>
-                                <button className="border border-black py-1 px-2 rounded-md">Resume</button>
+                                <div className="flex gap-2">
+                                    <TbMessage2 className="border cursor-pointer border-black text-5xl p-1 rounded-md" />
+                                    <div className="border cursor-pointer border-black py-1 px-2 flex rounded-md">
+                                        <button>Resume</button>
+                                        <MdDownload className=" text-4xl p-1 rounded-md" />
+                                    </div>
+                                </div>
                             </div>
                             <div className="flex gap-2 items-center">
                                 <MdOutlineEmail className="text-2xl pt-1" />

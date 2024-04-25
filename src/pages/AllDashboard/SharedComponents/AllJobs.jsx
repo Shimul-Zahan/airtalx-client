@@ -3,6 +3,7 @@ import { SlWallet } from "react-icons/sl";
 import { Link } from "react-router-dom";
 import { IoMdSearch } from "react-icons/io";
 import axios from "axios";
+import { TbMessage2 } from "react-icons/tb";
 
 const AllJobs = () => {
   const [allJobs, setAllJobs] = useState([]);
@@ -87,19 +88,23 @@ const AllJobs = () => {
           <div className="custom-shadow m-3 p-4 rounded-md" key={singleJob._id}>
             <div className="flex justify-between items-center pb-4">
               <div>
-                <h3 className="text-2xl font-semibold">
+                <h3 className="text-2xl font-semibold capitalize">
                   {singleJob.jobTitle}
                 </h3>
                 <p>
                   by{" "}
-                  <Link to={`/jobseeker/${singleJob.email}`}><span className="text-[#1d9cb5] font-semibold cursor-pointer">
+                  <Link to={`/user/${singleJob.email}`}><span className="text-[#1d9cb5] capitalize font-semibold cursor-pointer">
                     {singleJob.companyName}
-                  </span></Link>
+                  </span>
+                  </Link>
                 </p>
               </div>
-              <p className="border border-black rounded-md font-semibold p-2">
-                {singleJob.jobType}
-              </p>
+              <div className="flex gap-2">
+                <p className="border border-black rounded-md font-semibold p-2">
+                  {singleJob.jobType}
+                </p>
+                <TbMessage2 className="border cursor-pointer border-black text-5xl p-1 rounded-md" />
+              </div>
             </div>
             <div className="flex gap-2 items-center pb-2 text-lg font-semibold">
               <SlWallet />

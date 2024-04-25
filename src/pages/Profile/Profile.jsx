@@ -84,13 +84,20 @@ const Profile = () => {
         <div className="grid lg:grid-cols-9 grid-cols-1 lg:gap-8 gap-y-7">
           <div className="custom-shadow p-4 col-span-2 rounded-md relative">
             <div className="flex justify-center">
-              <div className="w-40 h-40 relative">
+              {/* <div className="w-40 h-40 avatar">
                 <img
                   className="rounded-full w-full h-full object-cover"
                   src={user?.photoURL}
                   alt=""
                 />
-              </div>
+              </div> */}
+              <label className="avatar w-40">
+                <div className="rounded-full border-2 border-white">
+                  <div>
+                    <img src={user?.photoURL} alt="User Photo" />
+                  </div>
+                </div>
+              </label>
             </div>
             <p className="text-xl lg:absolute bottom-0 mx-auto w-11/12 custom-shadow text-center p-1 my-4 capitalize">
               {user?.role}
@@ -123,7 +130,7 @@ const Profile = () => {
                         initialValues={user}
                         onFinish={onFinish}
                         onFinishFailed={onFinishFailed}
-                        form={form} 
+                        form={form}
                       >
                         <Form.Item
                           label="User Name"
@@ -191,19 +198,19 @@ const Profile = () => {
                 <MdOutlineEmail className="text-2xl pt-1" />
                 <p>{user?.email}</p>
               </div>
-              <div className="flex gap-2 items-center">
+              <div className="flex gap-2 items-center capitalize">
                 <LuGraduationCap className="text-2xl pt-1" />
                 {user?.studies && <p>{user?.studies}</p>}
                 {!user?.studies && <p>N/A</p>}
               </div>
-              <div className="flex gap-2 items-center">
+              <div className="flex gap-2 items-center capitalize">
                 <SlLocationPin className="text-2xl pt-1" />
                 {user?.location && <p>{user?.location}</p>}
                 {!user?.location && <p>N/A</p>}
               </div>
             </div>
             <h4 className="font-semibold pt-6">About Me</h4>
-            {user?.about && <p>{user?.about}</p>}
+            {user?.about && <p className="first-letter:capitalize">{user?.about}</p>}
             {!user?.about && <p>N/A</p>}
           </div>
         </div>
