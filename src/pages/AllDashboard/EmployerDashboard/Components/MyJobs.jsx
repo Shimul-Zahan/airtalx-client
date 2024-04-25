@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 
 const MyJobs = (_id) => {
   const [allJobs, setAllJobs] = useState([]);
+  console.log("🚀 ~ MyJobs ~ allJobs:", allJobs)
   const { user } = useContext(AuthContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [allPostJobsPerPage] = useState(6);
