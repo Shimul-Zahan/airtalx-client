@@ -38,7 +38,7 @@ const Alljobseekers = () => {
                                         {!singleJobseeker?.location && <p>N/A</p>}
                                     </div>
                                 </div>
-                                <div className="flex items-center gap-2 mt-5">
+                                <div className={`flex items-center gap-2 mt-5`}>
                                     <button className="border border-black py-1 px-2 rounded-md">Resume</button>
                                     <TbMessage2 className="border border-black text-4xl p-1 rounded-md" />
                                 </div>

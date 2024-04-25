@@ -48,8 +48,8 @@ const UserProfile = () => {
                                 </h3>
                                 <div className="flex gap-2">
                                     <TbMessage2 className="border cursor-pointer border-black text-5xl p-1 rounded-md" />
-                                    <div className="border cursor-pointer border-black py-1 px-2 flex rounded-md">
-                                        <button>Resume</button>
+                                    <div className={`border border-black py-1 cursor-pointer px-2 rounded-md ${allUsers?.role !== 'jobseeker' ? 'hidden' : ''}`}>
+                                        {/* <button className={`border border-black py-1 px-2 rounded-md ${allUsers?.role !== 'jobseeker' ? 'hidden' : ''}`}>Resume</button> */}
                                         <MdDownload className=" text-4xl p-1 rounded-md" />
                                     </div>
                                 </div>

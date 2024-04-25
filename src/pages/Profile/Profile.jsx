@@ -110,7 +110,7 @@ const Profile = () => {
                 {/* You can open the modal using document.getElementById('ID').showModal() method */}
                 <div className="flex items-center">
                   <div className="flex items-center gap-2">
-                    <button className="border border-black py-1 px-2 rounded-md">Resume</button>
+                    <button className={`border border-black py-1 px-2 rounded-md ${user?.role !== 'jobseeker' ? 'hidden' : ''}`}>Resume</button>
                     <FaRegEdit className="text-4xl p-1 cursor-pointer rounded-md border border-black right-0" onClick={() => document.getElementById("my_modal_3").showModal()} />
                   </div>
                 </div>
