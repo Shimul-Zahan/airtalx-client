@@ -74,7 +74,7 @@ const MyJobs = (_id) => {
                 </h3>
                 <p>
                   by{" "}
-                  <Link to={`/jobseeker/${singleJob.email}`}>
+                  <Link to={`/user/${singleJob.email}`}>
                     <span className="text-[#1d9cb5] font-semibold cursor-pointer">
                       {singleJob.companyName}
                     </span>
@@ -111,7 +111,7 @@ const MyJobs = (_id) => {
             <div>
               <p>
                 {singleJob.jobDescription.substring(0, 120)}...
-                <Link to={`/${singleJob._id}`} className="text-[#1d9cb5]">
+                <Link to={`/jobdetails/${singleJob._id}`} className="text-[#1d9cb5]">
                   know more
                 </Link>
               </p>

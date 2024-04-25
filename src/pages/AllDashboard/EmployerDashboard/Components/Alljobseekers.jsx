@@ -23,7 +23,6 @@ const Alljobseekers = () => {
         <div className="grid lg:grid-cols-3 grid-cols-1 m-3">
             {jobseekers.map(singleJobseeker => (
                 <div className="custom-shadow p-4 m-3 rounded-md" key={singleJobseeker._id}>
-                    <Link to={`/jobseeker/${singleJobseeker._id}`}>
                         <div className="flex justify-between">
                             <div>
                                 <h3 className="text-2xl font-semibold text-[#287180] capitalize">{singleJobseeker.name}</h3>
@@ -44,20 +43,25 @@ const Alljobseekers = () => {
                                     <TbMessage2 className="border border-black text-4xl p-1 rounded-md" />
                                 </div>
                             </div>
-                            <div className="w-32 h-32 relative">
-                                <img className="rounded-full w-full h-full object-cover" src={singleJobseeker?.photoURL} alt="" />
-                            </div>
+                            <label className="avatar w-40">
+                                <div className="rounded-full border-2 border-white">
+                                    <div>
+                                        <img src={singleJobseeker?.photoURL} alt="User Photo" />
+                                    </div>
+                                </div>
+                            </label>
                         </div>
                         <div className="pt-3">
                             <h4 className="font-semibold">About Me</h4>
                             <div className="">
-                                {singleJobseeker?.about && <p>{singleJobseeker?.about.substring(0, 120)}...<Link to={`/jobseeker/${singleJobseeker._id}`} className="text-[#1d9cb5]">
-                                    know more
+                                {singleJobseeker?.about && <p className="first-letter:capitalize">{singleJobseeker?.about.substring(0, 120)}...<Link to={`/user/${singleJobseeker?.email}`} className="text-[#1d9cb5] font-semibold">
+                                    <button className="">
+                                        know more
+                                    </button>
                                 </Link></p>}
                                 {!singleJobseeker?.about && <p>N/A</p>}
                             </div>
                         </div>
-                    </Link>
                 </div>
             ))}
         </div>

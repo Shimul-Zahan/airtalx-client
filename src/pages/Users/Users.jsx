@@ -112,7 +112,7 @@ const Users = () => {
             {users.map((user, index) => (
               <tr key={user._id}>
                 <th>{index + 1}</th>
-                <td>{user.name}</td>
+                <td className="capitalize">{user.name}</td>
                 <td>{user.email}</td>
                 <td>
                   <div
