@@ -96,11 +96,10 @@ const Profile = () => {
           message.success("Resume Uploaded Successfully!");
           setUser(res.data.user);
           localStorage.setItem("access-token", res.data.token);
-          setFile(null)
+          setFile(null);
         } else {
           message.error(res.data.message || "Failed to update profile");
         }
-        
       })
       .catch((error) => {
         console.error("Error uploading Resume:", error);
@@ -120,7 +119,7 @@ const Profile = () => {
           link.href = url;
           link.setAttribute("download", `${user?.name}_resume.pdf`);
           message.success("Resume Downloaded!");
-          setFile(null)
+          setFile(null);
           document.body.appendChild(link);
           link.click();
         } else {
@@ -166,53 +165,60 @@ const Profile = () => {
                 {/* You can open the modal using document.getElementById('ID').showModal() method */}
                 <div className="flex items-center">
                   <div className="flex items-center gap-2">
-                    <button
-                      className="btn btn-outline btn-info"
-                      onClick={() =>
-                        document.getElementById("my_modal_5").showModal()
-                      }
-                    >
-                      Resume Upload
-                    </button>
-                    <dialog
-                      id="my_modal_5"
-                      className="modal modal-bottom sm:modal-middle"
-                    >
-                      <div className="modal-box">
-                        <h3 className="font-bold text-lg mb-5 text-center">
-                          Uplaod Resume!
-                        </h3>
-                        <div className="flex justify-center gap-3">
-                          <input
-                            type="file"
-                            className="file-input file-input-primary "
-                            onChange={(e) => setFile(e.target.files[0])}
+                    {user.role === "jobseeker" && (
+                      <>
+                        <button
+                          className="btn btn-outline btn-info"
+                          onClick={() =>
+                            document.getElementById("my_modal_5").showModal()
+                          }
+                        >
+                          Resume Upload
+                        </button>
+                        <dialog
+                          id="my_modal_5"
+                          className="modal modal-bottom sm:modal-middle"
+                        >
+                          <div className="modal-box">
+                            <h3 className="font-bold text-lg mb-5 text-center">
+                              Uplaod Resume!
+                            </h3>
+                            <div className="flex justify-center gap-3">
+                              <input
+                                type="file"
+                                className="file-input file-input-primary "
+                                onChange={(e) => setFile(e.target.files[0])}
+                              />
+                              <button
+                                type="button"
+                                className="btn btn-primary btn-outline font-bold"
+                                onClick={upload1}
+                              >
+                                Upload
+                              </button>
+                            </div>
+                            <div className="modal-action">
+                              <form method="dialog">
+                                <button className="btn btn-error text-white">
+                                  Close
+                                </button>
+                              </form>
+                            </div>
+                          </div>
+                        </dialog>
+                        <button className="btn btn-outline btn-info">
+                          <IoMdDownload
+                            className={`${user?.resume ? "" : "disabled"}`}
+                            size="1.5em"
+                            style={{
+                              cursor: user?.resume ? "pointer" : "not-allowed",
+                            }}
+                            onClick={user?.resume ? downloadFile1 : null}
                           />
-                          <button
-                            type="button"
-                            className="btn btn-primary btn-outline font-bold"
-                            onClick={upload1}
-                          >
-                            Upload
-                          </button>
-                        </div>
-                        <div className="modal-action">
-                          <form method="dialog">
-                            <button className="btn btn-error text-white">Close</button>
-                          </form>
-                        </div>
-                      </div>
-                    </dialog>
-                    <button className="btn btn-outline btn-info">
-                      <IoMdDownload
-                        className={`${user?.resume ? "" : "disabled"}`}
-                        size="1.5em"
-                        style={{
-                          cursor: user?.resume ? "pointer" : "not-allowed",
-                        }}
-                        onClick={user?.resume ? downloadFile1 : null}
-                      />
-                    </button>
+                        </button>
+                      </>
+                    )}
+
                     <FaRegEdit
                       className="text-4xl p-1 cursor-pointer rounded-md border border-black right-0"
                       onClick={() =>
