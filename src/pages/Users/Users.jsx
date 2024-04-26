@@ -11,6 +11,12 @@ const Users = () => {
   const token = localStorage.getItem("access-token");
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
+
+  useEffect(() => {
+    fetchUsers();
+  }, [token]);
+
+
   if (user.role !== "admin") {
     return <Navigate to={from} />;
   }
@@ -39,10 +45,6 @@ const Users = () => {
         console.log("🚀 ~ .then ~ response:", response)
         if (data.message) {
           message.success("User deleted successfully");
-          // Update the users state to reflect the changes
-          //   setUsers((prevUsers) =>
-          //     prevUsers.filter((user) => user.email !== email)
-          //   );
           fetchUsers();
         } else {
           message.error("Failed to delete user");
@@ -53,10 +55,6 @@ const Users = () => {
         message.error("An error occurred while deleting user");
       });
   };
-
-  useEffect(() => {
-    fetchUsers();
-  }, [token]);
 
   const handleMakeAdmin = (user) => {
     fetch(`http://localhost:5000/users/admin/${user._id}`, {
