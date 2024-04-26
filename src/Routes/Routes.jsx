@@ -31,7 +31,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/user/:email',
-        element: <UserProfile />
+        element: <PrivateRouter><UserProfile /></PrivateRouter>
       },
       {
         path: "/findJob",
