@@ -35,7 +35,7 @@ const History = () => {
       case "cancelled":
         return "badge-error";
       case "Completed":
-        return "badge-warning";
+        return "badge-success";
       default:
         return "";
     }
@@ -98,8 +98,8 @@ const History = () => {
                     </div>
                   </td>
                   <td>
-                    <Link to={`/${job?.jobId}`} className="text-[#1d9cb5]">
-                      <button className="btn btn-warning btn-md text-white">
+                    <Link to={`/user/${job?.userEmail}`} className="text-[#1d9cb5] font-semibold">
+                      <button className="">
                         Details
                       </button>
                     </Link>
@@ -124,9 +124,8 @@ const History = () => {
               <button
                 key={i}
                 onClick={() => paginate(i + 1)}
-                className={`join-item btn btn-outline mr-2 ${
-                  currentPage === i + 1 ? "bg-green-400 text-white" : ""
-                }`}
+                className={`join-item btn btn-outline mr-2 ${currentPage === i + 1 ? "bg-green-400 text-white" : ""
+                  }`}
               >
                 {i + 1}
               </button>

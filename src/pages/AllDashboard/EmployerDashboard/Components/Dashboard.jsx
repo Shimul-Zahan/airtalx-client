@@ -4,6 +4,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { message } from "antd";
+import { TbMessage2 } from "react-icons/tb";
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
@@ -140,7 +141,8 @@ const Dashboard = () => {
                 <th>Job Type</th>
                 <th>Salary</th>
                 <th>Status</th>
-                <th>User Details</th>
+                <th>Details</th>
+                <th>Contact</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -162,11 +164,16 @@ const Dashboard = () => {
                     </div>
                   </td>
                   <td>
-                    <Link to={`/${job?.jobId}`} className="text-[#1d9cb5]">
-                      <button className="btn btn-warning btn-md text-white">
+                    <Link to={`/user/${job?.userEmail}`} className="text-[#1d9cb5] font-semibold">
+                      <button className="">
                         Details
                       </button>
                     </Link>
+                  </td>
+                  <td>
+                    <div className="flex justify-center cursor-pointer">
+                      <TbMessage2 className="border border-black text-3xl p-1 rounded-md" />
+                    </div>
                   </td>
                   <td>
                     <div className="flex justify-center">
@@ -175,7 +182,7 @@ const Dashboard = () => {
                           className="btn btn-success btn-sm text-white w-32"
                           onClick={() => handleProjectStatus(job?.userEmail, job?.jobId)}
                         >
-                          Completed
+                          Complete
                         </button>
                         <button
                           className="btn btn-error btn-sm text-white"
@@ -208,9 +215,8 @@ const Dashboard = () => {
               <button
                 key={i}
                 onClick={() => paginate(i + 1)}
-                className={`join-item btn btn-outline mr-2 ${
-                  currentPage === i + 1 ? "bg-green-400 text-white" : ""
-                }`}
+                className={`join-item btn btn-outline mr-2 ${currentPage === i + 1 ? "bg-green-400 text-white" : ""
+                  }`}
               >
                 {i + 1}
               </button>

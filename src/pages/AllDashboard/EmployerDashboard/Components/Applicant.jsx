@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../../providers/AuthProviders";
 import { message } from "antd";
+import { TbMessage2 } from "react-icons/tb";
 
 const Applicant = () => {
   const { user } = useContext(AuthContext);
@@ -51,7 +52,7 @@ const Applicant = () => {
     })
       .then((response) => {
         if (response.status === 200) {
-            message.error("Job application Rejected!");
+          message.error("Job application Rejected!");
           fetchData();
         } else {
           message.error("Failed to reject application");
@@ -105,6 +106,7 @@ const Applicant = () => {
                 <th>Salary</th>
                 <th>Status</th>
                 <th>Details</th>
+                <th>Contact</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -126,14 +128,19 @@ const Applicant = () => {
                     </div>
                   </td>
                   <td>
-                    <Link to={`/${job?.userEmail}`} className="text-[#1d9cb5] font-semibold">
+                    <Link to={`/user/${job?.userEmail}`} className="text-[#1d9cb5] font-semibold">
                       <button className="">
                         Details
                       </button>
                     </Link>
                   </td>
                   <td>
-                    <div className="flex  justify-center">
+                    <div className="flex justify-center cursor-pointer">
+                      <TbMessage2 className="border border-black text-3xl p-1 rounded-md" />
+                    </div>
+                  </td>
+                  <td>
+                    <div className="flex justify-center">
                       <div className="text-red-700 text-xl cursor-pointer"></div>
                       <div className=" flex flex-col gap-2">
                         <button
@@ -171,9 +178,8 @@ const Applicant = () => {
               <button
                 key={i}
                 onClick={() => paginate(i + 1)}
-                className={`join-item btn btn-outline mr-2 ${
-                  currentPage === i + 1 ? "bg-green-400 text-white" : ""
-                }`}
+                className={`join-item btn btn-outline mr-2 ${currentPage === i + 1 ? "bg-green-400 text-white" : ""
+                  }`}
               >
                 {i + 1}
               </button>

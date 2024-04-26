@@ -152,42 +152,47 @@ const JobseekerSignup = () => {
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
           >
+            <label htmlFor="">Name</label>
             <Form.Item
-              label="Name"
+              // label="Name"
               name="name"
               rules={[{ required: true, message: "Please input your name!" }]}
             >
-              <Input />
+              <Input className="bg-[#f5f5f5] rounded p-2 border-slate-300 border w-full"/>
             </Form.Item>
+            <label htmlFor="">Email</label>
             <Form.Item
-              label="Email"
+              // label="Email"
               name="email"
               rules={[{ required: true, message: "Please input your email!" }]}
             >
-              <Input />
+              <Input className="bg-[#f5f5f5] rounded p-2 border-slate-300 border w-full"/>
             </Form.Item>
+            <label htmlFor="">Password</label>
             <Form.Item
-              label="Password"
+              // label="Password"
               name="password"
               rules={[
                 { required: true, message: "Please input your password!" },
               ]}
             >
-              <Input.Password />
+              <Input.Password className="bg-[#f5f5f5] rounded p-2 border-slate-300 border w-full"/>
             </Form.Item>
+            <label htmlFor="">Confirm Password</label>
             <Form.Item
-              label="Confirm Password"
+              // label="Confirm Password"
               name="confirmPassword"
               rules={[
                 { required: true, message: "Please confirm your password!" },
               ]}
             >
-              <Input.Password />
+              <Input.Password className="bg-[#f5f5f5] rounded p-2 border-slate-300 border w-full"/>
             </Form.Item>
+            <label htmlFor="">Image</label>
             <Form.Item
               name="user_image"
               valuePropName="fileList"
-              label="Image"
+              // label="Image"
               getValueFromEvent={normFile}
               rules={[
                 {
@@ -202,11 +207,11 @@ const JobseekerSignup = () => {
                 listType="picture"
                 {...props}
               >
-                <Button icon={<UploadOutlined />}>Click to upload Image</Button>
+                <Button className="p-2 h-10" icon={<UploadOutlined />}>Click to upload Image</Button>
               </Upload>
             </Form.Item>
             <Form.Item>
-              <Button type="primary" htmlType="submit" className="w-full">
+              <Button  type="primary" htmlType="submit" className="w-full bg-[#1d9cb5] rounded text-white font-semibold h-10 mt-3">
                 Signup
               </Button>
             </Form.Item>
@@ -222,7 +227,7 @@ const JobseekerSignup = () => {
           <div className="flex text-center gap-2 mb-3">
             <Button
               onClick={handleGoogleLogin}
-              className="w-full border-[#1d9cb5] border rounded font-semibold p-2 mt-3 flex justify-center items-center gap-3"
+              className="w-full border-[#1d9cb5] border rounded font-semibold h-10 mt-3 flex justify-center items-center gap-3"
             >
               <FaGoogle />
               <span>Continue with Google</span>

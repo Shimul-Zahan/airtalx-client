@@ -54,8 +54,8 @@ const MyRunningJobs = () => {
     <>
       <div className="grid lg:grid-cols-3 grid-cols-1 m-3">
         {currentJobs.map((singleJob) => (
-          <div key={singleJob?.jobData?._id}>
-            <div className="custom-shadow m-3 p-4 rounded-md">
+          <div className="custom-shadow m-3 p-4 rounded-md" key={singleJob?.jobData?._id}>
+            <div>
               <div className="flex justify-between items-center pb-4">
                 <div>
                   <h3 className="text-2xl font-semibold">
@@ -63,9 +63,10 @@ const MyRunningJobs = () => {
                   </h3>
                   <p>
                     by{" "}
-                    <span className="text-[#1d9cb5] font-semibold cursor-pointer">
-                      {singleJob?.jobData?.companyName}
-                    </span>
+                    <Link to={`/user/${singleJob?.jobData?.email}`}>
+                      <span className="text-[#1d9cb5] font-semibold cursor-pointer">
+                        {singleJob?.jobData?.companyName}
+                      </span></Link>
                   </p>
                 </div>
                 <p className="border border-black rounded-md font-semibold p-2">
@@ -115,9 +116,8 @@ const MyRunningJobs = () => {
             <button
               key={i}
               onClick={() => paginate(i + 1)}
-              className={`join-item btn btn-outline mr-2 ${
-                currentPage === i + 1 ? "bg-green-400 text-white" : ""
-              }`}
+              className={`join-item btn btn-outline mr-2 ${currentPage === i + 1 ? "bg-green-400 text-white" : ""
+                }`}
             >
               {i + 1}
             </button>
