@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 
 const MyJobs = (_id) => {
   const [allJobs, setAllJobs] = useState([]);
+  console.log("🚀 ~ MyJobs ~ allJobs:", allJobs)
   const { user } = useContext(AuthContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [allPostJobsPerPage] = useState(6);
@@ -84,23 +85,6 @@ const MyJobs = (_id) => {
                 <p className="border border-black rounded-md font-semibold p-3">
                   {singleJob.jobType}
                 </p>
-                <details className="dropdown">
-                  <summary className="btn p-0 bg-white text-xl font-semibold border-black hover:border-black hover:bg-white rounded-md w-min">
-                    <BsThreeDotsVertical />
-                  </summary>
-                  <ul className="p-2 custom-shadow menu dropdown-content z-[1] rounded-md bg-white w-fit">
-                    <li className="flex">
-                      <span>
-                        <FaRegEdit className="bg-[#1d9cb5] text-white p-1 text-3xl rounded-md" />
-                      </span>
-                    </li>
-                    <li onClick={() => handleDelete(_id)} className="flex">
-                      <span>
-                        <RiDeleteBin2Line className="bg-red-500 text-white p-1 text-3xl rounded-md" />
-                      </span>
-                    </li>
-                  </ul>
-                </details>
               </div>
             </div>
             <div className="flex gap-2 items-center text-lg font-semibold">

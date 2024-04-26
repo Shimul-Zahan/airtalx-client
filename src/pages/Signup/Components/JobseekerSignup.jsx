@@ -116,12 +116,15 @@ const JobseekerSignup = () => {
               if (!response) {
                 message.error("Failed to Signup");
               }
-              message.success("Login successful");
+              message.success("SignUp successful");
+
               localStorage.setItem("access-token", response.data?.token);
               if (response?.data?.user?.role == "jobseeker")
                 navigate("/jobseeker/dashboard");
               if (response?.data?.user?.role == "employer")
                 navigate("/employer/dashboard");
+              
+              navigate("/login");
             })
             .catch((error) => {
               console.error("Error posting user data:", error);

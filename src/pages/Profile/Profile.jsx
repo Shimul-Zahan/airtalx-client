@@ -7,12 +7,13 @@ import { FaRegEdit } from "react-icons/fa";
 import { message, Form, Input, Upload, Button } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
-import { TbMessage2 } from "react-icons/tb";
+import { IoMdDownload } from "react-icons/io";
 
 const Profile = () => {
   const { user, setUser } = useContext(AuthContext);
   const [fileList, setFileList] = useState([]);
   const [form] = Form.useForm();
+  const [file, setFile] = useState();
 
   const onFinish = async (values) => {
     console.log("🚀 ~ onFinish ~ values:", values);
@@ -25,6 +26,7 @@ const Profile = () => {
       data.append("location", location);
       data.append("studies", studies);
       data.append("about", about);
+      data.append("role", user?.role);
       data.append("images", fileList[0]?.originFileObj || "");
       const config = {
         headers: {
@@ -34,7 +36,7 @@ const Profile = () => {
       const url = `http://localhost:5000/update/${user?.email}`;
       try {
         const response = await axios.put(url, data, config);
-        console.log("🚀 ~ onFinish ~ response:", response)
+        console.log("🚀 ~ onFinish ~ response:", response);
         if (response.data.user) {
           message.success("Profile Updated!");
           setUser(response.data.user);
@@ -78,6 +80,57 @@ const Profile = () => {
     },
     fileList,
   };
+
+  const upload1 = () => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    axios
+      .post(`http://localhost:5000/resume/upload/${user?.email}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        if (res.data.user) {
+          message.success("Resume Uploaded Successfully!");
+          setUser(res.data.user);
+          localStorage.setItem("access-token", res.data.token);
+          setFile(null);
+        } else {
+          message.error(res.data.message || "Failed to update profile");
+        }
+      })
+      .catch((error) => {
+        console.error("Error uploading Resume:", error);
+      });
+  };
+
+  const downloadFile1 = async () => {
+    await axios({
+      url: `http://localhost:5000/download/resume/${user?.resume}`,
+      method: "GET",
+      responseType: "blob",
+    })
+      .then((response) => {
+        if (response.data.size > 0) {
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", `${user?.name}_resume.pdf`);
+          message.success("Resume Downloaded!");
+          setFile(null);
+          document.body.appendChild(link);
+          link.click();
+        } else {
+          message.warning("File not converted yet");
+        }
+      })
+      .catch((error) => {
+        console.error("Error downloading file:", error);
+        message.error("Failed to download file");
+      });
+  };
   return (
     <div className="lg:w-3/4 w-11/12 mx-auto my-12">
       <div>
@@ -106,12 +159,72 @@ const Profile = () => {
           <div className="custom-shadow rounded-md p-4 col-span-7">
             <div>
               <div className="flex justify-between item">
-                <h3 className="font-semibold text-3xl pb-2 capitalize">{user?.name}</h3>
+                <h3 className="font-semibold text-3xl pb-2 capitalize">
+                  {user?.name}
+                </h3>
                 {/* You can open the modal using document.getElementById('ID').showModal() method */}
                 <div className="flex items-center">
                   <div className="flex items-center gap-2">
-                    <button className={`border border-black py-1 px-2 rounded-md ${user?.role !== 'jobseeker' ? 'hidden' : ''}`}>Resume</button>
-                    <FaRegEdit className="text-4xl p-1 cursor-pointer rounded-md border border-black right-0" onClick={() => document.getElementById("my_modal_3").showModal()} />
+                    {user.role === "jobseeker" && (
+                      <>
+                        <button
+                          className="btn btn-outline btn-info"
+                          onClick={() =>
+                            document.getElementById("my_modal_5").showModal()
+                          }
+                        >
+                          Resume Upload
+                        </button>
+                        <dialog
+                          id="my_modal_5"
+                          className="modal modal-bottom sm:modal-middle"
+                        >
+                          <div className="modal-box">
+                            <h3 className="font-bold text-lg mb-5 text-center">
+                              Uplaod Resume!
+                            </h3>
+                            <div className="flex justify-center gap-3">
+                              <input
+                                type="file"
+                                className="file-input file-input-primary "
+                                onChange={(e) => setFile(e.target.files[0])}
+                              />
+                              <button
+                                type="button"
+                                className="btn btn-primary btn-outline font-bold"
+                                onClick={upload1}
+                              >
+                                Upload
+                              </button>
+                            </div>
+                            <div className="modal-action">
+                              <form method="dialog">
+                                <button className="btn btn-error text-white">
+                                  Close
+                                </button>
+                              </form>
+                            </div>
+                          </div>
+                        </dialog>
+                        <button className="btn btn-outline btn-info">
+                          <IoMdDownload
+                            className={`${user?.resume ? "" : "disabled"}`}
+                            size="1.5em"
+                            style={{
+                              cursor: user?.resume ? "pointer" : "not-allowed",
+                            }}
+                            onClick={user?.resume ? downloadFile1 : null}
+                          />
+                        </button>
+                      </>
+                    )}
+
+                    <FaRegEdit
+                      className="text-4xl p-1 cursor-pointer rounded-md border border-black right-0"
+                      onClick={() =>
+                        document.getElementById("my_modal_3").showModal()
+                      }
+                    />
                   </div>
                 </div>
                 <dialog id="my_modal_3" className="modal">
