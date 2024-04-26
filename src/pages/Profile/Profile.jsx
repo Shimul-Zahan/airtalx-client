@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../../providers/AuthProviders";
-import { MdOutlineEmail } from "react-icons/md";
+import { MdOutlineEmail, MdWorkOutline } from "react-icons/md";
 import { LuGraduationCap } from "react-icons/lu";
 import { SlLocationPin } from "react-icons/sl";
 import { FaRegEdit } from "react-icons/fa";
@@ -134,17 +134,10 @@ const Profile = () => {
   return (
     <div className="lg:w-3/4 w-11/12 mx-auto my-12">
       <div>
-        <div className="grid lg:grid-cols-9 grid-cols-1 lg:gap-8 gap-y-7">
-          <div className="custom-shadow p-4 col-span-2 rounded-md relative">
+        <div className="grid lg:grid-cols-9 grid-cols-1 lg:gap-8 gap-7">
+          <div className="custom-shadow p-4 lg:col-span-2 rounded-md relative">
             <div className="flex justify-center">
-              {/* <div className="w-40 h-40 avatar">
-                <img
-                  className="rounded-full w-full h-full object-cover"
-                  src={user?.photoURL}
-                  alt=""
-                />
-              </div> */}
-              <label className="avatar w-40">
+              <label className="avatar w-48">
                 <div className="rounded-full border-2 border-white">
                   <div>
                     <img src={user?.photoURL} alt="User Photo" />
@@ -156,19 +149,21 @@ const Profile = () => {
               {user?.role}
             </p>
           </div>
-          <div className="custom-shadow rounded-md p-4 col-span-7">
+          <div className="custom-shadow rounded-md p-4 lg:col-span-7">
             <div>
               <div className="flex justify-between item">
-                <h3 className="font-semibold text-3xl pb-2 capitalize">
-                  {user?.name}
-                </h3>
+                <div>
+                  <h3 className="font-semibold text-4xl pb-5 capitalize">
+                    {user?.name}
+                  </h3>
+                </div>
                 {/* You can open the modal using document.getElementById('ID').showModal() method */}
                 <div className="flex items-center">
                   <div className="flex items-center gap-2">
                     {user.role === "jobseeker" && (
                       <>
                         <button
-                          className="btn btn-outline btn-info"
+                          className="border border-black py-2 px-3 rounded-md text-xl"
                           onClick={() =>
                             document.getElementById("my_modal_5").showModal()
                           }
@@ -206,7 +201,7 @@ const Profile = () => {
                             </div>
                           </div>
                         </dialog>
-                        <button className="btn btn-outline btn-info">
+                        <button className="border border-black py-2 px-3 rounded-md text-xl">
                           <IoMdDownload
                             className={`${user?.resume ? "" : "disabled"}`}
                             size="1.5em"
@@ -220,7 +215,7 @@ const Profile = () => {
                     )}
 
                     <FaRegEdit
-                      className="text-4xl p-1 cursor-pointer rounded-md border border-black right-0"
+                      className="text-5xl p-2 cursor-pointer rounded-md border border-black right-0"
                       onClick={() =>
                         document.getElementById("my_modal_3").showModal()
                       }
@@ -307,24 +302,47 @@ const Profile = () => {
                   </div>
                 </dialog>
               </div>
-              <div className="flex gap-2 items-center">
-                <MdOutlineEmail className="text-2xl pt-1" />
+              <div className="flex gap-2 items-center pb-2">
+                <MdOutlineEmail className="text-3xl border border-black rounded-full p-1" />
                 <p>{user?.email}</p>
               </div>
-              <div className="flex gap-2 items-center capitalize">
-                <LuGraduationCap className="text-2xl pt-1" />
-                {user?.studies && <p>{user?.studies}</p>}
-                {!user?.studies && <p>N/A</p>}
-              </div>
-              <div className="flex gap-2 items-center capitalize">
-                <SlLocationPin className="text-2xl pt-1" />
+              <div className="flex gap-2 items-center capitalize pb-2">
+                <SlLocationPin className="text-3xl border border-black rounded-full p-1" />
                 {user?.location && <p>{user?.location}</p>}
                 {!user?.location && <p>N/A</p>}
               </div>
+              <div className="flex gap-2 items-center capitalize pb-2">
+                <LuGraduationCap className="text-3xl border border-black rounded-full p-1" />
+                {user?.studies && <p>{user?.studies}</p>}
+                {!user?.studies && <p>N/A</p>}
+              </div>
+              <div className="flex gap-2 items-center capitalize pb-2">
+                <MdWorkOutline className="text-3xl border border-black rounded-full p-1" />
+                {user?.studies && <p>{user?.studies}</p>}
+                {!user?.studies && <p>N/A</p>}
+              </div>
             </div>
-            <h4 className="font-semibold pt-6">About Me</h4>
-            {user?.about && <p className="first-letter:capitalize">{user?.about}</p>}
-            {!user?.about && <p>N/A</p>}
+            <div className="pt-5">
+              <p>Skill Level: </p>
+              <p>Preferred Rate: </p>
+              <p>Preferred employment: </p>
+            </div>
+          </div>
+          <div className="custom-shadow lg:col-span-9 rounded-md p-3">
+            <div className="pb-6">
+              <h4 className="font-semibold pb-2">Expertise field</h4>
+              <div>
+                <span className="border border-black px-2 py-1 mr-3 rounded-full text-base">Graphic Designer</span>
+                <span className="border border-black px-2 py-1 mr-3 rounded-full text-base">Graphic Designer</span>
+                <span className="border border-black px-2 py-1 mr-3 rounded-full text-base">Graphic Designer</span>
+                <span className="border border-black px-2 py-1 mr-3 rounded-full text-base">Graphic Designer</span>
+              </div>
+            </div>
+            <div>
+              <h4 className="font-semibold">About Me</h4>
+              {user?.about && <p className="first-letter:capitalize">{user?.about}</p>}
+              {!user?.about && <p>N/A</p>}
+            </div>
           </div>
         </div>
       </div>
