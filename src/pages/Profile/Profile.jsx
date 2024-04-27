@@ -27,6 +27,7 @@ const Profile = () => {
       data.append("studies", studies);
       data.append("about", about);
       data.append("role", user?.role);
+      data.append("oldPass", user?.password);
       data.append("images", fileList[0]?.originFileObj || "");
       const config = {
         headers: {

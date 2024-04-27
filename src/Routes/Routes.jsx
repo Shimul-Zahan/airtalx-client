@@ -11,6 +11,8 @@ import Profile from "../pages/Profile/Profile";
 import FindJob from "../pages/Find Job/FindJob";
 import UserProfile from "../pages/Users/UserProfile";
 import PrivateRouter from "./PrivateRouter";
+import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
+import ResetPassword from "../pages/ForgotPassword/ResetPassword/ResetPassword";
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +34,14 @@ export const router = createBrowserRouter([
       {
         path: '/user/:email',
         element: <PrivateRouter><UserProfile /></PrivateRouter>
+      },
+      {
+        path: '/forgot-password',
+        element: <ForgotPassword />
+      },
+      {
+        path: "/reset_password/:id/:token",
+        element: <ResetPassword />
       },
       {
         path: "/findJob",

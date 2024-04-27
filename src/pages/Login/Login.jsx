@@ -64,7 +64,7 @@ const Login = () => {
     if (user?.role == "admin") navigate("/admin/dashboard");
   }
   return (
-    <div className="lg:w-1/2 w-11/12 mx-auto">
+    <div className="lg:w-2/3 w-11/12 mx-auto">
       <div className="flex justify-between gap-20 md:py-36 py-12">
         <div className="w-full md:block hidden">
           <Lottie animationData={LoginModel} />
@@ -121,6 +121,8 @@ const Login = () => {
                 Signup now
               </Link>
             </small>
+            <br />
+            <Link to="/forgot-password" className="link link-primary">Forgot Password</Link>
           </div>
           <p className="text-center pt-8 text-red-700 font-semibold">{error}</p>
         </div>
