@@ -91,6 +91,7 @@ const AllJobs = () => {
                 <h3 className="text-2xl font-semibold capitalize">
                   {singleJob.jobTitle}
                 </h3>
+                <p className="mb-3 text-base font-semibold">{singleJob.jobPostDate}</p>
                 <p>
                   by{" "}
                   <Link to={`/user/${singleJob.email}`}><span className="text-[#1d9cb5] capitalize font-semibold cursor-pointer">
@@ -99,7 +100,7 @@ const AllJobs = () => {
                   </Link>
                 </p>
               </div>
-              <div className="flex gap-2">
+              <div className="">
                 <p className="border border-black rounded-md font-semibold p-2">
                   {singleJob.jobType}
                 </p>
@@ -108,7 +109,8 @@ const AllJobs = () => {
             </div>
             <div className="flex gap-2 items-center pb-2 text-lg font-semibold">
               <SlWallet />
-              <p>{singleJob.salary}</p>
+              <p>${singleJob.startingSalary}</p> -
+              <p>${singleJob.endingSalary}</p>
             </div>
             <div>
               <p>

@@ -67,32 +67,34 @@ const MyJobs = (_id) => {
       <div className="grid grid-cols-3 m-3">
         {currentJobs.map((singleJob) => (
           <div className="custom-shadow m-3 p-4 rounded-md" key={singleJob._id}>
-            <div className="flex justify-between items-center pb-4">
+            <div className="flex justify-between pb-4">
               <div>
                 <h3 className="text-2xl font-semibold">
                   {singleJob.jobTitle}
                 </h3>
+                <p className="mb-3 text-base font-semibold">{singleJob.jobPostDate}</p>
                 <p>
                   by{" "}
                   <Link to={`/user/${singleJob.email}`}>
-                    <span className="text-[#1d9cb5] font-semibold cursor-pointer">
+                    <span className="text-[#1d9cb5] capitalize font-semibold cursor-pointer">
                       {singleJob.companyName}
                     </span>
                   </Link>
                 </p>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="">
                 <p className="border border-black rounded-md font-semibold p-3">
                   {singleJob.jobType}
                 </p>
               </div>
             </div>
-            <div className="flex gap-2 items-center text-lg font-semibold">
+            <div className="flex gap-2 items-center pb-2 text-lg font-semibold">
               <SlWallet />
-              <p>{singleJob.salary}</p>
+              <p>${singleJob.startingSalary}/hr</p> -
+              <p>${singleJob.endingSalary}/hr</p>
             </div>
             <div>
-              <p>
+              <p className="first-letter:capitalize">
                 {singleJob.jobDescription.substring(0, 120)}...
                 <Link to={`/jobdetails/${singleJob._id}`} className="text-[#1d9cb5]">
                   know more

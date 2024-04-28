@@ -4,7 +4,7 @@ import { MdOutlineEmail, MdWorkOutline } from "react-icons/md";
 import { LuGraduationCap } from "react-icons/lu";
 import { SlLocationPin } from "react-icons/sl";
 import { FaRegEdit } from "react-icons/fa";
-import { message, Form, Input, Upload, Button, Select } from "antd";
+import { message, Form, Input, Upload, Button } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { IoMdDownload } from "react-icons/io";
@@ -19,7 +19,8 @@ const Profile = () => {
   const onFinish = async (values) => {
     console.log("🚀 ~ onFinish ~ values:", values);
     try {
-      const { name, location, studies, about, newPassword } = values || {};
+      const { name, location, studies, about, newPassword, preferredSalary,
+        preferredJobType, expertiseField, expertiseLevel, jobPosition, jobCompanyName } = values || {};
 
       const data = new FormData();
       data.append("name", name);
@@ -27,6 +28,12 @@ const Profile = () => {
       data.append("location", location);
       data.append("studies", studies);
       data.append("about", about);
+      data.append("preferredSalary", preferredSalary);
+      data.append("expertiseField", expertiseField);
+      data.append("preferredJobType", preferredJobType);
+      data.append("expertiseLevel", expertiseLevel);
+      data.append("jobPosition", jobPosition);
+      data.append("jobCompanyName", jobCompanyName);
       data.append("role", user?.role);
       data.append("images", fileList[0]?.originFileObj || "");
       const config = {
@@ -377,16 +384,28 @@ const Profile = () => {
               </div>
             </div>
             <div className="pt-5">
-              {/* <p>Skill Level: </p> */}
-              <p>Preferred Rate: </p>
-              <p>Preferred employment: </p>
+              <div className="flex items-center gap-2 first-letter:capitalize">
+                Preferred Salary: {user?.preferredSalary && <p>{user?.preferredSalary}/hr</p>}
+                {!user?.preferredSalary && <p>N/A</p>}
+              </div>
+              <div className="flex items-center gap-2 capitalize">
+                Skill Level: {user?.expertiseLevel && <p>{user?.expertiseLevel}</p>}
+                {!user?.expertiseLevel && <p>N/A</p>}
+              </div>
+              <div className="flex items-center gap-2 capitalize">
+                Preferred Employment: {user?.preferredJobType && <p>{user?.preferredJobType}</p>}
+                {!user?.preferredJobType && <p>N/A</p>}
+              </div>
             </div>
           </div>
           <div className="custom-shadow lg:col-span-9 rounded-md p-3">
             <div className="pb-6">
               <h4 className="font-semibold pb-2">Expertise field</h4>
               <div>
-                <span className="border border-black px-2 py-1 mr-3 rounded-full text-base">Graphic Designer</span>
+                <span>
+                  {user?.expertiseField && <span className="border border-black capitalize px-2 py-1 mr-3 rounded-full text-base">{user?.expertiseField}</span>}
+                  {!user?.expertiseField && <p>N/A</p>}
+                </span>
                 {/* <span className="border border-black px-2 py-1 mr-3 rounded-full text-base">Graphic Designer</span>
                 <span className="border border-black px-2 py-1 mr-3 rounded-full text-base">Graphic Designer</span>
                 <span className="border border-black px-2 py-1 mr-3 rounded-full text-base">Graphic Designer</span> */}
