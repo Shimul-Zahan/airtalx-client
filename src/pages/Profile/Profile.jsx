@@ -4,7 +4,7 @@ import { MdOutlineEmail, MdWorkOutline } from "react-icons/md";
 import { LuGraduationCap } from "react-icons/lu";
 import { SlLocationPin } from "react-icons/sl";
 import { FaRegEdit } from "react-icons/fa";
-import { message, Form, Input, Upload, Button } from "antd";
+import { message, Form, Input, Upload, Button, Select } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { IoMdDownload } from "react-icons/io";
@@ -14,6 +14,7 @@ const Profile = () => {
   const [fileList, setFileList] = useState([]);
   const [form] = Form.useForm();
   const [file, setFile] = useState();
+  console.log(user)
 
   const onFinish = async (values) => {
     console.log("🚀 ~ onFinish ~ values:", values);
@@ -262,6 +263,59 @@ const Profile = () => {
                           <Input />
                         </Form.Item>
                         <Form.Item
+                          label="Preferred Salary"
+                          name="preferredSalary"
+                          initialValue={user?.preferredSalary}
+                        >
+                          <Input />
+                        </Form.Item>
+                        <Form.Item
+                          label="Preferred Job Type"
+                          name="preferredJobType"
+                          initialValue={user?.preferredJobType}
+                        >
+                          <Input />
+                        </Form.Item>
+                        <Form.Item
+                          label="Expertise Field"
+                          name="expertiseField"
+                          initialValue={user?.expertiseField}
+                        >
+                          <Input />
+                        </Form.Item>
+                        <Form.Item
+                          label="Expertise Level"
+                          name="expertiseLevel"
+                          initialValue={user?.expertiseLevel}
+                        >
+                          <Input />
+                        </Form.Item>
+                        <Form.Item
+                          label="Job Position"
+                          name="jobPosition"
+                          initialValue={user?.jobPosition}
+                        >
+                          <Input />
+                        </Form.Item>
+                        <Form.Item
+                          label="Current Company Name"
+                          name="jobCompanyName"
+                          initialValue={user?.jobCompanyName}
+                        >
+                          <Input />
+                        </Form.Item>
+                        {/* <Form.Select
+                          label="Expertise Field"
+                          name="expertiseField"
+                          initialValue={user?.expertiseField}
+                        >
+                          <Select>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Expert">Expert</option>
+                          </Select>
+                        </Form.Select> */}
+                        <Form.Item
                           name="user_image"
                           valuePropName="fileList"
                           label="Image"
@@ -318,12 +372,12 @@ const Profile = () => {
               </div>
               <div className="flex gap-2 items-center capitalize pb-2">
                 <MdWorkOutline className="text-3xl border border-black rounded-full p-1" />
-                {user?.studies && <p>{user?.studies}</p>}
-                {!user?.studies && <p>N/A</p>}
+                {user?.jobCompanyName && <p>{user?.jobCompanyName}</p>}
+                {!user?.jobCompanyName && <p>N/A</p>}
               </div>
             </div>
             <div className="pt-5">
-              <p>Skill Level: </p>
+              {/* <p>Skill Level: </p> */}
               <p>Preferred Rate: </p>
               <p>Preferred employment: </p>
             </div>
@@ -333,9 +387,9 @@ const Profile = () => {
               <h4 className="font-semibold pb-2">Expertise field</h4>
               <div>
                 <span className="border border-black px-2 py-1 mr-3 rounded-full text-base">Graphic Designer</span>
+                {/* <span className="border border-black px-2 py-1 mr-3 rounded-full text-base">Graphic Designer</span>
                 <span className="border border-black px-2 py-1 mr-3 rounded-full text-base">Graphic Designer</span>
-                <span className="border border-black px-2 py-1 mr-3 rounded-full text-base">Graphic Designer</span>
-                <span className="border border-black px-2 py-1 mr-3 rounded-full text-base">Graphic Designer</span>
+                <span className="border border-black px-2 py-1 mr-3 rounded-full text-base">Graphic Designer</span> */}
               </div>
             </div>
             <div>
