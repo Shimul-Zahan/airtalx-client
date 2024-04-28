@@ -109,26 +109,38 @@ const UserProfile = () => {
                             </div>
                             <div className="flex gap-2 items-center pb-2">
                                 <MdWorkOutline className="text-3xl border border-black rounded-full p-1" />
-                                {allUsers?.location && <p>{allUsers?.location}</p>}
-                                {!allUsers?.location && <p>N/A</p>}
+                                {allUsers?.jobCompanyName && <p>{allUsers?.jobCompanyName}</p>}
+                                {!allUsers?.jobCompanyName && <p>N/A</p>}
                             </div>
                         </div>
                         <div className="pt-5">
-                            <p>Skill Level: </p>
-                            <p>Preferred Rate: </p>
-                            <p>Preferred employment: </p>
-                        </div>
+              <div className="flex items-center gap-2 first-letter:capitalize">
+                Preferred Salary: {allUsers?.preferredSalary && <p>{allUsers?.preferredSalary}/hr</p>}
+                {!allUsers?.preferredSalary && <p>N/A</p>}
+              </div>
+              <div className="flex items-center gap-2 capitalize">
+                Skill Level: {allUsers?.expertiseLevel && <p>{allUsers?.expertiseLevel}</p>}
+                {!allUsers?.expertiseLevel && <p>N/A</p>}
+              </div>
+              <div className="flex items-center gap-2 capitalize">
+                Preferred Employment: {allUsers?.preferredJobType && <p>{allUsers?.preferredJobType}</p>}
+                {!allUsers?.preferredJobType && <p>N/A</p>}
+              </div>
+            </div>
                     </div>
                     <div className="custom-shadow lg:col-span-9 rounded-md p-3">
-                        <div className="pb-6">
-                            <h4 className="font-semibold pb-2">Expertise field</h4>
-                            <div>
-                                <span className="border border-black px-2 py-1 mr-3 rounded-full text-base">Graphic Designer</span>
-                                <span className="border border-black px-2 py-1 mr-3 rounded-full text-base">Graphic Designer</span>
-                                <span className="border border-black px-2 py-1 mr-3 rounded-full text-base">Graphic Designer</span>
-                                <span className="border border-black px-2 py-1 mr-3 rounded-full text-base">Graphic Designer</span>
-                            </div>
-                        </div>
+                    <div className="pb-6">
+              <h4 className="font-semibold pb-2">Expertise field</h4>
+              <div>
+                <span>
+                  {allUsers?.expertiseField && <span className="border border-black capitalize px-2 py-1 mr-3 rounded-full text-base">{allUsers?.expertiseField}</span>}
+                  {!allUsers?.expertiseField && <p>N/A</p>}
+                </span>
+                {/* <span className="border border-black px-2 py-1 mr-3 rounded-full text-base">Graphic Designer</span>
+                <span className="border border-black px-2 py-1 mr-3 rounded-full text-base">Graphic Designer</span>
+                <span className="border border-black px-2 py-1 mr-3 rounded-full text-base">Graphic Designer</span> */}
+              </div>
+            </div>
                         <div>
                             <h4 className="font-semibold">Bio</h4>
                             {allUsers?.about && <p>{allUsers?.about}</p>}

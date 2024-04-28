@@ -58,17 +58,16 @@ const JobDetails = () => {
           </h3>
           <div>
             <span>by</span>
-            <span className="text-[#1d9cb5] font-semibold pl-1">
+            <span className="text-[#1d9cb5] capitalize font-semibold pl-1">
               {jobData?.companyName}
             </span>
           </div>
           <div>
             <button
-              className={`text-xl rounded mt-3 px-6 py-1 ${
-                user?.role === "employer" || user?.role === "admin" || !user
+              className={`text-xl rounded mt-3 px-6 py-1 ${user?.role === "employer" || user?.role === "admin" || !user
                   ? "bg-gray-500 text-gray-300 cursor-not-allowed"
                   : "bg-[#1d9cb5] text-white"
-              }`}
+                }`}
               onClick={() => handleApply(jobData)}
               disabled={user?.role === "employer" || user?.role === "admin" || !user}
             >
@@ -89,7 +88,10 @@ const JobDetails = () => {
           </div>
           <div className="text-center custom-shadow p-10 rounded-md w-96">
             <p>JOB RATE PER HOUR</p>
-            <h4 className="text-2xl font-semibold">{jobData?.salary}</h4>
+            <div className="flex items-center justify-center gap-2">
+              <h4 className="text-2xl font-semibold">${jobData?.startingSalary}/hr</h4> - 
+              <h4 className="text-2xl font-semibold">${jobData?.endingSalary}/hr</h4>
+            </div>
           </div>
           <div className="text-center custom-shadow p-10 rounded-md w-96">
             <p>EMPLOYMENT</p>
@@ -101,7 +103,7 @@ const JobDetails = () => {
         <h4 className="text-5xl font-semibold text-center pt-8 pb-6">
           Job Description
         </h4>
-        <p>{jobData?.jobDescription}</p>
+        <p className="first-letter:capitalize">{jobData?.jobDescription}</p>
       </div>
     </div>
   );
