@@ -104,12 +104,12 @@ const PostJob = () => {
                 <div className="pt-8">
                     <h4 className="text-2xl font-semibold">Salary</h4>
                     <p>How much (US Dollar) do you want to pay per hour?</p>
-                    <div className="flex gap-3 items-center">
+                    <div className="lg:flex gap-3 items-center">
                         <div className="flex items-center">
                             <input name='startingSalary' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4" placeholder='e.g: "$2 (starting salary)"' type="text" />
                             <p>/hr</p>
                         </div>
-                        <p>-</p>
+                        <p>to</p>
                         <div className="flex items-center">
                             <input name='endingSalary' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4" placeholder='e.g: "$6 (ending salary)"' type="text" />
                             <p>/hr</p>

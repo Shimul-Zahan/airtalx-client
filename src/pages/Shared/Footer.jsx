@@ -51,7 +51,7 @@ const Footer = () => {
             </div>
             <div className="bg-[#1b405d] text-white p-3">
                 <div>
-                    <p className="text-center">Copyright © 2024 - All right reserved by ACME Industries Ltd</p>
+                    <p className="text-center">Copyright © 2024 - All right reserved by airTalX</p>
                 </div>
             </div>
         </div>

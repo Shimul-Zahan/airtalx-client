@@ -89,10 +89,53 @@ const Applicant = () => {
 
   return (
     <div className="p-6">
-      <div className="custom-shadow p-4 rounded-md">
+      <div className="block lg:hidden">
+        <div className="grid grid-cols-1">
+          <div className="flex justify-between">
+            <h4 className="text-2xl font-semibold pb-4">Applicants</h4>
+          </div>
+          {
+            currentJobs.map(job => <div className="custom-shadow p-4 rounded-md" key={job?.jobData?._id}>
+              <div className="flex justify-between items-center">
+                <p className="text-2xl">{job?.userEmail}</p>
+                <p>{job?.jobData?.jobType}</p>
+              </div>
+              <p>{job?.jobData?.jobTitle}</p>
+              <p>{job?.jobData?.salary}</p>
+              <div
+                className={`badge ${getBadgeClass(
+                  job?.status
+                )} badge-md text-white`}
+              >
+                {job?.status}
+              </div>
+              <div className="text-red-700 text-xl cursor-pointer"></div>
+              <div className=" flex flex-col gap-2">
+                <button
+                  className="btn btn-success btn-sm text-white w-32"
+                  onClick={() => handleMakeApproved(job.userEmail, job.jobId)}
+                >
+                  Approve
+                </button>
+                <button
+                  className="btn btn-error btn-sm text-white w-32"
+                  onClick={() => handleMakeReject(job.userEmail, job.jobId)}
+                >
+                  Cancel
+                </button>
+              </div>
+              <Link to={`/user/${job?.userEmail}`} className="text-[#1d9cb5] font-semibold">
+                <button className="">
+                  Details
+                </button>
+              </Link>
+            </div>)
+          }
+        </div>
+      </div>
+      <div className="custom-shadow lg:block hidden p-4 rounded-md">
         <div className="flex justify-between">
-          <h4 className="text-2xl font-semibold pb-4">Applicant</h4>
-
+          <h4 className="text-2xl font-semibold pb-4">Applicants</h4>
         </div>
         <div className="overflow-x-auto">
           <table className="table w-full">
