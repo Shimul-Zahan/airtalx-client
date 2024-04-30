@@ -64,7 +64,7 @@ const MyJobs = (_id) => {
 
   return (
     <>
-      <div className="grid grid-cols-3 m-3">
+      <div className="grid lg:grid-cols-3 grid-cols-1 m-3">
         {currentJobs.map((singleJob) => (
           <div className="custom-shadow m-3 p-4 rounded-md" key={singleJob._id}>
             <div className="flex justify-between pb-4">

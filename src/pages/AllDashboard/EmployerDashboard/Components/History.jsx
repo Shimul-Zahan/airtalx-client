@@ -51,10 +51,37 @@ const History = () => {
 
   return (
     <div className="p-6">
-      <div className="custom-shadow p-4 rounded-md">
+      <div className="lg:hidden block">
+        <div className="flex pb-4 justify-between">
+          <h4 className="text-2xl font-semibold">History</h4>
+        </div>
+        {
+          currentJobs.map(job => <div className="custom-shadow p-4 rounded-md" key={job?.jobData?._id}>
+            <div className="flex justify-between items-center">
+              <p className="text-2xl">{job?.userEmail}</p>
+              <p>{job?.jobData?.jobType}</p>
+            </div>
+            <p>{job?.jobData?.jobTitle}</p>
+            <p>{job?.jobData?.salary}</p>
+            <div
+              className={`badge ${getBadgeClass(
+                job?.status
+              )} badge-md text-white`}
+            >
+              {job?.status}
+            </div>
+            <div className="text-red-700 text-xl cursor-pointer"></div>
+            <Link to={`/user/${job?.userEmail}`} className="text-[#1d9cb5] font-semibold">
+              <button className="">
+                Details
+              </button>
+            </Link>
+          </div>)
+        }
+      </div>
+      <div className="custom-shadow lg:block hidden p-4 rounded-md">
         <div className="flex justify-between">
           <h4 className="text-2xl font-semibold">History</h4>
-
         </div>
         <div className="overflow-x-auto">
           <table className="table w-full">

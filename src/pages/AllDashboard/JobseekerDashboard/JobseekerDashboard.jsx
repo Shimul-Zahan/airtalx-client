@@ -22,69 +22,121 @@ const JobseekerDashboard = () => {
 
   const handleLogOut = () => {
     logOut()
-      .then(() => {})
+      .then(() => { })
       .catch((error) => console.log(error));
   };
 
   return (
-    <div className="grid grid-cols-10">
-      <div className="col-span-1 flex flex-col my-6 p-4 custom-shadow rounded-md">
-        <TabList className="flex flex-col space-y-3">
-          <Tab
-            className={`font-semibold cursor-pointer flex gap-2 items-center ${
-              activeTab === 0 ? "text-[#1d9cb5]" : "text-black"
-            }`}
-            onClick={() => setActiveTab(0)}
-          >
-            <FaHome  size="1em" />
-            <span>Dashboard</span>
-          </Tab>
-          <Tab
-            className={`font-semibold cursor-pointer flex gap-2 items-center ${
-              activeTab === 1 ? "text-[#1d9cb5]" : "text-black"
-            }`}
-            onClick={() => setActiveTab(1)}
-          >
-            <BiMessageDetail className="text-xl" />
-            <span>Inbox</span>
-          </Tab>
-          <Tab
-            className={`font-semibold cursor-pointer flex gap-2 items-center ${
-              activeTab === 2 ? "text-[#1d9cb5]" : "text-black"
-            }`}
-            onClick={() => setActiveTab(2)}
-          >
-            <MdWorkOutline className="text-xl" />
-            <span>All Jobs</span>
-          </Tab>
-          <Tab
-            className={`font-semibold cursor-pointer flex gap-2 items-center ${
-              activeTab === 3 ? "text-[#1d9cb5]" : "text-black"
-            }`}
-            onClick={() => setActiveTab(3)}
-          >
-            <BsPersonVcard className="text-xl" />
-            <span>My Jobs</span>
-          </Tab>
-          <Tab
-            className={`font-semibold cursor-pointer flex gap-2 items-center ${
-              activeTab === 4 ? "text-[#1d9cb5]" : "text-black"
-            }`}
-            onClick={() => setActiveTab(4)}
-          >
-            <FaHistory  className="text-xl" />
-            <span>History</span>
-          </Tab>
-          <div
-            onClick={handleLogOut}
-            className="font-semibold cursor-pointer flex gap-2 items-center text-red-500"
-          >
-            <MdLogout className="text-xl" />
-            <span>Logout</span>
-          </div>
-        </TabList>
+    <div className="grid grid-cols-12">
+      <div className="col-span-12 pb-20 lg:pb-0 lg:hidden">
+        <div className="flex flex-col fixed items-center bg-white z-[1] mb-20 w-[89%] my-6 mx-7 p-4 custom-shadow rounded-md">
+          <TabList className="flex flex-row justify-center gap-x-12 flex-wrap space-y-3">
+            <Tab
+              className={`font-semibold cursor-pointer flex gap-2 items-center ${activeTab === 0 ? "text-[#1d9cb5]" : "text-black"
+                }`}
+              onClick={() => setActiveTab(0)}
+            >
+              <FaHome className="absolute text-xl" />
+              {/* <span>Dashboard</span> */}
+            </Tab>
+            <Tab
+              className={`font-semibold cursor-pointer flex gap-2 items-center ${activeTab === 1 ? "text-[#1d9cb5]" : "text-black"
+                }`}
+              onClick={() => setActiveTab(1)}
+            >
+              <BiMessageDetail className="text-xl absolute" />
+              {/* <span>Inbox</span> */}
+            </Tab>
+            <Tab
+              className={`font-semibold cursor-pointer flex gap-2 items-center ${activeTab === 2 ? "text-[#1d9cb5]" : "text-black"
+                }`}
+              onClick={() => setActiveTab(2)}
+            >
+              <MdWorkOutline className="text-xl absolute" />
+              {/* <span>All Jobs</span> */}
+            </Tab>
+            <Tab
+              className={`font-semibold cursor-pointer flex gap-2 items-center ${activeTab === 3 ? "text-[#1d9cb5]" : "text-black"
+                }`}
+              onClick={() => setActiveTab(3)}
+            >
+              <BsPersonVcard className="text-xl absolute" />
+              {/* <span>My Jobs</span> */}
+            </Tab>
+            <Tab
+              className={`font-semibold cursor-pointer flex gap-2 items-center ${activeTab === 4 ? "text-[#1d9cb5]" : "text-black"
+                }`}
+              onClick={() => setActiveTab(4)}
+            >
+              <FaHistory className="text-xl absolute" />
+              {/* <span>History</span> */}
+            </Tab>
+            <div
+              onClick={handleLogOut}
+              className="font-semibold cursor-pointer flex gap-2 items-center text-red-500"
+            >
+              <MdLogout className="text-xl absolute" />
+              {/* <span>Logout</span> */}
+            </div>
+          </TabList>
+        </div>
+        
       </div>
-      <div className="col-span-9">
+      <div className="col-span-2 pb-20 lg:pb-0 hidden lg:block">
+        
+        <div className="col-span-1 flex flex-col my-6 ml-6 p-4 custom-shadow rounded-md">
+          <TabList className="flex flex-col space-y-3">
+            <Tab
+              className={`font-semibold cursor-pointer flex gap-2 items-center ${activeTab === 0 ? "text-[#1d9cb5]" : "text-black"
+                }`}
+              onClick={() => setActiveTab(0)}
+            >
+              <FaHome size="1em" />
+              <span>Dashboard</span>
+            </Tab>
+            <Tab
+              className={`font-semibold cursor-pointer flex gap-2 items-center ${activeTab === 1 ? "text-[#1d9cb5]" : "text-black"
+                }`}
+              onClick={() => setActiveTab(1)}
+            >
+              <BiMessageDetail className="text-xl" />
+              <span>Inbox</span>
+            </Tab>
+            <Tab
+              className={`font-semibold cursor-pointer flex gap-2 items-center ${activeTab === 2 ? "text-[#1d9cb5]" : "text-black"
+                }`}
+              onClick={() => setActiveTab(2)}
+            >
+              <MdWorkOutline className="text-xl" />
+              <span>All Jobs</span>
+            </Tab>
+            <Tab
+              className={`font-semibold cursor-pointer flex gap-2 items-center ${activeTab === 3 ? "text-[#1d9cb5]" : "text-black"
+                }`}
+              onClick={() => setActiveTab(3)}
+            >
+              <BsPersonVcard className="text-xl" />
+              <span>My Jobs</span>
+            </Tab>
+            <Tab
+              className={`font-semibold cursor-pointer flex gap-2 items-center ${activeTab === 4 ? "text-[#1d9cb5]" : "text-black"
+                }`}
+              onClick={() => setActiveTab(4)}
+            >
+              <FaHistory className="text-xl" />
+              <span>History</span>
+            </Tab>
+            <div
+              onClick={handleLogOut}
+              className="font-semibold cursor-pointer flex gap-2 items-center text-red-500"
+            >
+              <MdLogout className="text-xl" />
+              <span>Logout</span>
+            </div>
+          </TabList>
+        </div>
+      </div>
+      <div className="lg:col-span-10 col-span-12">
         <Tabs selectedIndex={activeTab}>
           <TabPanel>
             <Dashboard />
@@ -96,10 +148,10 @@ const JobseekerDashboard = () => {
             <AllJobs />
           </TabPanel>
           <TabPanel>
-            <MyRunningJobs/>
+            <MyRunningJobs />
           </TabPanel>
           <TabPanel>
-            <History/>
+            <History />
           </TabPanel>
         </Tabs>
       </div>
