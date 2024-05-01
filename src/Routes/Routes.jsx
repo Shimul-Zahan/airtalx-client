@@ -15,6 +15,7 @@ import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../pages/ForgotPassword/ResetPassword/ResetPassword";
 import EmployeProfile from "../pages/EmployeProfile/EmployeProfile";
 import FindEmployee from "../pages/FindEmploye/FindEmployee";
+import UpdateProfile from "../pages/UpdateProfile/UpdateProfile";
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
       {
         path: "/profile",
         element: <PrivateRouter><Profile /></PrivateRouter>,
+      },
+      {
+        path: "/updateProfile",
+        element: <PrivateRouter><UpdateProfile /></PrivateRouter>,
       },
       {
         path: '/user/:email',

@@ -1,7 +1,7 @@
 import Lottie from "lottie-react";
 import Employer from "../../../../public/employer.json";
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../providers/AuthProviders";
 import { FaGoogle } from "react-icons/fa";
 import axios from "axios";
@@ -10,6 +10,7 @@ import { UploadOutlined } from "@ant-design/icons";
 
 const EmployerSignup = () => {
   const [error, setError] = useState("");
+  const [defaultDate, setDefaultDate] = useState('');
   const { signinWithGoogle, user } = useContext(AuthContext);
   const [fileList, setFileList] = useState([]);
   const navigate = useNavigate();
@@ -41,6 +42,7 @@ const EmployerSignup = () => {
       data.append("email", email);
       data.append("role", "employer");
       data.append("password", confirmPassword);
+      data.append("memberSince", defaultDate);
       data.append("images", fileList[0].originFileObj);
 
       const config = {
@@ -133,6 +135,16 @@ const EmployerSignup = () => {
       });
   };
 
+  useEffect(() => {
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleDateString('en-US', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    });
+    setDefaultDate(formattedDate);
+  }, [])
+
   return (
     <div>
       <div className="flex justify-between items-center gap-20 py-12">
@@ -145,7 +157,7 @@ const EmployerSignup = () => {
           </h2>
           <Form
             name="jobseeker_signup"
-            initialValues={{ remember: true }}
+            initialValues={{ defaultDate }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
           >
@@ -155,15 +167,24 @@ const EmployerSignup = () => {
               name="name"
               rules={[{ required: true, message: "Please input your name!" }]}
             >
-              <Input className="bg-[#f5f5f5] rounded p-2 border-slate-300 border w-full"/>
+              <Input className="bg-[#f5f5f5] rounded p-2 border-slate-300 border w-full" />
             </Form.Item>
+            {/* <Form.Item
+              label="memberSince"
+              className=""
+              name="memberSince"
+              initialValue={defaultDate}
+              rules={[{ required: true, message: "Please input your name!" }]}
+            >
+              <Input className="bg-[#f5f5f5] rounded p-2 border-slate-300 border w-full" />
+            </Form.Item> */}
             <label htmlFor="">Email</label>
             <Form.Item
               // label="Email"
               name="email"
               rules={[{ required: true, message: "Please input your email!" }]}
             >
-              <Input className="bg-[#f5f5f5] rounded p-2 border-slate-300 border w-full"/>
+              <Input className="bg-[#f5f5f5] rounded p-2 border-slate-300 border w-full" />
             </Form.Item>
             <label htmlFor="">Password</label>
             <Form.Item
@@ -173,7 +194,7 @@ const EmployerSignup = () => {
                 { required: true, message: "Please input your password!" },
               ]}
             >
-              <Input.Password className="bg-[#f5f5f5] rounded p-2 border-slate-300 border w-full"/>
+              <Input.Password className="bg-[#f5f5f5] rounded p-2 border-slate-300 border w-full" />
             </Form.Item>
             <label htmlFor="">Confirm Password</label>
             <Form.Item
@@ -183,7 +204,7 @@ const EmployerSignup = () => {
                 { required: true, message: "Please confirm your password!" },
               ]}
             >
-              <Input.Password className="bg-[#f5f5f5] rounded p-2 border-slate-300 border w-full"/>
+              <Input.Password className="bg-[#f5f5f5] rounded p-2 border-slate-300 border w-full" />
             </Form.Item>
             <label htmlFor="">Image</label>
             <Form.Item
