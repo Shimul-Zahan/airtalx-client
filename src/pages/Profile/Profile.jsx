@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../../providers/AuthProviders";
-import { MdOutlineEmail, MdWorkOutline } from "react-icons/md";
+import { MdOutlineDeleteForever, MdOutlineEmail, MdWorkOutline } from "react-icons/md";
 import { LuGraduationCap } from "react-icons/lu";
 import { SlLocationPin } from "react-icons/sl";
 import { FaRegEdit } from "react-icons/fa";
@@ -10,7 +10,7 @@ import axios from "axios";
 import { IoMdDownload } from "react-icons/io";
 
 const Profile = () => {
-  const { user, setUser } = useContext(AuthContext);
+  const { user, setUser, logOut } = useContext(AuthContext);
   const [fileList, setFileList] = useState([]);
   const [form] = Form.useForm();
   const [file, setFile] = useState();
@@ -23,11 +23,11 @@ const Profile = () => {
         preferredJobType, expertiseField, expertiseLevel, jobPosition, jobCompanyName } = values || {};
 
       const data = new FormData();
-      data.append("name", name);
+      data.append("name", name || user?.name);
       data.append("password", newPassword);
-      data.append("location", location);
-      data.append("studies", studies);
-      data.append("about", about);
+      data.append("location", location || user?.location);
+      data.append("studies", studies || user?.studies);
+      data.append("about",  about || user?.about);
       data.append("preferredSalary", preferredSalary);
       data.append("expertiseField", expertiseField);
       data.append("preferredJobType", preferredJobType);
@@ -35,6 +35,8 @@ const Profile = () => {
       data.append("jobPosition", jobPosition);
       data.append("jobCompanyName", jobCompanyName);
       data.append("role", user?.role);
+      data.append("oldPass", user?.password);
+      data.append("isUpdate", newPassword ? "False" : "True");
       data.append("images", fileList[0]?.originFileObj || "");
       const config = {
         headers: {
@@ -66,6 +68,26 @@ const Profile = () => {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
+  const handleDeleteAccount = () => {
+    axios
+      .delete(`http://localhost:5000/user/delete/${user?.email}`)
+      .then((response) => {
+        const { data } = response;
+        console.log("🚀 ~ .then ~ response:", response);
+        if (data.message) {
+          message.success("Profile deleted successfully");
+          logOut();
+        } else {
+          message.error("Failed to delete user");
+        }
+      })
+      .catch((error) => {
+        console.error("Error deleting user:", error);
+        message.error("An error occurred while deleting user");
+      });
+  };
+
   const normFile = (e) => {
     setFileList(e.fileList);
     // console.log(e.fileList);
@@ -411,12 +433,20 @@ const Profile = () => {
                 <span className="border border-black px-2 py-1 mr-3 rounded-full text-base">Graphic Designer</span> */}
               </div>
             </div>
-            <div>
-              <h4 className="font-semibold">About Me</h4>
-              {user?.about && <p className="first-letter:capitalize">{user?.about}</p>}
-              {!user?.about && <p>N/A</p>}
-            </div>
+            <h4 className="font-semibold pt-6">About Me</h4>
+            {user?.about && (
+              <p className="first-letter:capitalize">{user?.about}</p>
+            )}
+            {!user?.about && <p>N/A</p>}
           </div>
+        </div>
+        <div className="flex justify-end mt-3">
+          <button
+            className="btn btn-error text-white font-bold"
+            onClick={handleDeleteAccount}
+          >
+            Delete Account <MdOutlineDeleteForever size="2em" />
+          </button>
         </div>
       </div>
     </div>
