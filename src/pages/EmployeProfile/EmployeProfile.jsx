@@ -1,12 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import {  MdOutlineEmail } from "react-icons/md";
+import { MdOutlineEmail } from "react-icons/md";
 import { SlLocationPin } from "react-icons/sl";
 import { TbMessage2 } from "react-icons/tb";
 import { useParams } from "react-router-dom";
 
 const EmployeProfile = () => {
   const [employeJobPost, setEmployeJobPost] = useState([]);
+  const [approveJob, setApproveJob] = useState([]);
+  const [allJobs, setAllJobs] = useState([]);
   const jobId = useParams();
 
   const fetchUser = async () => {
@@ -19,9 +21,35 @@ const EmployeProfile = () => {
       console.error("Error fetching user data:", error);
     }
   };
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/job/employe/${employeJobPost?.email}`
+      );
+      if (response.status === 200) {
+        setApproveJob(response.data);
+      } else {
+        console.error("Failed to fetch staff data");
+      }
+    } catch (error) {
+      console.error("Error fetching staff data:", error);
+    }
+  };
+  useEffect(() => {
+    const url = `http://localhost:5000/myJobPosts?email=${employeJobPost?.email}`;
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        setAllJobs(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   useEffect(() => {
     fetchUser();
+    fetchData();
   }, []);
 
   return (
@@ -71,6 +99,30 @@ const EmployeProfile = () => {
               <h4 className="font-semibold">Bio</h4>
               {employeJobPost?.about && <p>{employeJobPost?.about}</p>}
               {!employeJobPost?.about && <p>N/A</p>}
+            </div>
+          </div>
+          <div className="custom-shadow lg:col-span-9 rounded-md p-3">
+            <div>
+              <h4 className="text-center text-4xl underline font-bold">
+                Company Details
+              </h4>
+              <br />
+              <h4 className="font-semibold">Company Name: XXXXXX</h4>
+              <h4 className="font-semibold mt-2">Country: XXXXXX</h4>
+              <h4 className="font-semibold mt-2">Industry: XXXXXX</h4>
+              <h4 className="font-semibold mt-2">
+                Size of the company: XXXXXX
+              </h4>
+              <h4 className="font-semibold mt-2">No. of jobs posted: {allJobs?.length}</h4>
+              <h4 className="font-semibold mt-2">No. jobs filled: {approveJob?.length}</h4>
+              <h4 className="font-semibold mt-2">Member since April 27, 2024</h4>
+              <h4 className="font-semibold mt-2">
+                About the company: <br />
+                {employeJobPost?.aboutCompany && (
+                  <p>{employeJobPost?.aboutCompany}</p>
+                )}
+                {!employeJobPost?.aboutCompany && <p>N/A</p>}
+              </h4>
             </div>
           </div>
         </div>

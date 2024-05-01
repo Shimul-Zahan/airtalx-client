@@ -37,6 +37,7 @@ const Navbar = () => {
               <Link to={"/admin/dashboard"}>Dashboard</Link>
             )}
             <Link to={"/findJob"}>Find Job</Link>
+            <Link to={"/findEmploye"}>Find Employe</Link>
           </div>
           <div>
             {user ? (
