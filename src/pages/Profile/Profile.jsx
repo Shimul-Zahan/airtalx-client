@@ -23,11 +23,11 @@ const Profile = () => {
         preferredJobType, expertiseField, expertiseLevel, jobPosition, jobCompanyName } = values || {};
 
       const data = new FormData();
-      data.append("name", name);
+      data.append("name", name || user?.name);
       data.append("password", newPassword);
-      data.append("location", location);
-      data.append("studies", studies);
-      data.append("about", about);
+      data.append("location", location || user?.location);
+      data.append("studies", studies || user?.studies);
+      data.append("about",  about || user?.about);
       data.append("preferredSalary", preferredSalary);
       data.append("expertiseField", expertiseField);
       data.append("preferredJobType", preferredJobType);
@@ -36,6 +36,7 @@ const Profile = () => {
       data.append("jobCompanyName", jobCompanyName);
       data.append("role", user?.role);
       data.append("oldPass", user?.password);
+      data.append("isUpdate", newPassword ? "False" : "True");
       data.append("images", fileList[0]?.originFileObj || "");
       const config = {
         headers: {
