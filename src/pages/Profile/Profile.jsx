@@ -4,10 +4,12 @@ import { MdOutlineDeleteForever, MdOutlineEmail, MdWorkOutline } from "react-ico
 import { LuGraduationCap } from "react-icons/lu";
 import { SlLocationPin } from "react-icons/sl";
 import { FaRegEdit } from "react-icons/fa";
-import { message, Form, Input, Upload, Button } from "antd";
+import { message, Form, Input, Upload, Button, Select } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { IoMdDownload } from "react-icons/io";
+import { Option } from "antd/es/mentions";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const { user, setUser, logOut } = useContext(AuthContext);
@@ -15,59 +17,6 @@ const Profile = () => {
   const [form] = Form.useForm();
   const [file, setFile] = useState();
   console.log(user)
-
-  const onFinish = async (values) => {
-    console.log("🚀 ~ onFinish ~ values:", values);
-    try {
-      const { name, location, studies, about, newPassword, preferredSalary,
-        preferredJobType, expertiseField, expertiseLevel, jobPosition, jobCompanyName } = values || {};
-
-      const data = new FormData();
-      data.append("name", name || user?.name);
-      data.append("password", newPassword);
-      data.append("location", location || user?.location);
-      data.append("studies", studies || user?.studies);
-      data.append("about",  about || user?.about);
-      data.append("preferredSalary", preferredSalary || user?.preferredSalary);
-      data.append("expertiseField", expertiseField || user?.expertiseField);
-      data.append("preferredJobType",  preferredJobType || user?.preferredJobType);
-      data.append("expertiseLevel",  expertiseLevel || user?.expertiseLevel);
-      data.append("jobPosition",  jobPosition || user?.jobPosition);
-      data.append("jobCompanyName",  jobCompanyName || user?.jobCompanyName);
-      data.append("role", user?.role);
-      data.append("oldPass", user?.password);
-      data.append("isUpdate", newPassword ? "False" : "True");
-      data.append("images", fileList[0]?.originFileObj || "");
-      const config = {
-        headers: {
-          "content-type": "multipart/form-data",
-        },
-      };
-      const url = `http://localhost:5000/update/${user?.email}`;
-      try {
-        const response = await axios.put(url, data, config);
-        console.log("🚀 ~ onFinish ~ response:", response);
-        if (response.data.user) {
-          message.success("Profile Updated!");
-          setUser(response.data.user);
-          localStorage.setItem("access-token", response.data.token);
-          form.resetFields();
-        } else {
-          message.error(response.data.message || "Failed to update profile");
-        }
-      } catch (error) {
-        console.error("Update failed:", error);
-        message.error("Failed to update. Please try again later.");
-      }
-    } catch (error) {
-      console.error("Profile update failed:", error);
-      message.error("Failed to update profile. Please try again later.");
-    }
-  };
-
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
 
   const handleDeleteAccount = () => {
     axios
@@ -175,9 +124,10 @@ const Profile = () => {
                 </div>
               </label>
             </div>
-            <p className="text-xl lg:absolute bottom-0 mx-auto w-11/12 custom-shadow text-center p-1 my-4 capitalize">
-              {user?.role}
-            </p>
+            <div className="text-lg lg:absolute bottom-0 mx-auto w-[90%] text-center capitalize">
+              <p>Member Since: </p>
+              <p className="custom-shadow p-1 mb-4 capitalize">{user?.role}</p>
+            </div>
           </div>
           <div className="custom-shadow rounded-md p-4 lg:col-span-7">
             <div>
@@ -244,146 +194,21 @@ const Profile = () => {
                       </>
                     )}
 
-                    <FaRegEdit
-                      className="text-5xl p-2 cursor-pointer rounded-md border border-black right-0"
-                      onClick={() =>
-                        document.getElementById("my_modal_3").showModal()
-                      }
-                    />
+                    <Link to={'/updateProfile'}>
+                      <FaRegEdit className="text-5xl p-2 cursor-pointer rounded-md border border-black right-0" />
+                    </Link>
                   </div>
                 </div>
-                <dialog id="my_modal_3" className="modal">
+                {/* <dialog id="my_modal_3" className="modal">
                   <div className="modal-box">
                     <form method="dialog">
                       <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                         ✕
                       </button>
                     </form>
-                    <div className="mx-auto w-11/12 mb-4">
-                      <h2 className="text-4xl text-center font-semibold mb-3">
-                        Update Your Profile
-                      </h2>
-                      <Form
-                        name="update_profile"
-                        initialValues={user}
-                        onFinish={onFinish}
-                        onFinishFailed={onFinishFailed}
-                        form={form}
-                      >
-                        <Form.Item
-                          label="User Name"
-                          name="name"
-                          initialValue={user?.name}
-                        >
-                          <Input />
-                        </Form.Item>
-                        <Form.Item
-                          label="Location"
-                          name="location"
-                          initialValue={user?.location}
-                        >
-                          <Input />
-                        </Form.Item>
-                        <Form.Item
-                          label="Education"
-                          name="studies"
-                          initialValue={user?.studies}
-                        >
-                          <Input />
-                        </Form.Item>
-                        <Form.Item
-                          label="Preferred Salary"
-                          name="preferredSalary"
-                          initialValue={user?.preferredSalary}
-                        >
-                          <Input />
-                        </Form.Item>
-                        <Form.Item
-                          label="Preferred Job Type"
-                          name="preferredJobType"
-                          initialValue={user?.preferredJobType}
-                        >
-                          <Input />
-                        </Form.Item>
-                        <Form.Item
-                          label="Expertise Field"
-                          name="expertiseField"
-                          initialValue={user?.expertiseField}
-                        >
-                          <Input />
-                        </Form.Item>
-                        <Form.Item
-                          label="Expertise Level"
-                          name="expertiseLevel"
-                          initialValue={user?.expertiseLevel}
-                        >
-                          <Input />
-                        </Form.Item>
-                        <Form.Item
-                          label="Job Position"
-                          name="jobPosition"
-                          initialValue={user?.jobPosition}
-                        >
-                          <Input />
-                        </Form.Item>
-                        <Form.Item
-                          label="Current Company Name"
-                          name="jobCompanyName"
-                          initialValue={user?.jobCompanyName}
-                        >
-                          <Input />
-                        </Form.Item>
-                        {/* <Form.Select
-                          label="Expertise Field"
-                          name="expertiseField"
-                          initialValue={user?.expertiseField}
-                        >
-                          <Select>
-                            <option value="Beginner">Beginner</option>
-                            <option value="Medium">Medium</option>
-                            <option value="Expert">Expert</option>
-                          </Select>
-                        </Form.Select> */}
-                        <Form.Item
-                          name="user_image"
-                          valuePropName="fileList"
-                          label="Image"
-                          getValueFromEvent={normFile}
-                        >
-                          <Upload
-                            name="logo"
-                            action="/upload.do"
-                            listType="picture"
-                            {...props}
-                          >
-                            <Button icon={<UploadOutlined />}>
-                              Click to upload Image
-                            </Button>
-                          </Upload>
-                        </Form.Item>
-                        <Form.Item
-                          label="Bio"
-                          name="about"
-                          initialValue={user?.about}
-                        >
-                          <Input.TextArea />
-                        </Form.Item>
-                        <Form.Item label="Password" name="newPassword">
-                          <Input.Password placeholder="Enter New Password" />
-                        </Form.Item>
-                        <Form.Item>
-                          <Button
-                            type="primary"
-                            htmlType="submit"
-                            className="w-full"
-                          >
-                            Update
-                          </Button>
-                        </Form.Item>
-                      </Form>
-                    </div>
+                    
                   </div>
-                </dialog>
+                </dialog> */}
               </div>
               <div className="flex gap-2 items-center pb-2">
                 <MdOutlineEmail className="text-3xl border border-black rounded-full p-1" />
@@ -407,15 +232,15 @@ const Profile = () => {
             </div>
             <div className="pt-5">
               <div className="flex items-center gap-2 first-letter:capitalize">
-                Preferred Salary: {user?.preferredSalary && <p>{user?.preferredSalary}/hr</p>}
+                <span className="font-semibold">Preferred Salary:</span> {user?.preferredSalary && <p>{user?.preferredSalary}/hr</p>}
                 {!user?.preferredSalary && <p>N/A</p>}
               </div>
               <div className="flex items-center gap-2 capitalize">
-                Skill Level: {user?.expertiseLevel && <p>{user?.expertiseLevel}</p>}
+                <span className="font-semibold">Skill Level:</span> {user?.expertiseLevel && <p>{user?.expertiseLevel}</p>}
                 {!user?.expertiseLevel && <p>N/A</p>}
               </div>
               <div className="flex items-center gap-2 capitalize">
-                Preferred Employment: {user?.preferredJobType && <p>{user?.preferredJobType}</p>}
+                <span className="font-semibold">Preferred Employment:</span> {user?.preferredJobType && <p>{user?.preferredJobType}</p>}
                 {!user?.preferredJobType && <p>N/A</p>}
               </div>
             </div>
@@ -440,7 +265,7 @@ const Profile = () => {
             {!user?.about && <p>N/A</p>}
           </div>
         </div>
-        <div className="flex justify-end mt-3">
+        <div className="flex justify-center mt-8">
           <button
             className="btn btn-error text-white font-bold"
             onClick={handleDeleteAccount}

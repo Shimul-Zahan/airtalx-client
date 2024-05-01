@@ -86,7 +86,7 @@ const AllJobs = () => {
       <div className="grid lg:grid-cols-3 grid-cols-1 m-3">
         {currentJobs.map((singleJob) => (
           <div className="custom-shadow m-3 p-4 rounded-md" key={singleJob._id}>
-            <div className="flex justify-between items-center pb-4">
+            <div className="flex justify-between items-start pb-4">
               <div>
                 <h3 className="text-2xl font-semibold capitalize">
                   {singleJob.jobTitle}
@@ -100,7 +100,7 @@ const AllJobs = () => {
                   </Link>
                 </p>
               </div>
-              <div className="">
+              <div className="flex gap-2">
                 <p className="border border-black rounded-md font-semibold p-2">
                   {singleJob.jobType}
                 </p>
@@ -109,8 +109,8 @@ const AllJobs = () => {
             </div>
             <div className="flex gap-2 items-center pb-2 text-lg font-semibold">
               <SlWallet />
-              <p>${singleJob.startingSalary}</p> -
-              <p>${singleJob.endingSalary}</p>
+              <p>${singleJob.startingSalary}/hr</p> -
+              <p>${singleJob.endingSalary}/hr</p>
             </div>
             <div>
               <p>
