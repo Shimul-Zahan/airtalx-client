@@ -81,6 +81,8 @@ const AllJobs = () => {
           </option>
           <option value="Job">Job</option>
           <option value="Employer">Employer</option>
+          <option value="Full Time">Full Time</option>
+          <option value="Part Time">Part Time</option>
         </select>
       </div>
       <div className="grid lg:grid-cols-3 grid-cols-1 m-3">
@@ -91,12 +93,15 @@ const AllJobs = () => {
                 <h3 className="text-2xl font-semibold capitalize">
                   {singleJob.jobTitle}
                 </h3>
-                <p className="mb-3 text-base font-semibold">{singleJob.jobPostDate}</p>
+                <p className="mb-3 text-base font-semibold">
+                  {singleJob.jobPostDate}
+                </p>
                 <p>
                   by{" "}
-                  <Link to={`/user/${singleJob.email}`}><span className="text-[#1d9cb5] capitalize font-semibold cursor-pointer">
-                    {singleJob.companyName}
-                  </span>
+                  <Link to={`/employeProfile/${singleJob._id}`}>
+                    <span className="text-[#1d9cb5] capitalize font-semibold cursor-pointer">
+                      {singleJob.companyName}
+                    </span>
                   </Link>
                 </p>
               </div>
@@ -115,7 +120,10 @@ const AllJobs = () => {
             <div>
               <p>
                 {singleJob.jobDescription.substring(0, 120)}...
-                <Link to={`/jobdetails/${singleJob._id}`} className="text-[#1d9cb5]">
+                <Link
+                  to={`/jobdetails/${singleJob._id}`}
+                  className="text-[#1d9cb5]"
+                >
                   know more
                 </Link>
               </p>
@@ -139,8 +147,9 @@ const AllJobs = () => {
             <button
               key={i}
               onClick={() => paginate(i + 1)}
-              className={`join-item btn btn-outline mr-2 ${currentPage === i + 1 ? "bg-green-400 text-white" : ""
-                }`}
+              className={`join-item btn btn-outline mr-2 ${
+                currentPage === i + 1 ? "bg-green-400 text-white" : ""
+              }`}
             >
               {i + 1}
             </button>

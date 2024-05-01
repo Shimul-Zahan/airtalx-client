@@ -28,6 +28,7 @@ const Profile = () => {
       data.append("location", location || user?.location);
       data.append("studies", studies || user?.studies);
       data.append("about",  about || user?.about);
+      data.append("verification", user?.verification);
       data.append("preferredSalary", preferredSalary || user?.preferredSalary);
       data.append("expertiseField", expertiseField || user?.expertiseField);
       data.append("preferredJobType",  preferredJobType || user?.preferredJobType);

@@ -13,6 +13,7 @@ import UserProfile from "../pages/Users/UserProfile";
 import PrivateRouter from "./PrivateRouter";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../pages/ForgotPassword/ResetPassword/ResetPassword";
+import EmployeProfile from "../pages/EmployeProfile/EmployeProfile";
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ export const router = createBrowserRouter([
       {
         path: '/user/:email',
         element: <PrivateRouter><UserProfile /></PrivateRouter>
+      },
+      {
+        path: '/employeProfile/:id',
+        element: <PrivateRouter><EmployeProfile /></PrivateRouter>
       },
       {
         path: '/forgot-password',
