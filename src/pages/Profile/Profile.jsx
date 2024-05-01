@@ -28,12 +28,12 @@ const Profile = () => {
       data.append("location", location || user?.location);
       data.append("studies", studies || user?.studies);
       data.append("about",  about || user?.about);
-      data.append("preferredSalary", preferredSalary);
-      data.append("expertiseField", expertiseField);
-      data.append("preferredJobType", preferredJobType);
-      data.append("expertiseLevel", expertiseLevel);
-      data.append("jobPosition", jobPosition);
-      data.append("jobCompanyName", jobCompanyName);
+      data.append("preferredSalary", preferredSalary || user?.preferredSalary);
+      data.append("expertiseField", expertiseField || user?.expertiseField);
+      data.append("preferredJobType",  preferredJobType || user?.preferredJobType);
+      data.append("expertiseLevel",  expertiseLevel || user?.expertiseLevel);
+      data.append("jobPosition",  jobPosition || user?.jobPosition);
+      data.append("jobCompanyName",  jobCompanyName || user?.jobCompanyName);
       data.append("role", user?.role);
       data.append("oldPass", user?.password);
       data.append("isUpdate", newPassword ? "False" : "True");
