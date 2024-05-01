@@ -6,8 +6,17 @@ const PostJob = () => {
     const { user } = useContext(AuthContext);
     const [userData, setUserData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [defaultDate, setDefaultDate] = useState('');
 
     useEffect(() => {
+        const currentDate = new Date();
+        const formattedDate = currentDate.toLocaleDateString('en-US', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+        });
+        setDefaultDate(formattedDate);
+
         const url = `http://localhost:5000/users?email=${user?.email}`;
         fetch(url)
             .then(res => res.json())
@@ -29,10 +38,12 @@ const PostJob = () => {
         const email = form.email.value;
         const companyName = form.companyName.value;
         const jobTitle = form.jobTitle.value;
-        const salary = form.salary.value;
+        const startingSalary = form.startingSalary.value;
+        const endingSalary = form.endingSalary.value;
+        const jobPostDate = form.jobPostDate.value;
         const jobDescription = form.jobDescription.value;
 
-        const newJobPost = { headline, jobType, email, companyName, jobTitle, salary, jobDescription }
+        const newJobPost = { headline, jobType, email, companyName, jobTitle, startingSalary, endingSalary, jobPostDate, jobDescription }
         fetch('http://localhost:5000/newJobPost', {
             method: 'POST',
             headers: {
@@ -42,12 +53,11 @@ const PostJob = () => {
         })
             .then(res => res.json())
             .then(data => {
-                if(data.insertedId)
-                {
+                if (data.insertedId) {
                     message.success("Job Posted Sucessfully!");
                     form.reset();
                 }
-                else{
+                else {
                     message.error("Job Cannot Posted!")
                 }
             })
@@ -94,9 +104,21 @@ const PostJob = () => {
                 <div className="pt-8">
                     <h4 className="text-2xl font-semibold">Salary</h4>
                     <p>How much (US Dollar) do you want to pay per hour?</p>
-                    <div>
-                        <input name='salary' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4 w-[15%]" placeholder='e.g: "$6.00/hr", "$5.00/hr-$8.00/hr"' type="text" />
+                    <div className="lg:flex gap-3 items-center">
+                        <div className="flex items-center">
+                            <input name='startingSalary' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4" placeholder='e.g: "$2 (starting salary)"' type="text" />
+                            <p>/hr</p>
+                        </div>
+                        <p>to</p>
+                        <div className="flex items-center">
+                            <input name='endingSalary' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4" placeholder='e.g: "$6 (ending salary)"' type="text" />
+                            <p>/hr</p>
+                        </div>
                     </div>
+                </div>
+                <div className="hidden">
+                    <label htmlFor="">Date</label>
+                    <input name='jobPostDate' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4" type="text" value={defaultDate} />
                 </div>
                 <div className="pt-8">
                     <h4 className="text-2xl font-semibold">Job Description</h4>

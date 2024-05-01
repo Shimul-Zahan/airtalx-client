@@ -32,7 +32,7 @@ const EmployerSignup = () => {
 
       // Check if passwords match
       if (password !== confirmPassword) {
-        setError("Password and Confirm Password do not match");
+        setError("Password and Confirm Password does not match");
         return;
       }
 

@@ -16,30 +16,30 @@ const WhyUs = () => {
                 <ul>
                     <li className="flex pb-2">
                         <TiTick className="bg-green-700 text-white rounded-full absolute mt-2" />
-                        <span className="pl-6">All of your given datas will be safe and secured</span>
+                        <span className="pl-12">All of your given datas will be safe and secured</span>
                     </li>
                     <li className="flex pb-2">
                         <TiTick className="bg-green-700 text-white rounded-full absolute mt-2" />
-                        <span className="pl-6">Easy and safe payment methods via your bank accounts</span></li>
+                        <span className="pl-12">Easy and safe payment methods via your bank accounts</span></li>
                     <li className="flex pb-2">
                         <TiTick className="bg-green-700 text-white rounded-full absolute mt-2" />
-                        <span className="pl-6">Access to a wide range of job opportunities across various industries and locations</span>
+                        <span className="pl-12">Access to a wide range of job opportunities across various industries and locations</span>
                     </li>
                     <li className="flex pb-2">
                         <TiTick className="bg-green-700 text-white rounded-full absolute mt-2" />
-                        <span className="pl-6">Professional support and guidance throughout your job search journey</span>
+                        <span className="pl-12">Professional support and guidance throughout your job search journey</span>
                     </li>
                     <li className="flex pb-2">
                         <TiTick className="bg-green-700 text-white rounded-full absolute mt-2" />
-                        <span className="pl-6">Regular updates on the latest job openings and trends in the job market</span>
+                        <span className="pl-12">Regular updates on the latest job openings and trends in the job market</span>
                     </li>
                     <li className="flex pb-2">
                         <TiTick className="bg-green-700 text-white rounded-full absolute mt-2" />
-                        <span className="pl-6">Opportunities for skill development and career advancement</span>
+                        <span className="pl-12">Opportunities for skill development and career advancement</span>
                     </li>
                     <li className="flex pb-2">
                         <TiTick className="bg-green-700 text-white rounded-full absolute mt-2" />
-                        <span className="pl-6">Interactive tools and resources to enhance your job search experience</span>
+                        <span className="pl-12">Interactive tools and resources to enhance your job search experience</span>
                     </li>
                 </ul>
 

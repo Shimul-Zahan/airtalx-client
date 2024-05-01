@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../../providers/AuthProviders";
-import { MdOutlineDeleteForever, MdOutlineEmail } from "react-icons/md";
+import { MdOutlineDeleteForever, MdOutlineEmail, MdWorkOutline } from "react-icons/md";
 import { LuGraduationCap } from "react-icons/lu";
 import { SlLocationPin } from "react-icons/sl";
 import { FaRegEdit } from "react-icons/fa";
@@ -14,11 +14,13 @@ const Profile = () => {
   const [fileList, setFileList] = useState([]);
   const [form] = Form.useForm();
   const [file, setFile] = useState();
+  console.log(user)
 
   const onFinish = async (values) => {
     console.log("🚀 ~ onFinish ~ values:", values);
     try {
-      const { name, location, studies, about, newPassword } = values || {};
+      const { name, location, studies, about, newPassword, preferredSalary,
+        preferredJobType, expertiseField, expertiseLevel, jobPosition, jobCompanyName } = values || {};
 
       const data = new FormData();
       data.append("name", name);
@@ -26,6 +28,12 @@ const Profile = () => {
       data.append("location", location);
       data.append("studies", studies);
       data.append("about", about);
+      data.append("preferredSalary", preferredSalary);
+      data.append("expertiseField", expertiseField);
+      data.append("preferredJobType", preferredJobType);
+      data.append("expertiseLevel", expertiseLevel);
+      data.append("jobPosition", jobPosition);
+      data.append("jobCompanyName", jobCompanyName);
       data.append("role", user?.role);
       data.append("oldPass", user?.password);
       data.append("images", fileList[0]?.originFileObj || "");
@@ -155,17 +163,10 @@ const Profile = () => {
   return (
     <div className="lg:w-3/4 w-11/12 mx-auto my-12">
       <div>
-        <div className="grid lg:grid-cols-9 grid-cols-1 lg:gap-8 gap-y-7">
-          <div className="custom-shadow p-4 col-span-2 rounded-md relative">
+        <div className="grid lg:grid-cols-9 grid-cols-1 lg:gap-8 gap-7">
+          <div className="custom-shadow p-4 lg:col-span-2 rounded-md relative">
             <div className="flex justify-center">
-              {/* <div className="w-40 h-40 avatar">
-                <img
-                  className="rounded-full w-full h-full object-cover"
-                  src={user?.photoURL}
-                  alt=""
-                />
-              </div> */}
-              <label className="avatar w-40">
+              <label className="avatar w-48">
                 <div className="rounded-full border-2 border-white">
                   <div>
                     <img src={user?.photoURL} alt="User Photo" />
@@ -177,19 +178,21 @@ const Profile = () => {
               {user?.role}
             </p>
           </div>
-          <div className="custom-shadow rounded-md p-4 col-span-7">
+          <div className="custom-shadow rounded-md p-4 lg:col-span-7">
             <div>
               <div className="flex justify-between item">
-                <h3 className="font-semibold text-3xl pb-2 capitalize">
-                  {user?.name}
-                </h3>
+                <div>
+                  <h3 className="font-semibold text-4xl pb-5 capitalize">
+                    {user?.name}
+                  </h3>
+                </div>
                 {/* You can open the modal using document.getElementById('ID').showModal() method */}
                 <div className="flex items-center">
                   <div className="flex items-center gap-2">
                     {user.role === "jobseeker" && (
                       <>
                         <button
-                          className="btn btn-outline btn-info"
+                          className="border border-black py-2 px-3 rounded-md text-xl"
                           onClick={() =>
                             document.getElementById("my_modal_5").showModal()
                           }
@@ -227,7 +230,7 @@ const Profile = () => {
                             </div>
                           </div>
                         </dialog>
-                        <button className="btn btn-outline btn-info">
+                        <button className="border border-black py-2 px-3 rounded-md text-xl">
                           <IoMdDownload
                             className={`${user?.resume ? "" : "disabled"}`}
                             size="1.5em"
@@ -241,7 +244,7 @@ const Profile = () => {
                     )}
 
                     <FaRegEdit
-                      className="text-4xl p-1 cursor-pointer rounded-md border border-black right-0"
+                      className="text-5xl p-2 cursor-pointer rounded-md border border-black right-0"
                       onClick={() =>
                         document.getElementById("my_modal_3").showModal()
                       }
@@ -288,6 +291,59 @@ const Profile = () => {
                           <Input />
                         </Form.Item>
                         <Form.Item
+                          label="Preferred Salary"
+                          name="preferredSalary"
+                          initialValue={user?.preferredSalary}
+                        >
+                          <Input />
+                        </Form.Item>
+                        <Form.Item
+                          label="Preferred Job Type"
+                          name="preferredJobType"
+                          initialValue={user?.preferredJobType}
+                        >
+                          <Input />
+                        </Form.Item>
+                        <Form.Item
+                          label="Expertise Field"
+                          name="expertiseField"
+                          initialValue={user?.expertiseField}
+                        >
+                          <Input />
+                        </Form.Item>
+                        <Form.Item
+                          label="Expertise Level"
+                          name="expertiseLevel"
+                          initialValue={user?.expertiseLevel}
+                        >
+                          <Input />
+                        </Form.Item>
+                        <Form.Item
+                          label="Job Position"
+                          name="jobPosition"
+                          initialValue={user?.jobPosition}
+                        >
+                          <Input />
+                        </Form.Item>
+                        <Form.Item
+                          label="Current Company Name"
+                          name="jobCompanyName"
+                          initialValue={user?.jobCompanyName}
+                        >
+                          <Input />
+                        </Form.Item>
+                        {/* <Form.Select
+                          label="Expertise Field"
+                          name="expertiseField"
+                          initialValue={user?.expertiseField}
+                        >
+                          <Select>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Expert">Expert</option>
+                          </Select>
+                        </Form.Select> */}
+                        <Form.Item
                           name="user_image"
                           valuePropName="fileList"
                           label="Image"
@@ -328,19 +384,52 @@ const Profile = () => {
                   </div>
                 </dialog>
               </div>
-              <div className="flex gap-2 items-center">
-                <MdOutlineEmail className="text-2xl pt-1" />
+              <div className="flex gap-2 items-center pb-2">
+                <MdOutlineEmail className="text-3xl border border-black rounded-full p-1" />
                 <p>{user?.email}</p>
               </div>
-              <div className="flex gap-2 items-center capitalize">
-                <LuGraduationCap className="text-2xl pt-1" />
+              <div className="flex gap-2 items-center capitalize pb-2">
+                <SlLocationPin className="text-3xl border border-black rounded-full p-1" />
+                {user?.location && <p>{user?.location}</p>}
+                {!user?.location && <p>N/A</p>}
+              </div>
+              <div className="flex gap-2 items-center capitalize pb-2">
+                <LuGraduationCap className="text-3xl border border-black rounded-full p-1" />
                 {user?.studies && <p>{user?.studies}</p>}
                 {!user?.studies && <p>N/A</p>}
               </div>
-              <div className="flex gap-2 items-center capitalize">
-                <SlLocationPin className="text-2xl pt-1" />
-                {user?.location && <p>{user?.location}</p>}
-                {!user?.location && <p>N/A</p>}
+              <div className="flex gap-2 items-center capitalize pb-2">
+                <MdWorkOutline className="text-3xl border border-black rounded-full p-1" />
+                {user?.jobCompanyName && <p>{user?.jobCompanyName}</p>}
+                {!user?.jobCompanyName && <p>N/A</p>}
+              </div>
+            </div>
+            <div className="pt-5">
+              <div className="flex items-center gap-2 first-letter:capitalize">
+                Preferred Salary: {user?.preferredSalary && <p>{user?.preferredSalary}/hr</p>}
+                {!user?.preferredSalary && <p>N/A</p>}
+              </div>
+              <div className="flex items-center gap-2 capitalize">
+                Skill Level: {user?.expertiseLevel && <p>{user?.expertiseLevel}</p>}
+                {!user?.expertiseLevel && <p>N/A</p>}
+              </div>
+              <div className="flex items-center gap-2 capitalize">
+                Preferred Employment: {user?.preferredJobType && <p>{user?.preferredJobType}</p>}
+                {!user?.preferredJobType && <p>N/A</p>}
+              </div>
+            </div>
+          </div>
+          <div className="custom-shadow lg:col-span-9 rounded-md p-3">
+            <div className="pb-6">
+              <h4 className="font-semibold pb-2">Expertise field</h4>
+              <div>
+                <span>
+                  {user?.expertiseField && <span className="border border-black capitalize px-2 py-1 mr-3 rounded-full text-base">{user?.expertiseField}</span>}
+                  {!user?.expertiseField && <p>N/A</p>}
+                </span>
+                {/* <span className="border border-black px-2 py-1 mr-3 rounded-full text-base">Graphic Designer</span>
+                <span className="border border-black px-2 py-1 mr-3 rounded-full text-base">Graphic Designer</span>
+                <span className="border border-black px-2 py-1 mr-3 rounded-full text-base">Graphic Designer</span> */}
               </div>
             </div>
             <h4 className="font-semibold pt-6">About Me</h4>

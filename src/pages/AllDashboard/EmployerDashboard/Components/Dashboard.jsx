@@ -126,7 +126,24 @@ const Dashboard = () => {
           </h4>
         </div>
       </div>
-      <div className="custom-shadow p-4 rounded-md">
+      <div className="block lg:hidden">
+        <div className="grid grid-cols-1">
+          <div className="flex justify-between">
+            <h4 className="text-2xl font-semibold pb-4">Staff Pannel</h4>
+          </div>
+          {
+            currentJobs.map(job => <div className="custom-shadow p-4 rounded-md" key={job?.jobData?._id}>
+              <div className="flex justify-between items-center">
+                <p className="text-2xl">{job?.userEmail}</p>
+                <p>{job?.jobData?.jobType}</p>
+              </div>
+              <p>{job?.jobData?.jobTitle}</p>
+              <p>{job?.jobData?.salary}</p>
+            </div>)
+          }
+        </div>
+      </div>
+      <div className="custom-shadow hidden lg:block p-4 rounded-md">
         <div className="flex justify-between">
           <h4 className="text-2xl font-semibold">Staff Pannel</h4>
         </div>

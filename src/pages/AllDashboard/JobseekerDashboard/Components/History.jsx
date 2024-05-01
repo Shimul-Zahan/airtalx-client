@@ -53,10 +53,38 @@ const History = () => {
 
   return (
     <div className="p-6">
-      <div className="custom-shadow p-4 rounded-md">
+      <div className="block lg:hidden">
         <div className="flex justify-between">
           <h4 className="text-2xl font-semibold">History</h4>
-
+        </div>
+        <div className="grid grid-cols-1 gap-6">
+          {
+            currentJobs.map(job => <div className="custom-shadow p-4 rounded-md" key={job?.jobData?._id}>
+              <div className="flex justify-between">
+                <p>{job?.userEmail}</p>
+                <p>{job?.jobData?.jobType}</p>
+              </div>
+              <p>{job?.jobData?.jobTitle}</p>
+              <p>{job?.jobData?.salary}</p>
+              <div
+                className={`badge ${getBadgeClass(
+                  job?.projectStatus
+                )} badge-md text-white`}
+              >
+                {job?.projectStatus}
+              </div>
+              <Link to={`/${job?.jobId}`} className="text-[#1d9cb5]">
+                <button className="btn btn-warning btn-md text-white">
+                  Details
+                </button>
+              </Link>
+            </div>)
+          }
+        </div>
+      </div>
+      <div className="custom-shadow p-4 rounded-md lg:block hidden">
+        <div className="flex justify-between">
+          <h4 className="text-2xl font-semibold">History</h4>
         </div>
         <div className="overflow-x-auto">
           <table className="table w-full">
@@ -126,9 +154,8 @@ const History = () => {
               <button
                 key={i}
                 onClick={() => paginate(i + 1)}
-                className={`join-item btn btn-outline mr-2 ${
-                  currentPage === i + 1 ? "bg-green-400 text-white" : ""
-                }`}
+                className={`join-item btn btn-outline mr-2 ${currentPage === i + 1 ? "bg-green-400 text-white" : ""
+                  }`}
               >
                 {i + 1}
               </button>
