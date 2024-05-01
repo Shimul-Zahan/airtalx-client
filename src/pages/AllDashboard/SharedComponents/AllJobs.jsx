@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { SlWallet } from "react-icons/sl";
 import { Link } from "react-router-dom";
 import { IoMdSearch } from "react-icons/io";
 import axios from "axios";
 import { TbMessage2 } from "react-icons/tb";
+import { AuthContext } from "../../../providers/AuthProviders";
 
 const AllJobs = () => {
   const [allJobs, setAllJobs] = useState([]);
@@ -11,6 +12,7 @@ const AllJobs = () => {
   const [allJobsPerPage] = useState(6);
   const [searchValue, setSearchValue] = useState("");
   const [typeSelect, seTypeSelect] = useState("");
+  const {user} = useContext(AuthContext)
 
   // Function to fetch filtered job data
   const fetchFilteredJobs = async () => {
@@ -109,7 +111,10 @@ const AllJobs = () => {
                 <p className="border border-black rounded-md font-semibold p-2">
                   {singleJob.jobType}
                 </p>
-                <TbMessage2 className="border cursor-pointer border-black text-5xl p-1 rounded-md" />
+                {
+                  user && <TbMessage2 className="border cursor-pointer border-black text-5xl p-1 rounded-md" />
+                }
+                
               </div>
             </div>
             <div className="flex gap-2 items-center pb-2 text-lg font-semibold">
