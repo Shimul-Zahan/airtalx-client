@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../../providers/AuthProviders";
-import { MdOutlineEmail } from "react-icons/md";
+import { MdOutlineDeleteForever, MdOutlineEmail } from "react-icons/md";
 import { LuGraduationCap } from "react-icons/lu";
 import { SlLocationPin } from "react-icons/sl";
 import { FaRegEdit } from "react-icons/fa";
@@ -10,7 +10,7 @@ import axios from "axios";
 import { IoMdDownload } from "react-icons/io";
 
 const Profile = () => {
-  const { user, setUser } = useContext(AuthContext);
+  const { user, setUser, logOut } = useContext(AuthContext);
   const [fileList, setFileList] = useState([]);
   const [form] = Form.useForm();
   const [file, setFile] = useState();
@@ -59,6 +59,26 @@ const Profile = () => {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
+  const handleDeleteAccount = () => {
+    axios
+      .delete(`http://localhost:5000/user/delete/${user?.email}`)
+      .then((response) => {
+        const { data } = response;
+        console.log("🚀 ~ .then ~ response:", response);
+        if (data.message) {
+          message.success("Profile deleted successfully");
+          logOut();
+        } else {
+          message.error("Failed to delete user");
+        }
+      })
+      .catch((error) => {
+        console.error("Error deleting user:", error);
+        message.error("An error occurred while deleting user");
+      });
+  };
+
   const normFile = (e) => {
     setFileList(e.fileList);
     // console.log(e.fileList);
@@ -324,9 +344,19 @@ const Profile = () => {
               </div>
             </div>
             <h4 className="font-semibold pt-6">About Me</h4>
-            {user?.about && <p className="first-letter:capitalize">{user?.about}</p>}
+            {user?.about && (
+              <p className="first-letter:capitalize">{user?.about}</p>
+            )}
             {!user?.about && <p>N/A</p>}
           </div>
+        </div>
+        <div className="flex justify-end mt-3">
+          <button
+            className="btn btn-error text-white font-bold"
+            onClick={handleDeleteAccount}
+          >
+            Delete Account <MdOutlineDeleteForever size="2em" />
+          </button>
         </div>
       </div>
     </div>
