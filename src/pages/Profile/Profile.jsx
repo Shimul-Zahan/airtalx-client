@@ -18,6 +18,60 @@ const Profile = () => {
   const [file, setFile] = useState();
   console.log(user)
 
+  const onFinish = async (values) => {
+    console.log("🚀 ~ onFinish ~ values:", values);
+    try {
+      const { name, location, studies, about, newPassword, preferredSalary,
+        preferredJobType, expertiseField, expertiseLevel, jobPosition, jobCompanyName } = values || {};
+
+      const data = new FormData();
+      data.append("name", name || user?.name);
+      data.append("password", newPassword);
+      data.append("location", location || user?.location);
+      data.append("studies", studies || user?.studies);
+      data.append("about",  about || user?.about);
+      data.append("verification", user?.verification);
+      data.append("preferredSalary", preferredSalary || user?.preferredSalary);
+      data.append("expertiseField", expertiseField || user?.expertiseField);
+      data.append("preferredJobType",  preferredJobType || user?.preferredJobType);
+      data.append("expertiseLevel",  expertiseLevel || user?.expertiseLevel);
+      data.append("jobPosition",  jobPosition || user?.jobPosition);
+      data.append("jobCompanyName",  jobCompanyName || user?.jobCompanyName);
+      data.append("role", user?.role);
+      data.append("oldPass", user?.password);
+      data.append("isUpdate", newPassword ? "False" : "True");
+      data.append("images", fileList[0]?.originFileObj || "");
+      const config = {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      };
+      const url = `http://localhost:5000/update/${user?.email}`;
+      try {
+        const response = await axios.put(url, data, config);
+        console.log("🚀 ~ onFinish ~ response:", response);
+        if (response.data.user) {
+          message.success("Profile Updated!");
+          setUser(response.data.user);
+          localStorage.setItem("access-token", response.data.token);
+          form.resetFields();
+        } else {
+          message.error(response.data.message || "Failed to update profile");
+        }
+      } catch (error) {
+        console.error("Update failed:", error);
+        message.error("Failed to update. Please try again later.");
+      }
+    } catch (error) {
+      console.error("Profile update failed:", error);
+      message.error("Failed to update profile. Please try again later.");
+    }
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
+
   const handleDeleteAccount = () => {
     axios
       .delete(`http://localhost:5000/user/delete/${user?.email}`)
