@@ -107,15 +107,47 @@ const EmployeProfile = () => {
                 Company Details
               </h4>
               <br />
-              <h4 className="font-semibold">Company Name: XXXXXX</h4>
-              <h4 className="font-semibold mt-2">Country: XXXXXX</h4>
-              <h4 className="font-semibold mt-2">Industry: XXXXXX</h4>
-              <h4 className="font-semibold mt-2">
-                Size of the company: XXXXXX
+              <h4 className="font-semibold">
+                Company Name:
+                {employeJobPost?.company && (
+                  <span>{employeJobPost?.company}</span>
+                )}
+                {!employeJobPost?.company && <span>N/A</span>}
               </h4>
-              <h4 className="font-semibold mt-2">No. of jobs posted: {allJobs?.length}</h4>
-              <h4 className="font-semibold mt-2">No. jobs filled: {approveJob?.length}</h4>
-              <h4 className="font-semibold mt-2">Member since April 27, 2024</h4>
+              <h4 className="font-semibold mt-2">
+                Country:{" "}
+                {employeJobPost?.country && (
+                  <span>{employeJobPost?.country}</span>
+                )}
+                {!employeJobPost?.country && <span>N/A</span>}
+              </h4>
+              <h4 className="font-semibold mt-2">
+                Industry:{" "}
+                {employeJobPost?.industry && (
+                  <span>{employeJobPost?.industry}</span>
+                )}
+                {!employeJobPost?.industry && <span>N/A</span>}
+              </h4>
+              <h4 className="font-semibold mt-2">
+                Size of the company:
+                {employeJobPost?.companySize && (
+                  <span>{employeJobPost?.companySize}</span>
+                )}
+                {!employeJobPost?.companySize && <span>N/A</span>}
+              </h4>
+              <h4 className="font-semibold mt-2">
+                No. of jobs posted: {allJobs?.length}
+              </h4>
+              <h4 className="font-semibold mt-2">
+                No. jobs filled: {approveJob?.length}
+              </h4>
+              <h4 className="font-semibold mt-2">
+                Member since: <span></span>
+                {employeJobPost?.memberSince && (
+                  <span>{employeJobPost?.memberSince}</span>
+                )}
+                {!employeJobPost?.memberSince && <span>N/A</span>}
+              </h4>
               <h4 className="font-semibold mt-2">
                 About the company: <br />
                 {employeJobPost?.aboutCompany && (

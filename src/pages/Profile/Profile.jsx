@@ -1,76 +1,23 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../../providers/AuthProviders";
-import { MdOutlineDeleteForever, MdOutlineEmail, MdWorkOutline } from "react-icons/md";
+import {
+  MdOutlineDeleteForever,
+  MdOutlineEmail,
+  MdWorkOutline,
+} from "react-icons/md";
 import { LuGraduationCap } from "react-icons/lu";
 import { SlLocationPin } from "react-icons/sl";
 import { FaRegEdit } from "react-icons/fa";
-import { message, Form, Input, Upload, Button, Select } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { message } from "antd";
 import axios from "axios";
 import { IoMdDownload } from "react-icons/io";
-import { Option } from "antd/es/mentions";
 import { Link } from "react-router-dom";
 
 const Profile = () => {
   const { user, setUser, logOut } = useContext(AuthContext);
-  const [fileList, setFileList] = useState([]);
-  const [form] = Form.useForm();
+
   const [file, setFile] = useState();
-  console.log(user)
-
-  const onFinish = async (values) => {
-    console.log("🚀 ~ onFinish ~ values:", values);
-    try {
-      const { name, location, studies, about, newPassword, preferredSalary,
-        preferredJobType, expertiseField, expertiseLevel, jobPosition, jobCompanyName } = values || {};
-
-      const data = new FormData();
-      data.append("name", name || user?.name);
-      data.append("password", newPassword);
-      data.append("location", location || user?.location);
-      data.append("studies", studies || user?.studies);
-      data.append("about",  about || user?.about);
-      data.append("verification", user?.verification);
-      data.append("preferredSalary", preferredSalary || user?.preferredSalary);
-      data.append("expertiseField", expertiseField || user?.expertiseField);
-      data.append("preferredJobType",  preferredJobType || user?.preferredJobType);
-      data.append("expertiseLevel",  expertiseLevel || user?.expertiseLevel);
-      data.append("jobPosition",  jobPosition || user?.jobPosition);
-      data.append("jobCompanyName",  jobCompanyName || user?.jobCompanyName);
-      data.append("role", user?.role);
-      data.append("oldPass", user?.password);
-      data.append("isUpdate", newPassword ? "False" : "True");
-      data.append("images", fileList[0]?.originFileObj || "");
-      const config = {
-        headers: {
-          "content-type": "multipart/form-data",
-        },
-      };
-      const url = `http://localhost:5000/update/${user?.email}`;
-      try {
-        const response = await axios.put(url, data, config);
-        console.log("🚀 ~ onFinish ~ response:", response);
-        if (response.data.user) {
-          message.success("Profile Updated!");
-          setUser(response.data.user);
-          localStorage.setItem("access-token", response.data.token);
-          form.resetFields();
-        } else {
-          message.error(response.data.message || "Failed to update profile");
-        }
-      } catch (error) {
-        console.error("Update failed:", error);
-        message.error("Failed to update. Please try again later.");
-      }
-    } catch (error) {
-      console.error("Profile update failed:", error);
-      message.error("Failed to update profile. Please try again later.");
-    }
-  };
-
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
+  console.log(user);
 
   const handleDeleteAccount = () => {
     axios
@@ -89,29 +36,6 @@ const Profile = () => {
         console.error("Error deleting user:", error);
         message.error("An error occurred while deleting user");
       });
-  };
-
-  const normFile = (e) => {
-    setFileList(e.fileList);
-    // console.log(e.fileList);
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e?.fileList;
-  };
-
-  const props = {
-    multiple: false,
-    onRemove: (file) => {
-      const index = fileList.indexOf(file);
-      const newFileList = fileList.slice();
-      newFileList.splice(index, 1);
-      setFileList(newFileList);
-    },
-    beforeUpload: () => {
-      return false;
-    },
-    fileList,
   };
 
   const upload1 = () => {
@@ -165,170 +89,240 @@ const Profile = () => {
       });
   };
   return (
-    <div className="lg:w-3/4 w-11/12 mx-auto my-12">
-      <div>
-        <div className="grid lg:grid-cols-9 grid-cols-1 lg:gap-8 gap-7">
-          <div className="custom-shadow p-4 lg:col-span-2 rounded-md relative">
-            <div className="flex justify-center">
-              <label className="avatar w-48">
-                <div className="rounded-full border-2 border-white">
-                  <div>
-                    <img src={user?.photoURL} alt="User Photo" />
-                  </div>
+    <>
+      {user && user?.role === "jobseeker" && (
+        <div className="lg:w-3/4 w-11/12 mx-auto my-12">
+          <div>
+            <div className="grid lg:grid-cols-9 grid-cols-1 lg:gap-8 gap-7">
+              <div className="custom-shadow p-4 lg:col-span-2 rounded-md relative">
+                <div className="flex justify-center">
+                  <label className="avatar w-48">
+                    <div className="rounded-full border-2 border-white">
+                      <div>
+                        <img src={user?.photoURL} alt="User Photo" />
+                      </div>
+                    </div>
+                  </label>
                 </div>
-              </label>
-            </div>
-            <div className="text-lg lg:absolute bottom-0 mx-auto w-[90%] text-center capitalize">
-              <p>Member Since: </p>
-              <p className="custom-shadow p-1 mb-4 capitalize">{user?.role}</p>
-            </div>
-          </div>
-          <div className="custom-shadow rounded-md p-4 lg:col-span-7">
-            <div>
-              <div className="flex justify-between item">
+                <div className="text-lg lg:absolute bottom-0 mx-auto w-[90%] text-center capitalize">
+                  <p className="custom-shadow p-1 mb-4 capitalize">
+                    {user?.jobPosition}
+                    {!user?.jobPosition && <p>N/A</p>}
+                  </p>
+                </div>
+              </div>
+              <div className="custom-shadow rounded-md p-4 lg:col-span-7">
                 <div>
-                  <h3 className="font-semibold text-4xl pb-5 capitalize">
-                    {user?.name}
-                  </h3>
-                </div>
-                {/* You can open the modal using document.getElementById('ID').showModal() method */}
-                <div className="flex items-center">
-                  <div className="flex items-center gap-2">
-                    {user.role === "jobseeker" && (
-                      <>
-                        <button
-                          className="border border-black py-2 px-3 rounded-md text-xl"
-                          onClick={() =>
-                            document.getElementById("my_modal_5").showModal()
-                          }
-                        >
-                          Resume Upload
-                        </button>
-                        <dialog
-                          id="my_modal_5"
-                          className="modal modal-bottom sm:modal-middle"
-                        >
-                          <div className="modal-box">
-                            <h3 className="font-bold text-lg mb-5 text-center">
-                              Uplaod Resume!
-                            </h3>
-                            <div className="flex justify-center gap-3">
-                              <input
-                                type="file"
-                                className="file-input file-input-primary "
-                                onChange={(e) => setFile(e.target.files[0])}
+                  <div className="flex justify-between item">
+                    <div>
+                      <h3 className="font-semibold text-4xl pb-5 capitalize">
+                        {user?.name}
+                      </h3>
+                    </div>
+                    <div className="flex items-center">
+                      <div className="flex items-center gap-2">
+                        {user.role === "jobseeker" && (
+                          <>
+                            <button
+                              className="border border-black py-2 px-3 rounded-md text-xl"
+                              onClick={() =>
+                                document
+                                  .getElementById("my_modal_5")
+                                  .showModal()
+                              }
+                            >
+                              Resume Upload
+                            </button>
+                            <dialog
+                              id="my_modal_5"
+                              className="modal modal-bottom sm:modal-middle"
+                            >
+                              <div className="modal-box">
+                                <h3 className="font-bold text-lg mb-5 text-center">
+                                  Uplaod Resume!
+                                </h3>
+                                <div className="flex justify-center gap-3">
+                                  <input
+                                    type="file"
+                                    className="file-input file-input-primary "
+                                    onChange={(e) => setFile(e.target.files[0])}
+                                  />
+                                  <button
+                                    type="button"
+                                    className="btn btn-primary btn-outline font-bold"
+                                    onClick={upload1}
+                                  >
+                                    Upload
+                                  </button>
+                                </div>
+                                <div className="modal-action">
+                                  <form method="dialog">
+                                    <button className="btn btn-error text-white">
+                                      Close
+                                    </button>
+                                  </form>
+                                </div>
+                              </div>
+                            </dialog>
+                            <button className="border border-black py-2 px-3 rounded-md text-xl">
+                              <IoMdDownload
+                                className={`${user?.resume ? "" : "disabled"}`}
+                                size="1.5em"
+                                style={{
+                                  cursor: user?.resume
+                                    ? "pointer"
+                                    : "not-allowed",
+                                }}
+                                onClick={user?.resume ? downloadFile1 : null}
                               />
-                              <button
-                                type="button"
-                                className="btn btn-primary btn-outline font-bold"
-                                onClick={upload1}
-                              >
-                                Upload
-                              </button>
-                            </div>
-                            <div className="modal-action">
-                              <form method="dialog">
-                                <button className="btn btn-error text-white">
-                                  Close
-                                </button>
-                              </form>
-                            </div>
-                          </div>
-                        </dialog>
-                        <button className="border border-black py-2 px-3 rounded-md text-xl">
-                          <IoMdDownload
-                            className={`${user?.resume ? "" : "disabled"}`}
-                            size="1.5em"
-                            style={{
-                              cursor: user?.resume ? "pointer" : "not-allowed",
-                            }}
-                            onClick={user?.resume ? downloadFile1 : null}
-                          />
-                        </button>
-                      </>
-                    )}
+                            </button>
+                          </>
+                        )}
 
-                    <Link to={'/updateProfile'}>
-                      <FaRegEdit className="text-5xl p-2 cursor-pointer rounded-md border border-black right-0" />
-                    </Link>
+                        <Link to={"/updateProfile"}>
+                          <FaRegEdit className="text-5xl p-2 cursor-pointer rounded-md border border-black right-0" />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex gap-2 items-center pb-2">
+                    <MdOutlineEmail className="text-3xl border border-black rounded-full p-1" />
+                    <p>{user?.email}</p>
+                  </div>
+                  <div className="flex gap-2 items-center capitalize pb-2">
+                    <SlLocationPin className="text-3xl border border-black rounded-full p-1" />
+                    {user?.location && <p>{user?.location}</p>}
+                    {!user?.location && <p>N/A</p>}
+                  </div>
+                  <div className="flex gap-2 items-center capitalize pb-2">
+                    <LuGraduationCap className="text-3xl border border-black rounded-full p-1" />
+                    {user?.studies && <p>{user?.studies}</p>}
+                    {!user?.studies && <p>N/A</p>}
+                  </div>
+                  <div className="flex gap-2 items-center capitalize pb-2">
+                    <MdWorkOutline className="text-3xl border border-black rounded-full p-1" />
+                    {user?.jobCompanyName && <p>{user?.jobCompanyName}</p>}
+                    {!user?.jobCompanyName && <p>N/A</p>}
                   </div>
                 </div>
-                {/* <dialog id="my_modal_3" className="modal">
-                  <div className="modal-box">
-                    <form method="dialog">
-                      <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-                        ✕
-                      </button>
-                    </form>
-                    
+                <div className="pt-5">
+                <div className="flex items-center gap-2 capitalize">
+                    <span className="font-semibold">Skill Level:</span>{" "}
+                    {user?.expertiseLevel && <p>{user?.expertiseLevel}</p>}
+                    {!user?.expertiseLevel && <p>N/A</p>}
                   </div>
-                </dialog> */}
+                  <div className="flex items-center gap-2 first-letter:capitalize">
+                    <span className="font-semibold">Preferred Salary:</span>{" "}
+                    {user?.preferredSalary && <p>{user?.preferredSalary}/hr</p>}
+                    {!user?.preferredSalary && <p>N/A</p>}
+                  </div>
+                  
+                  <div className="flex items-center gap-2 capitalize">
+                    <span className="font-semibold">Preferred Employment:</span>{" "}
+                    {user?.preferredJobType && <p>{user?.preferredJobType}</p>}
+                    {!user?.preferredJobType && <p>N/A</p>}
+                  </div>
+                </div>
               </div>
-              <div className="flex gap-2 items-center pb-2">
-                <MdOutlineEmail className="text-3xl border border-black rounded-full p-1" />
-                <p>{user?.email}</p>
-              </div>
-              <div className="flex gap-2 items-center capitalize pb-2">
-                <SlLocationPin className="text-3xl border border-black rounded-full p-1" />
-                {user?.location && <p>{user?.location}</p>}
-                {!user?.location && <p>N/A</p>}
-              </div>
-              <div className="flex gap-2 items-center capitalize pb-2">
-                <LuGraduationCap className="text-3xl border border-black rounded-full p-1" />
-                {user?.studies && <p>{user?.studies}</p>}
-                {!user?.studies && <p>N/A</p>}
-              </div>
-              <div className="flex gap-2 items-center capitalize pb-2">
-                <MdWorkOutline className="text-3xl border border-black rounded-full p-1" />
-                {user?.jobCompanyName && <p>{user?.jobCompanyName}</p>}
-                {!user?.jobCompanyName && <p>N/A</p>}
+              <div className="custom-shadow lg:col-span-9 rounded-md p-3">
+                <div className="pb-6">
+                  <h4 className="font-semibold pb-2">Expertise field</h4>
+                  <div>
+                    <span>
+                      {user?.expertiseField && (
+                        <span className="border border-black capitalize px-2 py-1 mr-3 rounded-full text-base">
+                          {user?.expertiseField}
+                        </span>
+                      )}
+                      {!user?.expertiseField && <p>N/A</p>}
+                    </span>
+                  </div>
+                </div>
+                <h4 className="font-semibold pt-2">About Me</h4>
+                {user?.about && (
+                  <p className="first-letter:capitalize">{user?.about}</p>
+                )}
+                {!user?.about && <p>N/A</p>}
               </div>
             </div>
-            <div className="pt-5">
-              <div className="flex items-center gap-2 first-letter:capitalize">
-                <span className="font-semibold">Preferred Salary:</span> {user?.preferredSalary && <p>{user?.preferredSalary}/hr</p>}
-                {!user?.preferredSalary && <p>N/A</p>}
-              </div>
-              <div className="flex items-center gap-2 capitalize">
-                <span className="font-semibold">Skill Level:</span> {user?.expertiseLevel && <p>{user?.expertiseLevel}</p>}
-                {!user?.expertiseLevel && <p>N/A</p>}
-              </div>
-              <div className="flex items-center gap-2 capitalize">
-                <span className="font-semibold">Preferred Employment:</span> {user?.preferredJobType && <p>{user?.preferredJobType}</p>}
-                {!user?.preferredJobType && <p>N/A</p>}
-              </div>
+            <div className="flex justify-center mt-8">
+              <button
+                className="btn btn-error text-white font-bold"
+                onClick={handleDeleteAccount}
+              >
+                Delete Account <MdOutlineDeleteForever size="2em" />
+              </button>
             </div>
           </div>
-          <div className="custom-shadow lg:col-span-9 rounded-md p-3">
-            <div className="pb-6">
-              <h4 className="font-semibold pb-2">Expertise field</h4>
-              <div>
-                <span>
-                  {user?.expertiseField && <span className="border border-black capitalize px-2 py-1 mr-3 rounded-full text-base">{user?.expertiseField}</span>}
-                  {!user?.expertiseField && <p>N/A</p>}
-                </span>
-                {/* <span className="border border-black px-2 py-1 mr-3 rounded-full text-base">Graphic Designer</span>
-                <span className="border border-black px-2 py-1 mr-3 rounded-full text-base">Graphic Designer</span>
-                <span className="border border-black px-2 py-1 mr-3 rounded-full text-base">Graphic Designer</span> */}
+        </div>
+      )}
+      {user && user?.role === "employer" && (
+        <div className="lg:w-3/4 w-11/12 mx-auto my-12">
+          <div>
+            <div className="grid lg:grid-cols-9 grid-cols-1 lg:gap-8 gap-7">
+              <div className="custom-shadow  min-h-72   lg:col-span-2 rounded-md relative">
+                <div className="flex justify-center items-center">
+                  <label className="avatar w-48 mt-5">
+                    <div className="rounded-full border-2 border-white">
+                      <div>
+                        <img src={user?.photoURL} alt="User Photo" />
+                      </div>
+                    </div>
+                  </label>
+                </div>
+                <div className="text-lg lg:absolute bottom-0 mx-auto w-full text-center capitalize">
+                  <p className="custom-shadow p-1  capitalize">
+                    {user?.role}
+                  </p>
+                </div>
+              </div>
+              <div className="custom-shadow rounded-md p-4 lg:col-span-7">
+                <div>
+                  <div className="flex justify-between item">
+                    <div>
+                      <h3 className="font-semibold text-4xl pb-5 capitalize">
+                        {user?.name}
+                      </h3>
+                    </div>
+                    <div className="flex items-center">
+                      <div className="flex items-center gap-2">
+                        <Link to={"/updateProfile"}>
+                          <FaRegEdit className="text-5xl p-2 cursor-pointer rounded-md border border-black right-0" />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex gap-2 items-center pb-2">
+                    <MdOutlineEmail className="text-3xl border border-black rounded-full p-1" />
+                    <p>{user?.email}</p>
+                  </div>
+                  <div className="flex gap-2 items-center capitalize pb-2">
+                    <SlLocationPin className="text-3xl border border-black rounded-full p-1" />
+                    {user?.location && <p>{user?.location}</p>}
+                    {!user?.location && <p>N/A</p>}
+                  </div>
+                </div>
+              </div>
+              <div className="custom-shadow lg:col-span-9 rounded-md p-3">
+                <h4 className="font-semibold ">About Me</h4>
+                {user?.about && (
+                  <p className="first-letter:capitalize">{user?.about}</p>
+                )}
+                {!user?.about && <p>N/A</p>}
               </div>
             </div>
-            <h4 className="font-semibold pt-6">About Me</h4>
-            {user?.about && (
-              <p className="first-letter:capitalize">{user?.about}</p>
-            )}
-            {!user?.about && <p>N/A</p>}
+            <div className="flex justify-center mt-8">
+              <button
+                className="btn btn-error text-white font-bold"
+                onClick={handleDeleteAccount}
+              >
+                Delete Account <MdOutlineDeleteForever size="2em" />
+              </button>
+            </div>
           </div>
         </div>
-        <div className="flex justify-center mt-8">
-          <button
-            className="btn btn-error text-white font-bold"
-            onClick={handleDeleteAccount}
-          >
-            Delete Account <MdOutlineDeleteForever size="2em" />
-          </button>
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

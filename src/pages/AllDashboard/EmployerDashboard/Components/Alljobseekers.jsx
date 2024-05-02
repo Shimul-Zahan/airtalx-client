@@ -9,6 +9,7 @@ import axios from "axios";
 
 const Alljobseekers = () => {
   const [jobseekers, setJobseekers] = useState([]);
+  console.log("🚀 ~ Alljobseekers ~ jobseekers:", jobseekers)
   const [currentPage, setCurrentPage] = useState(1);
   const [allJobsPerPage] = useState(6);
   const [searchValue, setSearchValue] = useState("");
@@ -31,12 +32,11 @@ const Alljobseekers = () => {
   };
 
   useEffect(() => {
-    const url = "http://localhost:5000/users";
+    const url = "http://localhost:5000/users/jobseeker";
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        const jobseekerData = data.filter((user) => user.role === "jobseeker");
-        setJobseekers(jobseekerData);
+        setJobseekers(data);
       })
       .catch((error) => {
         console.log(error);
@@ -65,7 +65,7 @@ const Alljobseekers = () => {
   return (
     <>
       {/* search functionality */}
-      <div className="flex items-center gap-2 justify-center mt-10">
+      <div className="flex items-center gap-2 justify-center mt-5">
         <label className="input input-bordered flex items-center gap-2">
           <input
             type="text"

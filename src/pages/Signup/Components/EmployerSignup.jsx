@@ -1,7 +1,7 @@
 import Lottie from "lottie-react";
 import Employer from "../../../../public/employer.json";
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../../providers/AuthProviders";
 import { FaGoogle } from "react-icons/fa";
 import axios from "axios";
@@ -10,7 +10,6 @@ import { UploadOutlined } from "@ant-design/icons";
 
 const EmployerSignup = () => {
   const [error, setError] = useState("");
-  const [defaultDate, setDefaultDate] = useState('');
   const { signinWithGoogle, user } = useContext(AuthContext);
   const [fileList, setFileList] = useState([]);
   const navigate = useNavigate();
@@ -36,13 +35,19 @@ const EmployerSignup = () => {
         setError("Password and Confirm Password does not match");
         return;
       }
-
+      const currentDate = new Date();
+      const formattedDate = currentDate.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "2-digit",
+      });
+      
       const data = new FormData();
       data.append("name", name);
       data.append("email", email);
       data.append("role", "employer");
       data.append("password", confirmPassword);
-      data.append("memberSince", defaultDate);
+      data.append("memberSince", formattedDate);
       data.append("images", fileList[0].originFileObj);
 
       const config = {
@@ -54,7 +59,7 @@ const EmployerSignup = () => {
       try {
         await axios.post(url, data, config);
         message.success("Signup successful");
-        navigate("/login", { replace: true });
+        navigate("/otp")
       } catch (error) {
         console.error("Signup failed:", error);
         message.error("Failed to signup. Please try again later.");
@@ -97,6 +102,13 @@ const EmployerSignup = () => {
       .then((result) => {
         const person = result?.user;
         console.log("🚀 ~ .then ~ person:", person);
+        
+        const currentDate = new Date();
+        const formattedDate = currentDate.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "2-digit",
+        });
 
         if (person) {
           const userData = {
@@ -105,6 +117,7 @@ const EmployerSignup = () => {
             role: "employer",
             password: "",
             photoURL: person?.photoURL,
+            memberSince: formattedDate
           };
 
           axios
@@ -135,15 +148,7 @@ const EmployerSignup = () => {
       });
   };
 
-  useEffect(() => {
-    const currentDate = new Date();
-    const formattedDate = currentDate.toLocaleDateString('en-US', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric'
-    });
-    setDefaultDate(formattedDate);
-  }, [])
+
 
   return (
     <div>
@@ -157,7 +162,6 @@ const EmployerSignup = () => {
           </h2>
           <Form
             name="jobseeker_signup"
-            initialValues={{ defaultDate }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
           >

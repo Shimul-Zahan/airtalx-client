@@ -16,6 +16,7 @@ import ResetPassword from "../pages/ForgotPassword/ResetPassword/ResetPassword";
 import EmployeProfile from "../pages/EmployeProfile/EmployeProfile";
 import FindEmployee from "../pages/FindEmploye/FindEmployee";
 import UpdateProfile from "../pages/UpdateProfile/UpdateProfile";
+import OtpUI from "../pages/OtpUI/OtpUI";
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
       {
         path: "/updateProfile",
         element: <PrivateRouter><UpdateProfile /></PrivateRouter>,
+      },
+      {
+        path: "/otp",
+        element: <OtpUI />,
       },
       {
         path: '/user/:email',
