@@ -66,7 +66,7 @@ const EmployeProfile = () => {
                 </div>
               </label>
             </div>
-            <p className="text-xl lg:absolute bottom-0 mx-auto w-11/12 custom-shadow text-center p-1 my-4 capitalize">
+            <p className="text-xl  bottom-0 mx-auto w-11/12 custom-shadow text-center p-1 my-4 capitalize">
               Employe
             </p>
           </div>
