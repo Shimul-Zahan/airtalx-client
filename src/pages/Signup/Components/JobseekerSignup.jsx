@@ -36,11 +36,19 @@ const JobseekerSignup = () => {
         return;
       }
 
+      const currentDate = new Date();
+      const formattedDate = currentDate.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "2-digit",
+      });
+
       const data = new FormData();
       data.append("name", name);
       data.append("email", email);
       data.append("role", "jobseeker");
       data.append("password", confirmPassword);
+      data.append("memberSince", formattedDate);
       data.append("images", fileList[0].originFileObj);
 
       const config = {
@@ -52,7 +60,7 @@ const JobseekerSignup = () => {
       try {
         await axios.post(url, data, config);
         message.success("Signup successful");
-        navigate("/login", { replace: true });
+        navigate("/otp")
       } catch (error) {
         console.error("Signup failed:", error);
         message.error("Failed to signup. Please try again later.");
@@ -96,6 +104,13 @@ const JobseekerSignup = () => {
         const person = result?.user;
         console.log("🚀 ~ .then ~ person:", person);
 
+        const currentDate = new Date();
+        const formattedDate = currentDate.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "2-digit",
+        });
+
         if (person) {
           const userData = {
             name: person?.displayName,
@@ -103,6 +118,7 @@ const JobseekerSignup = () => {
             role: "jobseeker",
             password: "",
             photoURL: person?.photoURL,
+            memberSince: formattedDate
           };
 
           axios
@@ -123,7 +139,7 @@ const JobseekerSignup = () => {
                 navigate("/jobseeker/dashboard");
               if (response?.data?.user?.role == "employer")
                 navigate("/employer/dashboard");
-              
+
               navigate("/login");
             })
             .catch((error) => {
@@ -158,7 +174,7 @@ const JobseekerSignup = () => {
               name="name"
               rules={[{ required: true, message: "Please input your name!" }]}
             >
-              <Input className="bg-[#f5f5f5] rounded p-2 border-slate-300 border w-full"/>
+              <Input className="bg-[#f5f5f5] rounded p-2 border-slate-300 border w-full" />
             </Form.Item>
             <label htmlFor="">Email</label>
             <Form.Item
@@ -166,7 +182,7 @@ const JobseekerSignup = () => {
               name="email"
               rules={[{ required: true, message: "Please input your email!" }]}
             >
-              <Input className="bg-[#f5f5f5] rounded p-2 border-slate-300 border w-full"/>
+              <Input className="bg-[#f5f5f5] rounded p-2 border-slate-300 border w-full" />
             </Form.Item>
             <label htmlFor="">Password</label>
             <Form.Item
@@ -176,7 +192,7 @@ const JobseekerSignup = () => {
                 { required: true, message: "Please input your password!" },
               ]}
             >
-              <Input.Password className="bg-[#f5f5f5] rounded p-2 border-slate-300 border w-full"/>
+              <Input.Password className="bg-[#f5f5f5] rounded p-2 border-slate-300 border w-full" />
             </Form.Item>
             <label htmlFor="">Confirm Password</label>
             <Form.Item
@@ -186,7 +202,7 @@ const JobseekerSignup = () => {
                 { required: true, message: "Please confirm your password!" },
               ]}
             >
-              <Input.Password className="bg-[#f5f5f5] rounded p-2 border-slate-300 border w-full"/>
+              <Input.Password className="bg-[#f5f5f5] rounded p-2 border-slate-300 border w-full" />
             </Form.Item>
             <label htmlFor="">Image</label>
             <Form.Item
@@ -207,11 +223,17 @@ const JobseekerSignup = () => {
                 listType="picture"
                 {...props}
               >
-                <Button className="p-2 h-10" icon={<UploadOutlined />}>Click to upload Image</Button>
+                <Button className="p-2 h-10" icon={<UploadOutlined />}>
+                  Click to upload Image
+                </Button>
               </Upload>
             </Form.Item>
             <Form.Item>
-              <Button  type="primary" htmlType="submit" className="w-full bg-[#1d9cb5] rounded text-white font-semibold h-10 mt-3">
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="w-full bg-[#1d9cb5] rounded text-white font-semibold h-10 mt-3"
+              >
                 Signup
               </Button>
             </Form.Item>

@@ -62,7 +62,7 @@ const AllJobs = () => {
   return (
     <>
       {/* search functionality */}
-      <div className="flex items-center gap-2 justify-center">
+      <div className="flex items-center gap-2 justify-center mt-5">
         <label className="input input-bordered flex items-center gap-2">
           <input
             type="text"
