@@ -271,9 +271,9 @@ const Profile = () => {
                   </label>
                 </div>
                 <div className="text-lg lg:absolute bottom-0 mx-auto w-full text-center capitalize">
-                  <p className="custom-shadow p-1  capitalize">
-                    {user?.role}
-                  </p>
+                <p className="text-xl  bottom-0 mx-auto w-11/12 custom-shadow text-center p-1 my-4 capitalize">
+              Employe
+            </p>
                 </div>
               </div>
               <div className="custom-shadow rounded-md p-4 lg:col-span-7">

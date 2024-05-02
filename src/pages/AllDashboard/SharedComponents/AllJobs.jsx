@@ -12,7 +12,7 @@ const AllJobs = () => {
   const [allJobsPerPage] = useState(6);
   const [searchValue, setSearchValue] = useState("");
   const [typeSelect, seTypeSelect] = useState("");
-  const {user} = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
 
   // Function to fetch filtered job data
   const fetchFilteredJobs = async () => {
@@ -95,9 +95,6 @@ const AllJobs = () => {
                 <h3 className="text-2xl font-semibold capitalize">
                   {singleJob.jobTitle}
                 </h3>
-                <p className="mb-3 text-base font-semibold">
-                  {singleJob.jobPostDate}
-                </p>
                 <p>
                   by{" "}
                   <Link to={`/employeProfile/${singleJob._id}`}>
@@ -107,14 +104,18 @@ const AllJobs = () => {
                   </Link>
                 </p>
               </div>
-              <div className="flex gap-2">
-                <p className="border border-black rounded-md font-semibold p-2">
-                  {singleJob.jobType}
-                </p>
-                {
-                  user && <TbMessage2 className="border cursor-pointer border-black text-5xl p-1 rounded-md" />
-                }
-                
+              <div>
+                <div className="flex items-end flex-col gap-2">
+                  <div className="flex gap-2"> 
+                    <p className="border border-black rounded-md font-semibold p-2">
+                      {singleJob.jobType}
+                    </p>
+                    {user && (
+                      <TbMessage2 className="border cursor-pointer border-black text-5xl p-1 rounded-md" />
+                    )}
+                  </div>
+                  <div className="badge badge-primary text-white">{singleJob.jobPostDate}</div>
+                </div>
               </div>
             </div>
             <div className="flex gap-2 items-center pb-2 text-lg font-semibold">
