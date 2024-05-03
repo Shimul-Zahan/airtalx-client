@@ -12,6 +12,7 @@ import { message } from "antd";
 import axios from "axios";
 import { IoMdDownload } from "react-icons/io";
 import { Link } from "react-router-dom";
+import Swal from 'sweetalert2'
 
 const Profile = () => {
   const { user, setUser, logOut } = useContext(AuthContext);
@@ -19,24 +20,38 @@ const Profile = () => {
   const [file, setFile] = useState();
   console.log(user);
 
-  const handleDeleteAccount = () => {
-    axios
-      .delete(`http://localhost:5000/user/delete/${user?.email}`)
-      .then((response) => {
+  const handleDeleteAccount = async () => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    });
+  
+    if (result.isConfirmed) {
+      try {
+        const response = await axios.delete(`http://localhost:5000/user/delete/${user?.email}`);
         const { data } = response;
         console.log("🚀 ~ .then ~ response:", response);
         if (data.message) {
-          message.success("Profile deleted successfully");
+          await Swal.fire({
+            title: "Deleted!",
+            text: "Profile deleted successfully",
+            icon: "success"
+          });
           logOut();
         } else {
           message.error("Failed to delete user");
         }
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error deleting user:", error);
         message.error("An error occurred while deleting user");
-      });
+      }
+    }
   };
+  
 
   const upload1 = () => {
     const formData = new FormData();

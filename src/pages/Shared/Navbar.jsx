@@ -22,7 +22,7 @@ const Navbar = () => {
       <div className="w-3/4 mx-auto hidden lg:block py-4">
         <div className="flex items-center justify-between">
           <Link className="w-[60px] flex items-center">
-            <img className="rounded-full" src="/logo.jpg" alt="" />
+            <img className="rounded-full" src="/logo.png" alt="" />
             <h3 className="text-3xl font-semibold">airTalX</h3>
           </Link>
           <div className="flex flex-row gap-8 font-semibold">
@@ -147,7 +147,7 @@ const Navbar = () => {
               </div>
             </div>
             <div className="w-[60px] flex items-center">
-              <img className="rounded-full" src="/logo.jpg" alt="" />
+              <img className="rounded-full" src="/logo.png" alt="" />
               <h3 className="text-2xl font-semibold">airTalX</h3>
             </div>
           </div>

@@ -3,9 +3,9 @@ import Main from "../Layout/Main";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Signup from "../pages/Signup/Signup";
-import Users from "../pages/AllDashboard/AdminDashboard/Components/Users";
 import JobseekerDashboard from "../pages/AllDashboard/JobseekerDashboard/JobseekerDashboard";
 import EmployerDashboard from "../pages/AllDashboard/EmployerDashboard/EmployerDashboard";
+import AdminDashboard from "../pages/AllDashboard/AdminDashboard/AdminDashboard";
 import JobDetails from "../pages/AllDashboard/SharedComponents/JobDetails";
 import Profile from "../pages/Profile/Profile";
 import FindJob from "../pages/Find Job/FindJob";
@@ -19,7 +19,7 @@ import UpdateProfile from "../pages/UpdateProfile/UpdateProfile";
 import OtpUI from "../pages/OtpUI/OtpUI";
 import AboutUs from "../pages/Shared/AboutUs";
 import Blogs from "../pages/Blogs/Blogs";
-import AdminDashboard from "../pages/AllDashboard/AdminDashboard/AdminDashboard";
+import ContactUs from "../pages/ContactUs/ContactUs";
 
 export const router = createBrowserRouter([
   {
@@ -65,6 +65,10 @@ export const router = createBrowserRouter([
       {
         path: "/findEmploye",
         element: <FindEmployee />,
+      },
+      {
+        path: "/contactus",
+        element: <ContactUs />,
       },
       {
         path: "/jobseeker/dashboard",

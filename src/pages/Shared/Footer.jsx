@@ -12,7 +12,7 @@ const Footer = () => {
                             <div className="flex flex-col">
                                 <Link>Find Job</Link>
                                 <Link>Find Employee</Link>
-                                <Link>Blogs</Link>
+                                <Link to={'/blogs'}>Blogs</Link>
                             </div>
                         </div>
                         <div>
