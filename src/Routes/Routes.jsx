@@ -77,7 +77,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/jobdetails/:_id",
-        element: <PrivateRouter><JobDetails /></PrivateRouter>,
+        element: <JobDetails />,
       },
       {
         path: "/login",

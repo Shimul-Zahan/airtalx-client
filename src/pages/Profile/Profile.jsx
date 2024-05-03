@@ -303,13 +303,6 @@ const Profile = () => {
                   </div>
                 </div>
               </div>
-              <div className="custom-shadow lg:col-span-9 rounded-md p-3">
-                <h4 className="font-semibold ">About Me</h4>
-                {user?.about && (
-                  <p className="first-letter:capitalize">{user?.about}</p>
-                )}
-                {!user?.about && <p>N/A</p>}
-              </div>
             </div>
             <div className="flex justify-center mt-8">
               <button
