@@ -30,6 +30,26 @@ const UpdateProfile = () => {
       default:
     }
   };
+  const onGenderChange2 = (value) => {
+    switch (value) {
+      case "male":
+        form.setFieldsValue({
+          // note: 'Hi, man!',
+        });
+        break;
+      case "female":
+        form.setFieldsValue({
+          // note: 'Hi, lady!',
+        });
+        break;
+      case "other":
+        form.setFieldsValue({
+          // note: 'Hi there!',
+        });
+        break;
+      default:
+    }
+  };
 
   const normFile = (e) => {
     setFileList(e.fileList);
@@ -161,12 +181,17 @@ const UpdateProfile = () => {
               >
                 <Input />
               </Form.Item>
-              <Form.Item
-                label="Preferred Job Type"
-                name="preferredJobType"
-                initialValue={user?.preferredJobType}
-              >
-                <Input />
+              <Form.Item name="preferredJobType" label="Preferred Job Type">
+                <Select
+                  placeholder="Select an option"
+                  onChange={onGenderChange2}
+                  allowClear
+                  className="z-10"
+                  initialValue={user?.preferredJobType}
+                >
+                  <Option value="Beginner: 1-2 years of experience">Full Time</Option>
+                  <Option value="Intermediate: 3-5 years of experience">Part Time</Option>
+                </Select>
               </Form.Item>
               <Form.Item
                 label="Expertise Field"

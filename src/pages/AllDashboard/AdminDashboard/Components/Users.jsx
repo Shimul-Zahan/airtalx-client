@@ -3,7 +3,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { message } from "antd";
 import axios from "axios";
 import { Navigate, useLocation } from "react-router";
-import { AuthContext } from "../../providers/AuthProviders";
+import { AuthContext } from "../../../../providers/AuthProviders";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -93,7 +93,7 @@ const Users = () => {
   };
 
   return (
-    <div className="lg:w-3/4 w-11/12 mx-auto">
+    <div className="m-6 custom-shadow">
       <div className="overflow-x-auto">
         <table className="table table-zebra">
           {/* head */}
