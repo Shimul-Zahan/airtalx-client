@@ -2,8 +2,23 @@ import Lottie from "lottie-react";
 import contactUSModel from "../../../public/contactUS.json";
 import { TfiWorld } from "react-icons/tfi";
 import { AiOutlineMail } from "react-icons/ai";
+import { useEffect, useState } from "react";
+
 
 const ContactUs = () => {
+    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+      const handleResize = () => {
+        setScreenWidth(window.innerWidth);
+      };
+  
+      window.addEventListener('resize', handleResize);
+  
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }, []);
   return (
     <div className="mt-16">
       <div className="hero min-h-fit">
@@ -12,7 +27,8 @@ const ContactUs = () => {
             <div>
               <Lottie
                 animationData={contactUSModel}
-                style={{ height: 400, width: 600 }}
+                style={{ height: screenWidth >= 1024 ? 400 : 300, width: screenWidth >= 1024 ? 600 : 250 }}
+
               />
             </div>
           </div>
@@ -27,8 +43,8 @@ const ContactUs = () => {
           </div>
         </div>
       </div>
-      <div className="flex justify-center my-16">
-        <div className="flex items-center gap-10">
+      <div className="flex lg:flex-row justify-center my-16">
+        <div className="flex flex-col lg:flex-row items-center gap-10">
           <div className="card w-full border-2 border-[#194b65] rounded-xl">
             <div className="card-body">
               <h1 className="flex justify-center">
