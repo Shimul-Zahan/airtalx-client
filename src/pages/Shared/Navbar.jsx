@@ -8,12 +8,12 @@ const Navbar = () => {
   const { user, logOut, loading } = useContext(AuthContext);
 
   if (loading) {
-    return <Spinner />
+    return <Spinner />;
   }
 
   const handleLogOut = () => {
     logOut()
-      .then(() => { })
+      .then(() => {})
       .catch((error) => console.log(error));
   };
 
@@ -37,13 +37,18 @@ const Navbar = () => {
               <Link to={"/admin/dashboard"}>Dashboard</Link>
             )}
             <Link to={"/findJob"}>Find Job</Link>
-            <Link to={"/findEmploye"}>Find Employe</Link>
+            <Link to={"/findEmploye"}>Find Employee</Link>
           </div>
           <div>
             {user ? (
               <div className="dropdown pt-1 dropdown-end">
-                <div tabIndex={0} className="flex cursor-pointer gap-2 bg-[#2792a8] rounded-full pl-3 pr-1 py-1 items-center">
-                  <p className="text-white font-semibold capitalize">{user?.name}</p>
+                <div
+                  tabIndex={0}
+                  className="flex cursor-pointer gap-2 bg-[#2792a8] rounded-full pl-3 pr-1 py-1 items-center"
+                >
+                  <p className="text-white font-semibold capitalize">
+                    {user?.name}
+                  </p>
                   <label className="btn btn-ghost btn-circle avatar">
                     <div className="rounded-full border-2 border-white">
                       {loading ? (
@@ -132,7 +137,8 @@ const Navbar = () => {
                 {user && user.role === "employer" && (
                   <Link to={"/employer/dashboard"}>Dashboard</Link>
                 )}
-                <p></p>
+                <Link to={"/findJob"}>Find Job</Link>
+                <Link to={"/findEmploye"}>Find Employee</Link>
               </div>
             </div>
             <div className="w-[60px] flex items-center">
@@ -142,8 +148,13 @@ const Navbar = () => {
           </div>
           {user ? (
             <div className="dropdown pt-1 dropdown-end">
-              <div tabIndex={0} className="flex cursor-pointer gap-2 bg-[#2792a8] rounded-full pl-3 pr-1 py-1 items-center">
-                <p className="text-white font-semibold capitalize">{user?.name}</p>
+              <div
+                tabIndex={0}
+                className="flex cursor-pointer gap-2 bg-[#2792a8] rounded-full pl-3 pr-1 py-1 items-center"
+              >
+                <p className="text-white font-semibold capitalize">
+                  {user?.name}
+                </p>
                 <label className="btn btn-ghost btn-circle avatar">
                   <div className="rounded-full border-2 border-white">
                     {loading ? (
