@@ -3,7 +3,7 @@ import Main from "../Layout/Main";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Signup from "../pages/Signup/Signup";
-import Users from "../pages/Users/Users";
+import Users from "../pages/AllDashboard/AdminDashboard/Components/Users";
 import JobseekerDashboard from "../pages/AllDashboard/JobseekerDashboard/JobseekerDashboard";
 import EmployerDashboard from "../pages/AllDashboard/EmployerDashboard/EmployerDashboard";
 import JobDetails from "../pages/AllDashboard/SharedComponents/JobDetails";
@@ -17,6 +17,9 @@ import EmployeProfile from "../pages/EmployeProfile/EmployeProfile";
 import FindEmployee from "../pages/FindEmploye/FindEmployee";
 import UpdateProfile from "../pages/UpdateProfile/UpdateProfile";
 import OtpUI from "../pages/OtpUI/OtpUI";
+import AboutUs from "../pages/Shared/AboutUs";
+import Blogs from "../pages/Blogs/Blogs";
+import AdminDashboard from "../pages/AllDashboard/AdminDashboard/AdminDashboard";
 
 export const router = createBrowserRouter([
   {
@@ -26,10 +29,6 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-      },
-      {
-        path: "/admin/dashboard",
-        element: <PrivateRouter><Users /></PrivateRouter>,
       },
       {
         path: "/profile",
@@ -76,6 +75,10 @@ export const router = createBrowserRouter([
         element: <PrivateRouter><EmployerDashboard /></PrivateRouter>,
       },
       {
+        path: "/admin/dashboard",
+        element: <PrivateRouter><AdminDashboard /></PrivateRouter>,
+      },
+      {
         path: "/jobdetails/:_id",
         element: <JobDetails />,
       },
@@ -86,6 +89,14 @@ export const router = createBrowserRouter([
       {
         path: "/signup",
         element: <Signup />,
+      },
+      {
+        path: "/aboutUs",
+        element: <AboutUs />,
+      },
+      {
+        path: "/blogs",
+        element: <Blogs />,
       },
     ],
   },

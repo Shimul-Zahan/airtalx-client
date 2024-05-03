@@ -1,16 +1,7 @@
-import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 
 const Footer = () => {
-    // const [hasScrollbar, setHasScrollbar] = useState(false);
-
-    // useEffect(() => {
-    //     const hasVerticalScrollbar = document.body.clientHeight > window.innerHeight;
-    //     setHasScrollbar(hasVerticalScrollbar);
-    //     setHasScrollbar(true);
-    // }, []);
-
     return (
         <div>
             <div className="flex-grow bg-[#2792a8] text-white py-4">
@@ -21,13 +12,14 @@ const Footer = () => {
                             <div className="flex flex-col">
                                 <Link>Find Job</Link>
                                 <Link>Find Employee</Link>
+                                <Link>Blogs</Link>
                             </div>
                         </div>
                         <div>
                             <h6 className="font-semibold uppercase pb-2">Company</h6>
                             <div className="flex flex-col">
-                                <Link>About Us</Link>
-                                <Link>Contact</Link>
+                                <Link to={'/aboutUs'}>About Us</Link>
+                                <Link>Contact Us</Link>
                             </div>
                         </div>
                         <div>
@@ -44,6 +36,7 @@ const Footer = () => {
                                 <Link className="bg-[#153147] rounded-full p-2"><FaFacebookF /></Link>
                                 <Link className="bg-[#153147] rounded-full p-2"><FaInstagram /></Link>
                                 <Link className="bg-[#153147] rounded-full p-2"><FaTwitter /></Link>
+                                <Link className="bg-[#153147] rounded-full p-2"><FaLinkedinIn /></Link>
                             </div>
                         </div>
                     </div>

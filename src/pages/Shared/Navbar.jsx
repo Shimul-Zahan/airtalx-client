@@ -38,6 +38,7 @@ const Navbar = () => {
             )}
             <Link to={"/findJob"}>Find Job</Link>
             <Link to={"/findEmploye"}>Find Employee</Link>
+            <Link to={"/blogs"}>Blogs</Link>
           </div>
           <div>
             {user ? (
@@ -137,8 +138,12 @@ const Navbar = () => {
                 {user && user.role === "employer" && (
                   <Link to={"/employer/dashboard"}>Dashboard</Link>
                 )}
+                {user && user.role === "admin" && (
+                  <Link to={"/admin/dashboard"}>Dashboard</Link>
+                )}
                 <Link to={"/findJob"}>Find Job</Link>
                 <Link to={"/findEmploye"}>Find Employee</Link>
+                <Link to={"/blogs"}>Blogs</Link>
               </div>
             </div>
             <div className="w-[60px] flex items-center">
