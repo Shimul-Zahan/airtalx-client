@@ -90,6 +90,9 @@ const AllJobs = () => {
       <div className="grid lg:grid-cols-3 grid-cols-1 m-3">
         {currentJobs.map((singleJob) => (
           <div className="custom-shadow m-3 p-4 rounded-md" key={singleJob._id}>
+            <div className="flex justify-end mb-3">
+            <div className="badge badge-primary text-white">{singleJob.jobPostDate}</div>
+            </div>
             <div className="flex justify-between items-start pb-4">
               <div>
                 <h3 className="text-2xl font-semibold capitalize">
@@ -105,7 +108,7 @@ const AllJobs = () => {
                 </p>
               </div>
               <div>
-                <div className="flex items-end flex-col gap-2">
+                <div className="">
                   <div className="flex gap-2"> 
                     <p className="border border-black rounded-md font-semibold p-2">
                       {singleJob.jobType}
@@ -114,7 +117,7 @@ const AllJobs = () => {
                       <TbMessage2 className="border cursor-pointer border-black text-5xl p-1 rounded-md" />
                     )}
                   </div>
-                  <div className="badge badge-primary text-white">{singleJob.jobPostDate}</div>
+  
                 </div>
               </div>
             </div>

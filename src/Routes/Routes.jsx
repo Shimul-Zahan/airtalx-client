@@ -17,6 +17,7 @@ import EmployeProfile from "../pages/EmployeProfile/EmployeProfile";
 import FindEmployee from "../pages/FindEmploye/FindEmployee";
 import UpdateProfile from "../pages/UpdateProfile/UpdateProfile";
 import OtpUI from "../pages/OtpUI/OtpUI";
+import ContactUs from "../pages/ContactUs/ContactUs";
 
 export const router = createBrowserRouter([
   {
@@ -66,6 +67,10 @@ export const router = createBrowserRouter([
       {
         path: "/findEmploye",
         element: <FindEmployee />,
+      },
+      {
+        path: "/contactus",
+        element: <ContactUs />,
       },
       {
         path: "/jobseeker/dashboard",
