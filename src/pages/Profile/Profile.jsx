@@ -120,7 +120,8 @@ const Profile = () => {
                   </label>
                 </div>
                 <div className="text-lg lg:absolute bottom-0 mx-auto w-[90%] text-center capitalize">
-                  <p className="custom-shadow p-1 mb-4 capitalize">
+                  <p>Member Since: {user?.memberSince}</p>
+                  <p className="custom-shadow mt-2 p-1 mb-4 capitalize">
                     {user?.jobPosition}
                     {!user?.jobPosition && <p>N/A</p>}
                   </p>

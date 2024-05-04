@@ -94,26 +94,26 @@ const Alljobseekers = () => {
             className="custom-shadow p-4 m-3 rounded-md"
             key={singleJobseeker._id}
           >
-            <div className="flex justify-between relative">
+            <div className="flex flex-col-reverse lg:flex-row justify-between gap-2 relative">
               <div>
                 <h3 className="text-3xl font-semibold text-[#287180] capitalize">
                   {singleJobseeker.name}
                 </h3>
                 <div className="">
-                  <div className="flex gap-2 items-center">
-                    <MdOutlineEmail className="text-2xl pt-1" />
+                  <div className={`flex gap-2 items-center ${!user && 'hidden'}`}>
+                  <MdOutlineEmail className="text-3xl border border-black rounded-full p-1" />
                     {singleJobseeker?.email && <p>{singleJobseeker?.email}</p>}
                     {!singleJobseeker?.email && <p>N/A</p>}
                   </div>
                   <div className="flex gap-2 items-center font-semibold">
-                    <SlLocationPin className="text-2xl pt-1" />
+                  <SlLocationPin className="text-3xl border border-black rounded-full p-1" />
                     {singleJobseeker?.location && (
                       <p>{singleJobseeker?.location}</p>
                     )}
                     {!singleJobseeker?.location && <p>N/A</p>}
                   </div>
                 </div>
-                <div className={`flex items-center gap-2 mt-5`}>
+                <div className={`flex items-center gap-2 mt-5 ${!user && 'hidden'}`}>
                   <button className="border border-black py-1 px-2 rounded-md">
                     Resume
                   </button>
@@ -135,7 +135,7 @@ const Alljobseekers = () => {
                   </div>
                 </div>
               </div>
-              <label className="avatar w-40 absolute right-0">
+              <label className="avatar w-40 right-0">
                 <div className="rounded-full border-2 border-white">
                   <div>
                     <img src={singleJobseeker?.photoURL} alt="User Photo" />
@@ -143,30 +143,36 @@ const Alljobseekers = () => {
                 </div>
               </label>
             </div>
-            <div className="pt-3">
-              <h4 className="font-semibold">About Me</h4>
+            <div className={`pt-3`}>
+              <h4 className={`font-semibold ${!user && 'hidden'}`}>About Me</h4>
               <div className="">
                 {singleJobseeker?.about && (
-                  <p className="first-letter:capitalize">
-                    {singleJobseeker?.about.substring(0, 120)}...
-                    <Link
-                      to={`/user/${singleJobseeker?.email}`}
-                      className="text-[#1d9cb5] font-semibold"
-                    >
-                      <button className="">know more</button>
-                    </Link>
-                  </p>
+                  <div>
+                    <p className={`first-letter:capitalize ${!user && 'hidden'}`}>
+                      {singleJobseeker?.about.substring(0, 120)}...
+                      <Link
+                        to={`/user/${singleJobseeker?.email}`}
+                        className="text-[#1d9cb5] font-semibold"
+                      >
+                        <button className="">know more</button>
+                      </Link>
+                    </p>
+                    <Link to={`/user/${singleJobseeker?.email}`} className={`text-[#1d9cb5] font-semibold ${user && 'hidden'}`}>know more</Link>
+                  </div>
                 )}
                 {!singleJobseeker?.about && (
-                  <p className="first-letter:capitalize">
-                    N/A...
-                    <Link
-                      to={`/user/${singleJobseeker?.email}`}
-                      className="text-[#1d9cb5] font-semibold"
-                    >
-                      <button className="">know more</button>
-                    </Link>
-                  </p>
+                  <div>
+                    <p className={`first-letter:capitalize ${!user && 'hidden'}`}>
+                      N/A...
+                      <Link
+                        to={`/user/${singleJobseeker?.email}`}
+                        className="text-[#1d9cb5] font-semibold"
+                      >
+                        <button className="">know more</button>
+                      </Link>
+                    </p>
+                    <Link to={`/user/${singleJobseeker?.email}`} className={`text-[#1d9cb5] font-semibold ${user && 'hidden'}`}>know more</Link>
+                  </div>
                 )}
                 {/* <Link to={`/user/${singleJobseeker?.email}`}>{!singleJobseeker?.about && <p>N/A</p>}</Link> */}
               </div>
@@ -189,9 +195,8 @@ const Alljobseekers = () => {
             <button
               key={i}
               onClick={() => paginate(i + 1)}
-              className={`join-item btn btn-outline mr-2 ${
-                currentPage === i + 1 ? "bg-green-400 text-white" : ""
-              }`}
+              className={`join-item btn btn-outline mr-2 ${currentPage === i + 1 ? "bg-green-400 text-white" : ""
+                }`}
             >
               {i + 1}
             </button>

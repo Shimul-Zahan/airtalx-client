@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter, FaYoutube } from "react-icons/fa";
 
 const Footer = () => {
     return (
@@ -32,11 +32,12 @@ const Footer = () => {
                         </div>
                         <div className="">
                             <h6 className="font-semibold uppercase pb-2">Social Links</h6>
-                            <div className="flex gap-2">
+                            <div className="flex gap-2 flex-wrap">
                                 <Link className="bg-[#153147] rounded-full p-2"><FaFacebookF /></Link>
                                 <Link className="bg-[#153147] rounded-full p-2"><FaInstagram /></Link>
                                 <Link className="bg-[#153147] rounded-full p-2"><FaTwitter /></Link>
                                 <Link className="bg-[#153147] rounded-full p-2"><FaLinkedinIn /></Link>
+                                <Link className="bg-[#153147] rounded-full p-2"><FaYoutube /></Link>
                             </div>
                         </div>
                     </div>

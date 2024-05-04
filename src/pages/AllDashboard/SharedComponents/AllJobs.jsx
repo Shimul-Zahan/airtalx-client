@@ -91,7 +91,7 @@ const AllJobs = () => {
         {currentJobs.map((singleJob) => (
           <div className="custom-shadow m-3 p-4 rounded-md" key={singleJob._id}>
             <div className="flex justify-end mb-3">
-            <div className="badge badge-primary text-white">{singleJob.jobPostDate}</div>
+              <div className="badge badge-primary bg-[#1d9cb5] border-none text-white">{singleJob.jobPostDate}</div>
             </div>
             <div className="flex justify-between items-start pb-4">
               <div>
@@ -109,15 +109,16 @@ const AllJobs = () => {
               </div>
               <div>
                 <div className="">
-                  <div className="flex gap-2"> 
+                  <div className="flex gap-2">
                     <p className="border border-black rounded-md font-semibold p-2">
                       {singleJob.jobType}
                     </p>
-                    {user && (
-                      <TbMessage2 className="border cursor-pointer border-black text-5xl p-1 rounded-md" />
-                    )}
+                    {/* <div>
+                      {user && (
+                        <TbMessage2 className="border cursor-pointer border-black text-5xl p-1 rounded-md" />
+                      )}
+                    </div> */}
                   </div>
-  
                 </div>
               </div>
             </div>
@@ -156,9 +157,8 @@ const AllJobs = () => {
             <button
               key={i}
               onClick={() => paginate(i + 1)}
-              className={`join-item btn btn-outline mr-2 ${
-                currentPage === i + 1 ? "bg-green-400 text-white" : ""
-              }`}
+              className={`join-item btn btn-outline mr-2 ${currentPage === i + 1 ? "bg-green-400 text-white" : ""
+                }`}
             >
               {i + 1}
             </button>
