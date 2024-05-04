@@ -93,7 +93,7 @@ const Users = () => {
   };
 
   return (
-    <div className="m-6 custom-shadow">
+    <div className="m-6 custom-shadow rounded-md">
       <div className="overflow-x-auto">
         <table className="table table-zebra">
           {/* head */}

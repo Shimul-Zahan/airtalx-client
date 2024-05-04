@@ -3,26 +3,27 @@ import contactUSModel from "../../../public/contactUS.json";
 import { TfiWorld } from "react-icons/tfi";
 import { AiOutlineMail } from "react-icons/ai";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 
 const ContactUs = () => {
-    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
-    useEffect(() => {
-      const handleResize = () => {
-        setScreenWidth(window.innerWidth);
-      };
-  
-      window.addEventListener('resize', handleResize);
-  
-      return () => {
-        window.removeEventListener('resize', handleResize);
-      };
-    }, []);
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
   return (
-    <div className="mt-16">
-      <div className="hero min-h-fit">
-        <div className="hero-content flex-col lg:flex-row-reverse border-4 rounded-xl shadow-2xl px-10">
+    <div className="mt-16 lg:w-3/4 w-11/12 mx-auto">
+      <div className="">
+        <div className="flex items-center mx-auto flex-col lg:flex-row-reverse border-4 rounded-xl px-10">
           <div>
             <div>
               <Lottie
@@ -51,7 +52,7 @@ const ContactUs = () => {
                 <TfiWorld size="3em" />
               </h1>
               <h1 className="font-bold text-3xl text-center">
-                Visit our <a className="link link-primary">support page</a> to
+                Visit our <Link className="link link-primary">support page</Link> to
                 get the help that you need
               </h1>
             </div>
@@ -64,7 +65,7 @@ const ContactUs = () => {
               <div className="text-center">
                 <h1 className="font-bold text-3xl">Email us at</h1>
                 <h1 className="font-bold text-3xl">
-                  <a className="link link-primary">admin@airtalx.com</a>
+                  <Link className="link link-primary">admin@airtalx.com</Link>
                 </h1>
               </div>
             </div>

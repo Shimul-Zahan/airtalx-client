@@ -19,7 +19,7 @@ const Footer = () => {
                             <h6 className="font-semibold uppercase pb-2">Company</h6>
                             <div className="flex flex-col">
                                 <Link to={'/aboutUs'}>About Us</Link>
-                                <Link>Contact Us</Link>
+                                <Link to={'/contactus'}>Contact Us</Link>
                             </div>
                         </div>
                         <div>
