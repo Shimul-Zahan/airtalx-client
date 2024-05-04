@@ -20,6 +20,7 @@ import OtpUI from "../pages/OtpUI/OtpUI";
 import AboutUs from "../pages/Shared/AboutUs";
 import Blogs from "../pages/Blogs/Blogs";
 import ContactUs from "../pages/ContactUs/ContactUs";
+import BlogDetails from "../pages/Blogs/BlogDetails";
 
 export const router = createBrowserRouter([
   {
@@ -101,6 +102,10 @@ export const router = createBrowserRouter([
       {
         path: "/blogs",
         element: <Blogs />,
+      },
+      {
+        path: "/blogDetails/:_id",
+        element: <BlogDetails />,
       },
     ],
   },

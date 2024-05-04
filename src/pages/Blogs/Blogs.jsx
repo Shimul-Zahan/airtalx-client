@@ -19,7 +19,7 @@ const Blogs = () => {
                         <h4 className="text-3xl font-semibold pb-3">{singleBlog.blogTitle}</h4>
                         <p>
                             {singleBlog.blogBody.substring(0, 120)}...
-                            <Link className="text-[#1d9cb5]" >
+                            <Link to={`/blogDetails/${singleBlog._id}`} className="text-[#1d9cb5]" >
                                 see more
                             </Link>
                         </p>
