@@ -6,7 +6,6 @@ import { MdLogout } from "react-icons/md";
 import { BsFilePerson } from "react-icons/bs";
 import { Navigate, useLocation } from "react-router";
 import { AiOutlineHome, AiOutlineProfile } from "react-icons/ai";
-import Dashboard from "./Components/Dashboard";
 import Users from "./Components/Users";
 import PostBlog from "./Components/PostBlog";
 
@@ -99,14 +98,6 @@ const AdminDashboard = () => {
                             <AiOutlineProfile className="text-xl absolute" />
                             <span className="pl-7">Post a Blog</span>
                         </Tab>
-                        <Tab
-                            className={`font-semibold cursor-pointer flex gap-2 items-center ${activeTab === 3 ? "text-[#1d9cb5]" : "text-black"
-                                }`}
-                            onClick={() => setActiveTab(3)}
-                        >
-                            <BsFilePerson className="text-xl absolute" />
-                            <span className="pl-7">Users</span>
-                        </Tab>
                         <div
                             onClick={handleLogOut}
                             className="font-semibold cursor-pointer flex gap-2 items-center text-red-500"
@@ -120,16 +111,13 @@ const AdminDashboard = () => {
             <div className="lg:col-span-10 col-span-12">
                 <Tabs selectedIndex={activeTab}>
                     <TabPanel>
-                        <Dashboard />
+                    <Users />
                     </TabPanel>
                     <TabPanel>
                         <div>2</div>
                     </TabPanel>
                     <TabPanel>
                         <PostBlog />
-                    </TabPanel>
-                    <TabPanel>
-                        <Users />
                     </TabPanel>
                 </Tabs>
             </div>
