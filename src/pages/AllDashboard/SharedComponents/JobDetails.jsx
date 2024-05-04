@@ -49,6 +49,7 @@ const JobDetails = () => {
       message.error(error);
     }
   };
+  
   return (
     <div className="lg:w-3/4 w-11/12 mx-auto">
       <div className="flex justify-between">
