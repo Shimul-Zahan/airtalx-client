@@ -179,7 +179,7 @@ const UpdateProfile = () => {
                 name="preferredSalary"
                 initialValue={user?.preferredSalary}
               >
-                <Input />
+                <Input placeholder={`e.g: "3" (preferred salary)`}/>
               </Form.Item>
               <Form.Item name="preferredJobType" label="Preferred Job Type">
                 <Select

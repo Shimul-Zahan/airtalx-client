@@ -6,8 +6,12 @@ const PostBlog = () => {
         const form = e.target;
         const blogTitle = form.blogTitle.value;
         const blogBody = form.blogBody.value;
+        const likes = 0;
+        const dislikes = 0;
+        const reactLike = [];
+        const reactDisLike = [];
 
-        const blogPost = { blogTitle, blogBody }
+        const blogPost = { blogTitle, blogBody,likes,dislikes,reactLike,reactDisLike }
         fetch('http://localhost:5000/newBlogs', {
             method: 'POST',
             headers: {
@@ -18,12 +22,12 @@ const PostBlog = () => {
             .then(res => res.json())
             .then(data => {
                 if (data.insertedId) {
-                    message.success("Your blog is Posted Sucessfully!");
+                    message.success("Blog Posted Sucessfully!");
                     console.log(data)
                     form.reset();
                 }
                 else {
-                    message.error("Your blog did not Posted!")
+                    message.error("Blog did not Posted!")
                 }
             })
             .catch(error => {
