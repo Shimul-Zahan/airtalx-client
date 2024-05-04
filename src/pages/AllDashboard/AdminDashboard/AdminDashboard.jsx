@@ -26,7 +26,7 @@ const AdminDashboard = () => {
     return (
         <div className="grid grid-cols-12">
             <div className="col-span-12 lg:col-span-1 pb-20 lg:pb-0 lg:hidden block">
-                <div className="flex flex-col fixed items-center bg-white z-[1] mb-20 w-full pr-2 my-6 mx-7 p-4 custom-shadow rounded-md">
+                <div className="flex flex-col fixed items-center bg-white z-[1] mb-20 w-full pr-2 my-6 mx-7 p-4 custom-shadow rounded-lg">
                     <TabList className="flex flex-row justify-center gap-x-12 flex-wrap space-y-3">
                         <Tab
                             className={`font-semibold cursor-pointer flex items-center ${activeTab === 0 ? "text-[#1d9cb5]" : "text-black"
