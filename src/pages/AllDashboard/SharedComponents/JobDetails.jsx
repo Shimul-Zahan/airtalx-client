@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProviders";
 import { message } from "antd";
+import ReactHtmlParser from 'react-html-parser';
 
 const JobDetails = () => {
   const { user } = useContext(AuthContext);
@@ -104,7 +105,13 @@ const JobDetails = () => {
         <h4 className="text-5xl font-semibold text-center pt-8 pb-6">
           Job Description
         </h4>
-        <p className="first-letter:capitalize">{jobData?.jobDescription}</p>
+        <div className="first-letter:capitalize">{ReactHtmlParser(jobData.jobDescription)}</div>
+      </div>
+      <div className="pb-12">
+        <h4 className="text-5xl font-semibold text-center pt-8 pb-6">
+          About Company
+        </h4>
+        <div className="first-letter:capitalize">{ReactHtmlParser(jobData.aboutCompany)}</div>
       </div>
     </div>
   );

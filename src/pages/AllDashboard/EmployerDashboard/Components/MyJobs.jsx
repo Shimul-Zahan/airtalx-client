@@ -6,6 +6,7 @@ import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import ReactHtmlParser from 'react-html-parser';
 
 const MyJobs = (_id) => {
   const [allJobs, setAllJobs] = useState([]);
@@ -95,7 +96,7 @@ const MyJobs = (_id) => {
             </div>
             <div>
               <p className="first-letter:capitalize">
-                {singleJob.jobDescription.substring(0, 120)}...
+                {ReactHtmlParser(singleJob.jobDescription.substring(0, 120))}...
                 <Link to={`/jobdetails/${singleJob._id}`} className="text-[#1d9cb5]">
                   know more
                 </Link>

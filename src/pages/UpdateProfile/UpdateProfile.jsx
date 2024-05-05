@@ -3,11 +3,14 @@ import { message, Form, Input, Upload, Button, Select } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { Option } from "antd/es/mentions";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
+import JoditEditor from 'jodit-react';
 
 const UpdateProfile = () => {
-  const [fileList, setFileList] = useState([]);
   const { user, setUser } = useContext(AuthContext);
+  const [fileList, setFileList] = useState([]);
+  const [content1, setContent1] = useState('');
+  const editor1 = useRef(null);
   const [form] = Form.useForm();
 
   const onGenderChange = (value) => {
@@ -96,7 +99,7 @@ const UpdateProfile = () => {
       data.append("password", newPassword);
       data.append("location", location || user?.location);
       data.append("studies", studies || user?.studies);
-      data.append("about", about || user?.about);
+      data.append("about", content1);
       data.append("preferredSalary", preferredSalary || user?.preferredSalary);
       data.append("expertiseField", expertiseField || user?.expertiseField);
       data.append(
@@ -179,7 +182,7 @@ const UpdateProfile = () => {
                 name="preferredSalary"
                 initialValue={user?.preferredSalary}
               >
-                <Input placeholder={`e.g: "3" (preferred salary)`}/>
+                <Input placeholder={`e.g: "3" (preferred salary)`} />
               </Form.Item>
               <Form.Item name="preferredJobType" label="Preferred Job Type">
                 <Select
@@ -244,7 +247,10 @@ const UpdateProfile = () => {
             </Upload>
           </Form.Item>
           <Form.Item label="Bio" name="about" initialValue={user?.about}>
-            <Input.TextArea />
+            {/* <Input.TextArea /> */}
+            <div className="custom-class no-tailwind custom-ul custom-ol">
+              <JoditEditor ref={editor1} value={content1} onChange={newContent => setContent1(newContent)} />
+            </div>
           </Form.Item>
           <Form.Item label="Password" name="newPassword">
             <Input.Password placeholder="Enter New Password" />

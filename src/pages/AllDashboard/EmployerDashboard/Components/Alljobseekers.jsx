@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../../../providers/AuthProviders";
 import { IoMdSearch } from "react-icons/io";
 import axios from "axios";
+import ReactHtmlParser from 'react-html-parser';
 
 const Alljobseekers = () => {
   const [jobseekers, setJobseekers] = useState([]);
@@ -94,24 +95,35 @@ const Alljobseekers = () => {
             className="custom-shadow p-4 m-3 rounded-md"
             key={singleJobseeker._id}
           >
-            <div className="flex flex-col-reverse lg:flex-row justify-between gap-2 relative">
+            <div className="relative">
               <div>
-                <h3 className="text-3xl font-semibold text-[#287180] capitalize">
-                  {singleJobseeker.name}
-                </h3>
-                <div className="">
-                  <div className={`flex gap-2 items-center ${!user && 'hidden'}`}>
-                  <MdOutlineEmail className="text-3xl border border-black rounded-full p-1" />
-                    {singleJobseeker?.email && <p>{singleJobseeker?.email}</p>}
-                    {!singleJobseeker?.email && <p>N/A</p>}
+                <div className="flex lg:flex-row flex-col-reverse justify-between lg:gap-28 gap-2">
+                  <div>
+                    <h3 className="text-3xl font-semibold text-[#287180] capitalize">
+                      {singleJobseeker.name}
+                    </h3>
+                    <div className="">
+                      <div className={`flex gap-2 items-center ${!user && 'hidden'}`}>
+                        <MdOutlineEmail className="text-3xl border border-black rounded-full p-1" />
+                        {singleJobseeker?.email && <p>{singleJobseeker?.email}</p>}
+                        {!singleJobseeker?.email && <p>N/A</p>}
+                      </div>
+                      <div className="flex gap-2 items-center font-semibold">
+                        <SlLocationPin className="text-3xl border border-black rounded-full p-1" />
+                        {singleJobseeker?.location && (
+                          <p>{singleJobseeker?.location}</p>
+                        )}
+                        {!singleJobseeker?.location && <p>N/A</p>}
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex gap-2 items-center font-semibold">
-                  <SlLocationPin className="text-3xl border border-black rounded-full p-1" />
-                    {singleJobseeker?.location && (
-                      <p>{singleJobseeker?.location}</p>
-                    )}
-                    {!singleJobseeker?.location && <p>N/A</p>}
-                  </div>
+                  <label className="avatar w-28 right-0">
+                    <div className="rounded-full border-2 border-black">
+                      <div>
+                        <img src={singleJobseeker?.photoURL} alt="User Photo" />
+                      </div>
+                    </div>
+                  </label>
                 </div>
                 <div className={`flex items-center gap-2 mt-5 ${!user && 'hidden'}`}>
                   <button className="border border-black py-1 px-2 rounded-md">
@@ -135,13 +147,13 @@ const Alljobseekers = () => {
                   </div>
                 </div>
               </div>
-              <label className="avatar w-40 right-0">
-                <div className="rounded-full border-2 border-white">
+              {/* <label className="avatar w-40 right-0">
+                <div className="rounded-full border-2 border-black">
                   <div>
                     <img src={singleJobseeker?.photoURL} alt="User Photo" />
                   </div>
                 </div>
-              </label>
+              </label> */}
             </div>
             <div className={`pt-3`}>
               <h4 className={`font-semibold ${!user && 'hidden'}`}>About Me</h4>
@@ -149,7 +161,7 @@ const Alljobseekers = () => {
                 {singleJobseeker?.about && (
                   <div>
                     <p className={`first-letter:capitalize ${!user && 'hidden'}`}>
-                      {singleJobseeker?.about.substring(0, 120)}...
+                      {ReactHtmlParser(singleJobseeker?.about.substring(0, 120))}...
                       <Link
                         to={`/user/${singleJobseeker?.email}`}
                         className="text-[#1d9cb5] font-semibold"
