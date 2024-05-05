@@ -58,7 +58,7 @@ const EmployeProfile = () => {
         <div className="grid lg:grid-cols-9 grid-cols-1 lg:gap-8 gap-y-7">
           <div className="custom-shadow p-4 lg:col-span-2 rounded-md relative">
             <div className="flex justify-center">
-              <label className="avatar w-40">
+              <label className="avatar w-28">
                 <div className="rounded-full border-2 border-white">
                   <div>
                     <img src={employeJobPost?.photoURL} alt="User Photo" />
@@ -66,8 +66,9 @@ const EmployeProfile = () => {
                 </div>
               </label>
             </div>
-            <p className="text-xl  bottom-0 mx-auto w-11/12 custom-shadow text-center p-1 my-4 capitalize">
-              Employe
+            <p className="text-center my-3 text-lg">Member Since: {employeJobPost?.memberSince}</p>
+            <p className="text-xl  bottom-0 mx-auto w-11/12 custom-shadow text-center p-1 mb-4 capitalize">
+              Employer
             </p>
           </div>
           <div className="custom-shadow rounded-md p-4 lg:col-span-7">
@@ -103,53 +104,53 @@ const EmployeProfile = () => {
           </div>
           <div className="custom-shadow lg:col-span-9 rounded-md p-3">
             <div>
-              <h4 className="text-center text-4xl underline font-bold">
+              <h4 className="text-center text-4xl font-bold">
                 Company Details
               </h4>
               <br />
-              <h4 className="font-semibold">
-                Company Name:
+              <h4 className="">
+                <span className="font-semibold">Company Name: </span>
                 {employeJobPost?.company && (
-                  <span>{employeJobPost?.company}</span>
+                  <span className="capitalize">{employeJobPost?.company}</span>
                 )}
                 {!employeJobPost?.company && <span>N/A</span>}
               </h4>
-              <h4 className="font-semibold mt-2">
-                Country:{" "}
+              <h4 className="mt-2">
+                <span className="font-semibold">Country: </span>
                 {employeJobPost?.country && (
-                  <span>{employeJobPost?.country}</span>
+                  <span className="capitalize">{employeJobPost?.country}</span>
                 )}
                 {!employeJobPost?.country && <span>N/A</span>}
               </h4>
-              <h4 className="font-semibold mt-2">
-                Industry:{" "}
+              <h4 className="mt-2">
+              <span className="font-semibold">Industry: </span>
                 {employeJobPost?.industry && (
-                  <span>{employeJobPost?.industry}</span>
+                  <span className="capitalize">{employeJobPost?.industry}</span>
                 )}
                 {!employeJobPost?.industry && <span>N/A</span>}
               </h4>
-              <h4 className="font-semibold mt-2">
-                Size of the company:
+              <h4 className="mt-2">
+              <span className="font-semibold">Size of Company: </span>
                 {employeJobPost?.companySize && (
-                  <span>{employeJobPost?.companySize}</span>
+                  <span>{employeJobPost?.companySize} Staffs</span>
                 )}
                 {!employeJobPost?.companySize && <span>N/A</span>}
               </h4>
-              <h4 className="font-semibold mt-2">
-                No. of jobs posted: {allJobs?.length}
+              <h4 className="mt-2">
+              <span className="font-semibold">Number of Job Posted: </span> <span>{allJobs?.length}</span>
               </h4>
-              <h4 className="font-semibold mt-2">
-                No. jobs filled: {approveJob?.length}
+              <h4 className="mt-2">
+              <span className="font-semibold">Number of Job Approved: </span> {approveJob?.length}
               </h4>
-              <h4 className="font-semibold mt-2">
+              {/* <h4 className="font-semibold mt-2">
                 Member since: <span></span>
                 {employeJobPost?.memberSince && (
                   <span>{employeJobPost?.memberSince}</span>
                 )}
                 {!employeJobPost?.memberSince && <span>N/A</span>}
-              </h4>
-              <h4 className="font-semibold mt-2">
-                About the company: <br />
+              </h4> */}
+              <h4 className="mt-2">
+                <span className="font-semibold">About the company: </span> <br />
                 {employeJobPost?.aboutCompany && (
                   <p>{employeJobPost?.aboutCompany}</p>
                 )}

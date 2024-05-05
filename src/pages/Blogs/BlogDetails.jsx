@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
 import { AuthContext } from "../../providers/AuthProviders";
 import { message } from "antd";
+import ReactHtmlParser from 'react-html-parser';
 
 const BlogDetails = () => {
   const { user } = useContext(AuthContext);
@@ -72,10 +73,10 @@ const BlogDetails = () => {
     <div className="flex justify-center items-center min-h-[60vh]">
       <div className="card w-4/5 bg-white border-2 rounded-xl border-black">
         <div className="card-body gap-10 text-wrap">
-          <h2 className="text-5xl font-bold underline text-center">
+          <h2 className="text-5xl font-bold text-center">
             {blogs.blogTitle}
           </h2>
-          <p style={{ overflowWrap: "break-word" }}>{blogs.blogBody}</p>
+          <p style={{ overflowWrap: "break-word" }}>{ReactHtmlParser(blogs.blogBody)}</p>
           <div className="card-actions justify-end">
             <button
               className="btn btn-success btn-outline"

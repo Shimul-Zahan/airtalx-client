@@ -1,11 +1,16 @@
 import { message } from "antd";
+import JoditEditor from 'jodit-react';
+import { useRef, useState } from "react";
 
 const PostBlog = () => {
+    const [content1, setContent1] = useState('');
+    const editor1 = useRef(null);
+
     const postABlog = (e) => {
         e.preventDefault();
         const form = e.target;
         const blogTitle = form.blogTitle.value;
-        const blogBody = form.blogBody.value;
+        const blogBody = content1;
         const likes = 0;
         const dislikes = 0;
         const reactLike = [];
@@ -47,7 +52,10 @@ const PostBlog = () => {
                     <h4 className="text-2xl font-semibold">Blog Body</h4>
                     {/* <p>Write a detailed job description. Include all the essential information</p> */}
                     <div>
-                        <textarea name='blogBody' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4 w-full" id="" cols="30" rows="10"></textarea>
+                        {/* <textarea name='blogBody' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4 w-full" id="" cols="30" rows="10"></textarea> */}
+                        <div className="custom-class no-tailwind custom-ul custom-ol">
+                            <JoditEditor ref={editor1} value={content1} onChange={newContent => setContent1(newContent)} />
+                        </div>
                     </div>
                 </div>
                 <div>

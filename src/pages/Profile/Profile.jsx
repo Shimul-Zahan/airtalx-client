@@ -13,6 +13,7 @@ import axios from "axios";
 import { IoMdDownload } from "react-icons/io";
 import { Link } from "react-router-dom";
 import Swal from 'sweetalert2'
+import ReactHtmlParser from 'react-html-parser';
 
 const Profile = () => {
   const { user, setUser, logOut } = useContext(AuthContext);
@@ -29,7 +30,7 @@ const Profile = () => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!"
     });
-  
+
     if (result.isConfirmed) {
       try {
         const response = await axios.delete(`http://localhost:5000/user/delete/${user?.email}`);
@@ -51,7 +52,7 @@ const Profile = () => {
       }
     }
   };
-  
+
 
   const upload1 = () => {
     const formData = new FormData();
@@ -104,7 +105,7 @@ const Profile = () => {
       });
   };
   return (
-    <>
+    <div>
       {user && user?.role === "jobseeker" && (
         <div className="lg:w-3/4 w-11/12 mx-auto my-12">
           <div>
@@ -222,7 +223,7 @@ const Profile = () => {
                   </div>
                 </div>
                 <div className="pt-5">
-                <div className="flex items-center gap-2 capitalize">
+                  <div className="flex items-center gap-2 capitalize">
                     <span className="font-semibold">Skill Level:</span>{" "}
                     {user?.expertiseLevel && <p>{user?.expertiseLevel}</p>}
                     {!user?.expertiseLevel && <p>N/A</p>}
@@ -232,7 +233,7 @@ const Profile = () => {
                     {user?.preferredSalary && <p>{user?.preferredSalary}/hr</p>}
                     {!user?.preferredSalary && <p>N/A</p>}
                   </div>
-                  
+
                   <div className="flex items-center gap-2 capitalize">
                     <span className="font-semibold">Preferred Employment:</span>{" "}
                     {user?.preferredJobType && <p>{user?.preferredJobType}</p>}
@@ -256,7 +257,7 @@ const Profile = () => {
                 </div>
                 <h4 className="font-semibold pt-2">About Me</h4>
                 {user?.about && (
-                  <p className="first-letter:capitalize">{user?.about}</p>
+                  <p className="first-letter:capitalize">{ReactHtmlParser(user?.about)}</p>
                 )}
                 {!user?.about && <p>N/A</p>}
               </div>
@@ -287,9 +288,9 @@ const Profile = () => {
                   </label>
                 </div>
                 <div className="text-lg lg:absolute bottom-0 mx-auto w-full text-center capitalize">
-                <p className="text-xl  bottom-0 mx-auto w-11/12 custom-shadow text-center p-1 my-4 capitalize">
-              Employe
-            </p>
+                  <p className="text-xl  bottom-0 mx-auto w-11/12 custom-shadow text-center p-1 my-4 capitalize">
+                    Employe
+                  </p>
                 </div>
               </div>
               <div className="custom-shadow rounded-md p-4 lg:col-span-7">
@@ -331,7 +332,7 @@ const Profile = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

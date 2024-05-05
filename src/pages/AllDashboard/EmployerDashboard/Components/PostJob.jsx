@@ -1,12 +1,18 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../../../providers/AuthProviders";
 import { message } from "antd";
+import JoditEditor from 'jodit-react';
 
 const PostJob = () => {
     const { user } = useContext(AuthContext);
     const [userData, setUserData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [defaultDate, setDefaultDate] = useState('');
+    const [content1, setContent1] = useState('');
+    const [content2, setContent2] = useState('');
+
+    const editor1 = useRef(null);
+    const editor2 = useRef(null);
 
     useEffect(() => {
         const currentDate = new Date();
@@ -41,14 +47,14 @@ const PostJob = () => {
         const startingSalary = form.startingSalary.value;
         const endingSalary = form.endingSalary.value;
         const jobPostDate = form.jobPostDate.value;
-        const jobDescription = form.jobDescription.value;
+        const jobDescription = content2;
         const photoURL = user?.photoURL;
         const memberSince = user?.memberSince;
         const company = form.company.value;
         const country = form.country.value;
         const industry = form.industry.value;
         const companySize = form.companySize.value;
-        const aboutCompany = form.aboutCompany.value;
+        const aboutCompany = content1;
 
         const newJobPost = { headline, jobType, email, companyName, jobTitle, startingSalary, endingSalary, jobPostDate, memberSince, jobDescription, photoURL, company, country, industry, companySize, aboutCompany }
         fetch('http://localhost:5000/newJobPost', {
@@ -166,14 +172,22 @@ const PostJob = () => {
                     <h4 className="text-2xl font-semibold">About Company</h4>
                     {/* <p>Write a detailed job description. Include all the essential information</p> */}
                     <div>
-                        <textarea name='aboutCompany' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4 w-full" id="" cols="30" rows="10"></textarea>
+                        {/* <textarea name='aboutCompany' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4 w-full" id="" cols="30" rows="10"></textarea> */}
+                        <div className="custom-class no-tailwind custom-ul custom-ol">
+                            <JoditEditor ref={editor1} value={content1} onChange={newContent => setContent1(newContent)} />
+                        </div>
                     </div>
                 </div>
                 <div className="pt-8">
                     <h4 className="text-2xl font-semibold">Job Description</h4>
                     <p>Write a detailed job description. Include all the essential information</p>
-                    <div>
-                        <textarea name='jobDescription' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4 w-full" id="" cols="30" rows="10"></textarea>
+                    <div className="w-full gap-5 mt-4">
+                        {/* <textarea name='jobDescription' className="bg-gray-100 border border-gray-200 p-3 rounded-md w-full" id=""></textarea> */}
+                        <div className="custom-class no-tailwind custom-ul custom-ol">
+                            <JoditEditor ref={editor2} value={content2} onChange={newContent => setContent2(newContent)} />
+                        </div>
+                        {/* <input type="text" onChange={(e) => setContent(e.target.value)} />
+                        <Markdown>{content}</Markdown> */}
                     </div>
                 </div>
                 <div>

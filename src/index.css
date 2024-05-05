@@ -20,3 +20,9 @@ body{
 .loading-lg {
     width: 5rem;
 }
+
+li {
+    /* list-style: circle; */
+}
+
+

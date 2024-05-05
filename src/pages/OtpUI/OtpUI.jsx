@@ -43,7 +43,7 @@ const OtpUI = () => {
                   name="otp"
                   id="otp"
                   placeholder="OTP"
-                  className="w-full px-4 py-3 rounded-md border border-indigo-300 focus:outline-none focus:ring text-end"
+                  className="w-full px-4 py-3 rounded-md border border-indigo-300 focus:outline-none focus:ring"
                 />
                 <svg
                   className="absolute top-1/2 -translate-y-1/2 left-2"

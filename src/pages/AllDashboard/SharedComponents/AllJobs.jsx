@@ -5,6 +5,7 @@ import { IoMdSearch } from "react-icons/io";
 import axios from "axios";
 import { TbMessage2 } from "react-icons/tb";
 import { AuthContext } from "../../../providers/AuthProviders";
+import ReactHtmlParser from 'react-html-parser';
 
 const AllJobs = () => {
   const [allJobs, setAllJobs] = useState([]);
@@ -129,7 +130,7 @@ const AllJobs = () => {
             </div>
             <div>
               <p>
-                {singleJob.jobDescription.substring(0, 120)}...
+                {ReactHtmlParser(singleJob.jobDescription.substring(0, 120))}...
                 <Link
                   to={`/jobdetails/${singleJob._id}`}
                   className="text-[#1d9cb5]"
