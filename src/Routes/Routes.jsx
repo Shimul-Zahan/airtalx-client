@@ -21,6 +21,9 @@ import AboutUs from "../pages/Shared/AboutUs";
 import Blogs from "../pages/Blogs/Blogs";
 import ContactUs from "../pages/ContactUs/ContactUs";
 import BlogDetails from "../pages/Blogs/BlogDetails";
+import TermsOfUse from "../pages/TermsOfUse/TermsOfUse";
+import PrivacyAndPolicy from "../pages/PrivacyAndPolicy/PrivacyAndPolicy";
+import HelpAndFAQs from "../pages/HelpAndFAQs/HelpAndFAQs";
 
 export const router = createBrowserRouter([
   {
@@ -98,6 +101,18 @@ export const router = createBrowserRouter([
       {
         path: "/aboutUs",
         element: <AboutUs />,
+      },
+      {
+        path: "/termsOfUse",
+        element: <TermsOfUse />,
+      },
+      {
+        path: "/privacyAndPolicy",
+        element: <PrivacyAndPolicy />,
+      },
+      {
+        path: "/helpAndFAQs",
+        element: <HelpAndFAQs />,
       },
       {
         path: "/blogs",

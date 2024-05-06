@@ -182,7 +182,7 @@ const UpdateProfile = () => {
                 name="preferredSalary"
                 initialValue={user?.preferredSalary}
               >
-                <Input placeholder={`e.g: "3" (preferred salary)`} />
+                <Input placeholder={'please enter a value between $3 and $99'} />
               </Form.Item>
               <Form.Item name="preferredJobType" label="Preferred Job Type">
                 <Select
