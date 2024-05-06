@@ -6,6 +6,7 @@ import { MdDownload, MdOutlineEmail, MdWorkOutline } from "react-icons/md";
 import { SlLocationPin } from "react-icons/sl";
 import { TbMessage2 } from "react-icons/tb";
 import { useParams } from "react-router-dom";
+import ReactHtmlParser from 'react-html-parser';
 
 const UserProfile = () => {
   const [allUsers, setAllUsers] = useState([]);
@@ -155,7 +156,7 @@ const UserProfile = () => {
             </div>
             <div>
               <h4 className="font-semibold">Bio</h4>
-              {allUsers?.about && <p>{allUsers?.about}</p>}
+              {allUsers?.about && <p>{ReactHtmlParser(allUsers?.about)}</p>}
               {!allUsers?.about && <p>N/A</p>}
             </div>
           </div>

@@ -10,8 +10,8 @@ const Footer = () => {
                         <div>
                             <h6 className="font-semibold uppercase pb-2">Services</h6>
                             <div className="flex flex-col">
-                                <Link>Find Job</Link>
-                                <Link>Find Employee</Link>
+                                <Link to={'/findJob'}>Find Job</Link>
+                                <Link to={'/findEmploye'}>Find Employee</Link>
                                 <Link to={'/blogs'}>Blogs</Link>
                             </div>
                         </div>
@@ -25,9 +25,9 @@ const Footer = () => {
                         <div>
                             <h6 className="font-semibold uppercase pb-2">Legal</h6>
                             <div className="flex flex-col">
-                                <Link>Terms of Use</Link>
-                                <Link>Privacy & Policy</Link>
-                                <Link>Help and FAQs</Link>
+                                <Link to={'/termsOfUse'}>Terms of Use</Link>
+                                <Link to={'/privacyAndPolicy'}>Privacy & Policy</Link>
+                                <Link to={'/helpAndFAQs'}>Help and FAQs</Link>
                             </div>
                         </div>
                         <div className="">
