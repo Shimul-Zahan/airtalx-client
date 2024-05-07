@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { MdOutlineEmail } from "react-icons/md";
+import { MdOutlineEmail, MdWorkOutline } from "react-icons/md";
 import { SlLocationPin } from "react-icons/sl";
 import { TbMessage2 } from "react-icons/tb";
 import { Link } from "react-router-dom";
@@ -104,9 +104,9 @@ const Alljobseekers = () => {
                     </h3>
                     <div className="">
                       <div className={`flex gap-2 items-center ${!user && 'hidden'}`}>
-                        <MdOutlineEmail className="text-3xl border border-black rounded-full p-1" />
-                        {singleJobseeker?.email && <p>{singleJobseeker?.email}</p>}
-                        {!singleJobseeker?.email && <p>N/A</p>}
+                        <MdWorkOutline className="text-3xl border border-black rounded-full p-1" />
+                        {singleJobseeker?.jobPosition && <p>{singleJobseeker?.jobPosition}</p>}
+                        {!singleJobseeker?.jobPosition && <p>N/A</p>}
                       </div>
                       <div className="flex gap-2 items-center font-semibold">
                         <SlLocationPin className="text-3xl border border-black rounded-full p-1" />

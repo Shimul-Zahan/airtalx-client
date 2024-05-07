@@ -289,7 +289,7 @@ const Profile = () => {
                 </div>
                 <div className="text-lg lg:absolute bottom-0 mx-auto w-full text-center capitalize">
                   <p className="text-xl  bottom-0 mx-auto w-11/12 custom-shadow text-center p-1 my-4 capitalize">
-                    Employe
+                    Employer
                   </p>
                 </div>
               </div>

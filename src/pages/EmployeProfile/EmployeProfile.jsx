@@ -4,6 +4,7 @@ import { MdOutlineEmail } from "react-icons/md";
 import { SlLocationPin } from "react-icons/sl";
 import { TbMessage2 } from "react-icons/tb";
 import { useParams } from "react-router-dom";
+import ReactHtmlParser from 'react-html-parser';
 
 const EmployeProfile = () => {
   const [employeJobPost, setEmployeJobPost] = useState([]);
@@ -98,7 +99,7 @@ const EmployeProfile = () => {
           <div className="custom-shadow lg:col-span-9 rounded-md p-3">
             <div>
               <h4 className="font-semibold">Bio</h4>
-              {employeJobPost?.about && <p>{employeJobPost?.about}</p>}
+              {employeJobPost?.about && <p>{ReactHtmlParser(employeJobPost?.about)}</p>}
               {!employeJobPost?.about && <p>N/A</p>}
             </div>
           </div>
@@ -152,7 +153,7 @@ const EmployeProfile = () => {
               <h4 className="mt-2">
                 <span className="font-semibold">About the company: </span> <br />
                 {employeJobPost?.aboutCompany && (
-                  <p>{employeJobPost?.aboutCompany}</p>
+                  <p>{ReactHtmlParser(employeJobPost?.aboutCompany)}</p>
                 )}
                 {!employeJobPost?.aboutCompany && <p>N/A</p>}
               </h4>
