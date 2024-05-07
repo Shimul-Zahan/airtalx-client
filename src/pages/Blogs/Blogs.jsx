@@ -27,7 +27,20 @@ const Blogs = () => {
             <div className="grid grid-cols-3 gap-6">
                 {
                     currentBlogs.map(singleBlog => <div className="custom-shadow p-6 rounded-md" key={singleBlog._id}>
-                        <h4 className="text-3xl font-semibold pb-3">{singleBlog.blogTitle}</h4>
+                        <div className="pb-3 flex justify-between">
+                            <div>
+                                <h4 className="text-3xl font-semibold">{singleBlog.blogTitle}</h4>
+                                <p>
+                                    by{" "}
+                                    <Link to={`/user/${singleBlog.blogPostedByEmail}`}>
+                                        <span className="text-[#1d9cb5] capitalize font-semibold cursor-pointer">
+                                            {singleBlog.blogPostedByName}
+                                        </span>
+                                    </Link>
+                                </p>
+                            </div>
+                            <div className="badge badge-primary bg-[#1d9cb5] border-none text-white">{singleBlog.blogPostDate}</div>
+                        </div>
                         <p>
                             {ReactHtmlParser(singleBlog.blogBody.substring(0, 120))}...
                             <Link to={`/blogDetails/${singleBlog._id}`} className="text-[#1d9cb5]" >

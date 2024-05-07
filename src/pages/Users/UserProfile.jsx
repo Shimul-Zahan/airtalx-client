@@ -82,7 +82,7 @@ const UserProfile = () => {
                     <TbMessage2 size="1.5em" />
                   </button>
 
-                  <div>
+                  <div className={`${allUsers.role === 'admin' && 'hidden'}`}>
                     <button
                       className="border-2 border-black p-2 rounded-md"
                       onClick={allUsers?.resume ? downloadFile1 : null}

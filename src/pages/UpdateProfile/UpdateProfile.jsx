@@ -251,6 +251,7 @@ const UpdateProfile = () => {
             <div className="custom-class no-tailwind custom-ul custom-ol">
               <JoditEditor ref={editor1} value={content1} onChange={newContent => setContent1(newContent)} />
             </div>
+            
           </Form.Item>
           <Form.Item label="Password" name="newPassword">
             <Input.Password placeholder="Enter New Password" />
