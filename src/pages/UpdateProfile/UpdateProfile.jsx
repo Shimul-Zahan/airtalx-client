@@ -246,12 +246,19 @@ const UpdateProfile = () => {
               <Button icon={<UploadOutlined />}>Click to upload Image</Button>
             </Upload>
           </Form.Item>
+          <Form.Item
+            label="Location"
+            name="location"
+            initialValue={user?.location}
+          >
+            <Input />
+          </Form.Item>
           <Form.Item label="Bio" name="about" initialValue={user?.about}>
             {/* <Input.TextArea /> */}
             <div className="custom-class no-tailwind custom-ul custom-ol">
               <JoditEditor ref={editor1} value={content1} onChange={newContent => setContent1(newContent)} />
             </div>
-            
+
           </Form.Item>
           <Form.Item label="Password" name="newPassword">
             <Input.Password placeholder="Enter New Password" />
