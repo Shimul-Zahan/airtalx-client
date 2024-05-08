@@ -4,10 +4,11 @@ import { message } from "antd";
 import axios from "axios";
 import { Navigate, useLocation } from "react-router";
 import { AuthContext } from "../../../../providers/AuthProviders";
+import Swal from "sweetalert2";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const token = localStorage.getItem("access-token");
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -37,23 +38,36 @@ const Users = () => {
       });
   };
 
-  const handleDeleteBtn = (email) => {
-    axios
-      .delete(`http://localhost:5000/user/delete/${email}`)
-      .then((response) => {
+  const handleDeleteBtn = async (email) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    });
+    if (result.isConfirmed) {
+      try {
+        const response = await axios.delete(`http://localhost:5000/user/delete/${email}`);
         const { data } = response;
-        console.log("🚀 ~ .then ~ response:", response)
+        console.log("🚀 ~ .then ~ response:", response);
         if (data.message) {
-          message.success("User deleted successfully");
+          await Swal.fire({
+            title: "Deleted!",
+            text: "User deleted successfully",
+            icon: "success"
+          });
           fetchUsers();
         } else {
           message.error("Failed to delete user");
         }
-      })
-      .catch((error) => {
+      } 
+      catch (error) {
         console.error("Error deleting user:", error);
         message.error("An error occurred while deleting user");
-      });
+      }
+    }
   };
 
   const handleMakeAdmin = (user) => {

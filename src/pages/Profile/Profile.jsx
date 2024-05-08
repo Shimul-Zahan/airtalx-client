@@ -46,7 +46,8 @@ const Profile = () => {
         } else {
           message.error("Failed to delete user");
         }
-      } catch (error) {
+      }
+      catch (error) {
         console.error("Error deleting user:", error);
         message.error("An error occurred while deleting user");
       }
@@ -288,8 +289,70 @@ const Profile = () => {
                   </label>
                 </div>
                 <div className="text-lg lg:absolute bottom-0 mx-auto w-full text-center capitalize">
+                  <p className="text-center my-3 text-lg">Member Since: {user?.memberSince}</p>
                   <p className="text-xl  bottom-0 mx-auto w-11/12 custom-shadow text-center p-1 my-4 capitalize">
-                    Employer
+                    {user?.jobPosition && <p>{user?.jobPosition}</p>}
+                    {!user?.jobPosition && <p>N/A</p>}
+                  </p>
+                </div>
+              </div>
+              <div className="custom-shadow rounded-md p-4 lg:col-span-7">
+                <div>
+                  <div className="flex justify-between item">
+                    <div>
+                      <h3 className="font-semibold text-4xl pb-5 capitalize">
+                        {user?.name}
+                      </h3>
+                    </div>
+                    <div className="flex items-center">
+                      <div className="flex items-center gap-2">
+                        <Link to={"/updateProfile"}>
+                          <FaRegEdit className="text-5xl p-2 cursor-pointer rounded-md border border-black right-0" />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex gap-2 items-center pb-2">
+                    <MdWorkOutline className="text-3xl border border-black rounded-full p-1" />
+                    {user?.jobCompanyName && <p>{user?.jobCompanyName}</p>}
+                    {!user?.jobCompanyName && <p>N/A</p>}
+                  </div>
+                  <div className="flex gap-2 items-center capitalize pb-2">
+                    <SlLocationPin className="text-3xl border border-black rounded-full p-1" />
+                    {user?.location && <p>{user?.location}</p>}
+                    {!user?.location && <p>N/A</p>}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-center mt-8">
+              <button
+                className="btn btn-error text-white font-bold"
+                onClick={handleDeleteAccount}
+              >
+                Delete Account <MdOutlineDeleteForever size="2em" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {user && user?.role === "admin" && (
+        <div className="lg:w-3/4 w-11/12 mx-auto my-12">
+          <div>
+            <div className="grid lg:grid-cols-9 grid-cols-1 lg:gap-8 gap-7">
+              <div className="custom-shadow  min-h-72   lg:col-span-2 rounded-md relative">
+                <div className="flex justify-center items-center">
+                  <label className="avatar w-48 mt-5">
+                    <div className="rounded-full border-2 border-white">
+                      <div>
+                        <img src={user?.photoURL} alt="User Photo" />
+                      </div>
+                    </div>
+                  </label>
+                </div>
+                <div className="text-lg lg:absolute bottom-0 mx-auto w-full text-center capitalize">
+                  <p className="text-xl  bottom-0 mx-auto w-11/12 custom-shadow text-center p-1 my-4 capitalize">
+                    admin
                   </p>
                 </div>
               </div>

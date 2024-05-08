@@ -99,11 +99,16 @@ const Alljobseekers = () => {
               <div>
                 <div className="flex lg:flex-row flex-col-reverse justify-between lg:gap-28 gap-2">
                   <div>
-                    <h3 className="text-3xl font-semibold text-[#287180] capitalize">
-                      {singleJobseeker.name}
-                    </h3>
+                    { user ?
+                      <h3 className="text-3xl font-semibold text-[#287180] capitalize">
+                        {singleJobseeker.name}
+                      </h3> :
+                      <h3 className="text-3xl font-semibold text-[#287180] capitalize">
+                        {singleJobseeker.name.split(' ')[0]}
+                      </h3>
+                    }
                     <div className="">
-                      <div className={`flex gap-2 items-center ${!user && 'hidden'}`}>
+                      <div className={`flex gap-2 items-center`}>
                         <MdWorkOutline className="text-3xl border border-black rounded-full p-1" />
                         {singleJobseeker?.jobPosition && <p>{singleJobseeker?.jobPosition}</p>}
                         {!singleJobseeker?.jobPosition && <p>N/A</p>}

@@ -10,7 +10,6 @@ const EmployeProfile = () => {
   const [employeJobPost, setEmployeJobPost] = useState([]);
   const [approveJob, setApproveJob] = useState([]);
   const [allJobs, setAllJobs] = useState([]);
-  const jobId = useParams();
 
   const fetchUser = async () => {
     try {
