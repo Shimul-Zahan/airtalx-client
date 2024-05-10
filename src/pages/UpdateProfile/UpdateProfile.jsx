@@ -10,7 +10,9 @@ const UpdateProfile = () => {
   const { user, setUser } = useContext(AuthContext);
   const [fileList, setFileList] = useState([]);
   const [content1, setContent1] = useState('');
+  const [content2, setContent2] = useState('');
   const editor1 = useRef(null);
+  const editor2 = useRef(null);
   const [form] = Form.useForm();
 
   const onGenderChange = (value) => {
@@ -83,6 +85,7 @@ const UpdateProfile = () => {
       const {
         name,
         location,
+        country,
         studies,
         about,
         newPassword,
@@ -92,12 +95,16 @@ const UpdateProfile = () => {
         expertiseLevel,
         jobPosition,
         jobCompanyName,
+        jobCompanySize,
+        aboutCompany,
+        industry,
       } = values || {};
 
       const data = new FormData();
       data.append("name", name || user?.name);
       data.append("password", newPassword);
       data.append("location", location || user?.location);
+      data.append("country", country || user?.country);
       data.append("studies", studies || user?.studies);
       data.append("about", content1);
       data.append("preferredSalary", preferredSalary || user?.preferredSalary);
@@ -109,6 +116,9 @@ const UpdateProfile = () => {
       data.append("expertiseLevel", expertiseLevel || user?.expertiseLevel);
       data.append("jobPosition", jobPosition || user?.jobPosition);
       data.append("jobCompanyName", jobCompanyName || user?.jobCompanyName);
+      data.append("jobCompanySize", jobCompanySize || user?.jobCompanySize);
+      data.append("industry", industry || user?.industry);
+      data.append("aboutCompany", content2);
       data.append("role", user?.role);
       data.append("oldPass", user?.password);
       data.append("isUpdate", newPassword ? "False" : "True");
@@ -215,20 +225,6 @@ const UpdateProfile = () => {
                   <Option value="Advanced: 6+ years of experience">Advanced: 6+ years of experience</Option>
                 </Select>
               </Form.Item>
-              <Form.Item
-                label="Job Position"
-                name="jobPosition"
-                initialValue={user?.jobPosition}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                label="Current Company Name"
-                name="jobCompanyName"
-                initialValue={user?.jobCompanyName}
-              >
-                <Input />
-              </Form.Item>
             </>
           )}
           <Form.Item
@@ -253,12 +249,66 @@ const UpdateProfile = () => {
           >
             <Input />
           </Form.Item>
+          <Form.Item
+            label="Country"
+            name="country"
+            initialValue={user?.country}
+          >
+            <Input />
+          </Form.Item>
           <Form.Item label="Bio" name="about" initialValue={user?.about}>
             {/* <Input.TextArea /> */}
             <div className="custom-class no-tailwind custom-ul custom-ol">
-              <JoditEditor ref={editor1} value={content1} onChange={newContent => setContent1(newContent)} />
+              <JoditEditor ref={editor1} value={content1} initialValue={user?.about} onChange={newContent => setContent1(newContent)} />
             </div>
-
+          </Form.Item>
+          <Form.Item
+            label="Current Company Name"
+            name="jobCompanyName"
+            initialValue={user?.jobCompanyName}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Job Position"
+            name="jobPosition"
+            initialValue={user?.jobPosition}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Industry"
+            name="industry"
+            initialValue={user?.industry}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item name="jobCompanySize" label="Company Size">
+            <Select
+              placeholder="Select an option"
+              allowClear
+              className="z-10"
+              initialValue={user?.jobCompanySize}
+            >
+              <Option value="">Select</Option>
+              <Option value="1-10">1-10</Option>
+              <Option value="11-20">11-20</Option>
+              <Option value="21-50">21-50</Option>
+              <Option value="51-100">51-100</Option>
+              <Option value="101-200">101-200</Option>
+              <Option value="201-500">201-500</Option>
+              <Option value="501-1000">501-1000</Option>
+              <Option value="1001-2000">1001-2000</Option>
+              <Option value="2001-5000">2001-5000</Option>
+              <Option value="5001-10000">5001-10000</Option>
+              <Option value="10001 plus">10001 plus</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item label="About Company" name="aboutCompany" initialValue={user?.about}>
+            {/* <Input.TextArea /> */}
+            <div className="custom-class no-tailwind custom-ul custom-ol">
+              <JoditEditor ref={editor2} value={content2} initialValue={user?.aboutCompany} onChange={newContent => setContent2(newContent)} />
+            </div>
           </Form.Item>
           <Form.Item label="Password" name="newPassword">
             <Input.Password placeholder="Enter New Password" />

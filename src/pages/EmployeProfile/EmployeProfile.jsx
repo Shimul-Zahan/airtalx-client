@@ -10,6 +10,7 @@ const EmployeProfile = () => {
   const [employeJobPost, setEmployeJobPost] = useState([]);
   const [approveJob, setApproveJob] = useState([]);
   const [allJobs, setAllJobs] = useState([]);
+  const jobId = useParams();
 
   const fetchUser = async () => {
     try {
@@ -40,6 +41,7 @@ const EmployeProfile = () => {
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
+        console.log(data)
         setAllJobs(data);
       })
       .catch((error) => {

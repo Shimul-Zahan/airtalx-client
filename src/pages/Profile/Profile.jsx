@@ -114,7 +114,7 @@ const Profile = () => {
               <div className="custom-shadow p-4 lg:col-span-2 rounded-md relative">
                 <div className="flex justify-center">
                   <label className="avatar w-48">
-                    <div className="rounded-full border-2 border-white">
+                    <div className="rounded-full border-1 border-black">
                       <div>
                         <img src={user?.photoURL} alt="User Photo" />
                       </div>
@@ -281,7 +281,7 @@ const Profile = () => {
               <div className="custom-shadow  min-h-72   lg:col-span-2 rounded-md relative">
                 <div className="flex justify-center items-center">
                   <label className="avatar w-48 mt-5">
-                    <div className="rounded-full border-2 border-white">
+                    <div className="rounded-full border-1 border-black">
                       <div>
                         <img src={user?.photoURL} alt="User Photo" />
                       </div>
@@ -324,6 +324,69 @@ const Profile = () => {
                   </div>
                 </div>
               </div>
+              <div className="custom-shadow lg:col-span-9 rounded-md p-3">
+                <div>
+                  <h4 className="font-semibold">Bio</h4>
+                  {user?.about && <p>{ReactHtmlParser(user?.about)}</p>}
+                  {!user?.about && <p>N/A</p>}
+                </div>
+              </div>
+              <div className="custom-shadow lg:col-span-9 rounded-md p-3">
+                <div>
+                  <h4 className="text-center text-4xl font-bold">
+                    Company Details
+                  </h4>
+                  <br />
+                  <h4 className="">
+                    <span className="font-semibold">Company Name: </span>
+                    {user?.jobCompanyName && (
+                      <span className="capitalize">{user?.jobCompanyName}</span>
+                    )}
+                    {!user?.jobCompanyName && <span>N/A</span>}
+                  </h4>
+                  <h4 className="mt-2">
+                    <span className="font-semibold">Country: </span>
+                    {user?.country && (
+                      <span className="capitalize">{user?.country}</span>
+                    )}
+                    {!user?.country && <span>N/A</span>}
+                  </h4>
+                  <h4 className="mt-2">
+                    <span className="font-semibold">Industry: </span>
+                    {user?.industry && (
+                      <span className="capitalize">{user?.industry}</span>
+                    )}
+                    {!user?.industry && <span>N/A</span>}
+                  </h4>
+                  <h4 className="mt-2">
+                    <span className="font-semibold">Size of Company: </span>
+                    {user?.jobCompanySize && (
+                      <span>{user?.jobCompanySize} Staffs</span>
+                    )}
+                    {!user?.jobCompanySize && <span>N/A</span>}
+                  </h4>
+                  <h4 className="mt-2">
+                    <span className="font-semibold">Number of Job Posted: </span> <span></span>
+                  </h4>
+                  <h4 className="mt-2">
+                    <span className="font-semibold">Number of Job Approved: </span>
+                  </h4>
+                  {/* <h4 className="font-semibold mt-2">
+                Member since: <span></span>
+                {user?.memberSince && (
+                  <span>{user?.memberSince}</span>
+                )}
+                {!user?.memberSince && <span>N/A</span>}
+              </h4> */}
+                  <h4 className="mt-2">
+                    <span className="font-semibold">About the company: </span> <br />
+                    {user?.aboutCompany && (
+                      <p>{ReactHtmlParser(user?.aboutCompany)}</p>
+                    )}
+                    {!user?.aboutCompany && <p>N/A</p>}
+                  </h4>
+                </div>
+              </div>
             </div>
             <div className="flex justify-center mt-8">
               <button
@@ -343,7 +406,7 @@ const Profile = () => {
               <div className="custom-shadow  min-h-72   lg:col-span-2 rounded-md relative">
                 <div className="flex justify-center items-center">
                   <label className="avatar w-48 mt-5">
-                    <div className="rounded-full border-2 border-white">
+                    <div className="rounded-full border-1 border-black">
                       <div>
                         <img src={user?.photoURL} alt="User Photo" />
                       </div>
