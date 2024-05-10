@@ -168,13 +168,13 @@ const Alljobseekers = () => {
                     <p className={`first-letter:capitalize ${!user && 'hidden'}`}>
                       {ReactHtmlParser(singleJobseeker?.about.substring(0, 120))}...
                       <Link
-                        to={`/user/${singleJobseeker?.email}`}
+                        to={`/jobseekerProfile/${singleJobseeker?._id}`}
                         className="text-[#1d9cb5] font-semibold"
                       >
                         <button className="">know more</button>
                       </Link>
                     </p>
-                    <Link to={`/user/${singleJobseeker?.email}`} className={`text-[#1d9cb5] font-semibold ${user && 'hidden'}`}>know more</Link>
+                    <Link to={`/jobseekerProfile/${singleJobseeker?._id}`} className={`text-[#1d9cb5] font-semibold ${user && 'hidden'}`}>know more</Link>
                   </div>
                 )}
                 {!singleJobseeker?.about && (
@@ -182,13 +182,13 @@ const Alljobseekers = () => {
                     <p className={`first-letter:capitalize ${!user && 'hidden'}`}>
                       N/A...
                       <Link
-                        to={`/user/${singleJobseeker?.email}`}
+                        to={`/jobseekerProfile/${singleJobseeker?._id}`}
                         className="text-[#1d9cb5] font-semibold"
                       >
                         <button className="">know more</button>
                       </Link>
                     </p>
-                    <Link to={`/user/${singleJobseeker?.email}`} className={`text-[#1d9cb5] font-semibold ${user && 'hidden'}`}>know more</Link>
+                    <Link to={`/jobseekerProfile/${singleJobseeker?._id}`} className={`text-[#1d9cb5] font-semibold ${user && 'hidden'}`}>know more</Link>
                   </div>
                 )}
                 {/* <Link to={`/user/${singleJobseeker?.email}`}>{!singleJobseeker?.about && <p>N/A</p>}</Link> */}

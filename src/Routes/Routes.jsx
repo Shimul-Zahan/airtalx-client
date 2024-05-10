@@ -47,7 +47,7 @@ export const router = createBrowserRouter([
         element: <OtpUI />,
       },
       {
-        path: '/user/:email',
+        path: '/jobseekerProfile/:_id',
         element: <PrivateRouter><UserProfile /></PrivateRouter>
       },
       {

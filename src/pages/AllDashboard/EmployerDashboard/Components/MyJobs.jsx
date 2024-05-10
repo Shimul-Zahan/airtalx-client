@@ -1,20 +1,21 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../../../providers/AuthProviders";
 import { SlWallet } from "react-icons/sl";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import ReactHtmlParser from 'react-html-parser';
+import { message } from "antd";
+import axios from "axios";
 
-const MyJobs = (_id) => {
+const MyJobs = () => {
   const [allJobs, setAllJobs] = useState([]);
   console.log("🚀 ~ MyJobs ~ allJobs:", allJobs)
   const { user } = useContext(AuthContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [allPostJobsPerPage] = useState(6);
-  useEffect(() => {
+  const fetchMyJobs = () => {
     const url = `http://localhost:5000/myJobPosts?email=${user?.email}`;
     fetch(url)
       .then((res) => res.json())
@@ -25,34 +26,39 @@ const MyJobs = (_id) => {
       .catch((error) => {
         console.log(error);
       });
+  }
+  useEffect(() => {
+    fetchMyJobs();
   }, []);
 
-  const handleDelete = (_id) => {
-    Swal.fire({
+  const handleDeleteJob = async (_id) => {
+    const result = await Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        fetch(`http://localhost:5000/myJobPosts/${_id}`, {
-          method: "DELETE",
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-            if (data.deletedCount > 0) {
-              Swal.fire("Deleted!", "Your file has been deleted.", "success");
-              const remaining = allJobs.filter((myJob) => myJob._id !== _id);
-              setAllJobs(remaining);
-            }
-          })
-          .catch((error) => console.log(error));
-      }
+      confirmButtonText: "Yes, delete it!"
     });
+    if (result.isConfirmed) {
+      try {
+        const response = await axios.delete(`http://localhost:5000/myJobPosts/${_id}`);
+        if (response.status === 200) {
+          await Swal.fire({
+            title: "Deleted!",
+            text: "Job deleted successfully",
+            icon: "success"
+          });
+          fetchMyJobs();
+        } else {
+          message.error("Failed to delete job");
+        }
+      }
+      catch (error) {
+        console.error("Error deleting job:", error);
+        message.error("An error occurred while deleting job");
+      }
+    }
   };
 
   // Logic for pagination
@@ -68,6 +74,10 @@ const MyJobs = (_id) => {
       <div className="grid lg:grid-cols-3 grid-cols-1 m-3">
         {currentJobs.map((singleJob) => (
           <div className="custom-shadow m-3 p-4 rounded-md" key={singleJob._id}>
+            <span className="flex pb-4 justify-end">
+              <FaRegEdit setSelectedJob={singleJob._id} className="border cursor-pointer bg-blue-600 text-white p-1 rounded-md text-3xl" />
+              <RiDeleteBin2Line setSelectedJob={singleJob._id} onClick={() => handleDeleteJob(singleJob._id)} className="border cursor-pointer bg-red-600 text-white p-1 rounded-md text-3xl" />
+            </span>
             <div className="flex justify-between pb-4">
               <div>
                 <h3 className="text-2xl font-semibold">
@@ -84,9 +94,9 @@ const MyJobs = (_id) => {
                 </p>
               </div>
               <div className="">
-                <p className="border border-black rounded-md font-semibold p-3">
+                <span className="border border-black rounded-md font-semibold p-3">
                   {singleJob.jobType}
-                </p>
+                </span>
               </div>
             </div>
             <div className="flex gap-2 items-center pb-2 text-lg font-semibold">

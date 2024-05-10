@@ -18,7 +18,7 @@ const UserProfile = () => {
       .then((res) => res.json())
       .then((data) => {
         const userData = data.find(
-          (users) => users.email === userDescription.email
+          (users) => users._id === userDescription._id
         );
         setAllUsers(userData);
         console.log(data);
@@ -82,7 +82,7 @@ const UserProfile = () => {
                     <TbMessage2 size="1.5em" />
                   </button>
 
-                  <div className={`${allUsers.role === 'admin' && 'hidden'}`}>
+                  <div className={`${allUsers.role === 'admin' || 'employer' && 'hidden'}`}>
                     <button
                       className="border-2 border-black p-2 rounded-md"
                       onClick={allUsers?.resume ? downloadFile1 : null}

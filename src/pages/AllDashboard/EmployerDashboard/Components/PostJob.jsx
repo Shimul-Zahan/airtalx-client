@@ -41,20 +41,20 @@ const PostJob = () => {
         const form = e.target;
         const headline = form.headline.value;
         const jobType = form.jobType.value;
-        const email = form.email.value;
-        const companyName = form.companyName.value;
+        const email = user?.email;
+        const companyName = user?.name;
         const jobTitle = form.jobTitle.value;
         const startingSalary = form.startingSalary.value;
         const endingSalary = form.endingSalary.value;
-        const jobPostDate = form.jobPostDate.value;
+        const jobPostDate = defaultDate;
         const jobDescription = content2;
         const photoURL = user?.photoURL;
         const memberSince = user?.memberSince;
-        const company = form.company.value;
-        const country = form.country.value;
-        const industry = form.industry.value;
-        const companySize = form.companySize.value;
-        const aboutCompany = content1;
+        const company = user?.company;
+        const country = user?.country;
+        const industry = user?.industry;
+        const companySize = user?.jobCompanySize;
+        const aboutCompany = user?.aboutCompany;
 
         const newJobPost = { headline, jobType, email, companyName, jobTitle, startingSalary, endingSalary, jobPostDate, memberSince, jobDescription, photoURL, company, country, industry, companySize, aboutCompany }
         fetch('http://localhost:5000/newJobPost', {
@@ -95,23 +95,6 @@ const PostJob = () => {
                     <input name='headline' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4 w-full" placeholder="e.g: I'm looking for a professional data researcher" type="text" />
                 </div>
                 <div className="pt-8">
-                    <h4 className="text-2xl font-semibold">Company Size</h4>
-                    <select name='companySize' className="bg-gray-100 border border-gray-200 p-3 w-[15%] rounded-md mt-4" id="">
-                        <option value="">Select</option>
-                        <option value="1-10">1-10</option>
-                        <option value="11-20">11-20</option>
-                        <option value="21-50">21-50</option>
-                        <option value="51-100">51-100</option>
-                        <option value="101-200">101-200</option>
-                        <option value="201-500">201-500</option>
-                        <option value="501-1000">501-1000</option>
-                        <option value="1001-2000">1001-2000</option>
-                        <option value="2001-5000">2001-5000</option>
-                        <option value="5001-10000">5001-10000</option>
-                        <option value="10001 plus">10001 plus</option>
-                    </select>
-                </div>
-                <div className="pt-8">
                     <h4 className="text-2xl font-semibold">Job Type</h4>
                     <select name='jobType' className="bg-gray-100 border border-gray-200 p-3 w-[15%] rounded-md mt-4" id="">
                         <option value="">Select</option>
@@ -119,62 +102,18 @@ const PostJob = () => {
                         <option value="Part Time">Part Time</option>
                     </select>
                 </div>
-                <div className="pt-8 hidden">
-                    <h4 className="text-2xl font-semibold">Job holder email</h4>
-                    <div>
-                        <input name='email' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4 w-full" placeholder='e.g: "example@gmail.com"' value={user?.email} disabled type="email" />
-                    </div>
-                </div>
-                <div className="pt-8 hidden">
-                    <h4 className="text-2xl font-semibold">{"Company/Job holder's name"}</h4>
-                    <div>
-                        <input name='companyName' className="bg-gray-100 capitalize border border-gray-200 p-3 rounded-md mt-4 w-full" placeholder='e.g: "airTalX", "John Doe"' value={userData[0]?.name} disabled type="text" />
-                    </div>
-                </div>
-                <div className="pt-8">
-                    <h4 className="text-2xl font-semibold">Industry</h4>
-                    <div>
-                        <input name='industry' className="bg-gray-100 capitalize border border-gray-200 p-3 rounded-md mt-4 w-full" placeholder='e.g: "airTalX", "John Doe"' type="text" />
-                    </div>
-                </div>
-                <div className="pt-8">
-                    <h4 className="text-2xl font-semibold">{"Company/Job holder's name"}</h4>
-                    <div>
-                        <input name='company' className="bg-gray-100 capitalize border border-gray-200 p-3 rounded-md mt-4 w-full" placeholder='e.g: "airTalX", "John Doe"' type="text" />
-                    </div>
-                </div>
-                <div className="pt-8">
-                    <h4 className="text-2xl font-semibold">Country</h4>
-                    <div>
-                        <input name='country' className="bg-gray-100 capitalize border border-gray-200 p-3 rounded-md mt-4 w-full" placeholder='e.g: "USA", "Philipines"' type="text" />
-                    </div>
-                </div>
                 <div className="pt-8">
                     <h4 className="text-2xl font-semibold">Salary</h4>
                     <p>How much (US Dollar) do you want to pay per hour?</p>
                     <div className="lg:flex gap-3 items-center">
                         <div className="flex items-center">
-                            <input name='startingSalary' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4" placeholder='e.g: "2" (starting salary)' type="text" />
+                            <input name='startingSalary' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4" placeholder='Please enter a number between 3 to 99 (starting salary)' type="text" />
                             <p>/hr</p>
                         </div>
                         <p>to</p>
                         <div className="flex items-center">
-                            <input name='endingSalary' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4" placeholder='e.g: "6" (ending salary)' type="text" />
+                            <input name='endingSalary' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4" placeholder='Please enter a number between 3 to 99 (ending salary)' type="text" />
                             <p>/hr</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="hidden">
-                    <label htmlFor="">Job Creating Date</label>
-                    <input name='jobPostDate' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4" type="text" value={defaultDate} />
-                </div>
-                <div className="pt-8">
-                    <h4 className="text-2xl font-semibold">About Company</h4>
-                    {/* <p>Write a detailed job description. Include all the essential information</p> */}
-                    <div>
-                        {/* <textarea name='aboutCompany' className="bg-gray-100 border border-gray-200 p-3 rounded-md mt-4 w-full" id="" cols="30" rows="10"></textarea> */}
-                        <div className="custom-class no-tailwind custom-ul custom-ol">
-                            <JoditEditor ref={editor1} value={content1} onChange={newContent => setContent1(newContent)} />
                         </div>
                     </div>
                 </div>
