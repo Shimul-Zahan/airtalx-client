@@ -4,15 +4,29 @@ import ReactHtmlParser from 'react-html-parser';
 
 const Blogs = () => {
     const [blogs, setBlogs] = useState([]);
+    const [fetchSingleUser, setFetchSingleUser] = useState([]);
     const [allBlogsPerPage] = useState(6);
     const [currentPage, setCurrentPage] = useState(1);
-    useEffect(() => {
+    const fetchBlogs = () => {
         fetch('http://localhost:5000/newBlogs')
             .then(res => res.json())
             .then(data => {
                 setBlogs(data);
                 console.log(data);
             })
+    }
+    const fetchUser = () => {
+        fetch('http://localhost:5000/users')
+            .then(res => res.json())
+            .then(data => {
+                const blogWriter = blogs.blogPostedByEmail === data.email
+                setFetchSingleUser(blogWriter);
+                console.log(blogWriter);
+            })
+    }
+    useEffect(() => {
+        fetchBlogs();
+        fetchUser();
     })
 
 
@@ -32,7 +46,7 @@ const Blogs = () => {
                                 <h4 className="text-3xl font-semibold">{singleBlog.blogTitle}</h4>
                                 <p>
                                     by{" "}
-                                    <Link to={`/user/${singleBlog.blogPostedByEmail}`}>
+                                    <Link to={`/user/${singleBlog.blogPostedByName}/${fetchSingleUser._id}`}>
                                         <span className="text-[#1d9cb5] capitalize font-semibold cursor-pointer">
                                             {singleBlog.blogPostedByName}
                                         </span>
@@ -43,7 +57,7 @@ const Blogs = () => {
                         </div>
                         <p>
                             {ReactHtmlParser(singleBlog.blogBody.substring(0, 120))}...
-                            <Link to={`/blogDetails/${singleBlog._id}`} className="text-[#1d9cb5]" >
+                            <Link to={`/blogDetails/${singleBlog.blogTitle ? singleBlog.blogTitle : 'undefinedTitle'}/${singleBlog._id}`} className="text-[#1d9cb5]" >
                                 see more
                             </Link>
                         </p>

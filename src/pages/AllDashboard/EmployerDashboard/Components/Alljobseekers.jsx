@@ -122,7 +122,7 @@ const Alljobseekers = () => {
                       </div>
                     </div>
                   </div>
-                  <label className="avatar w-28 right-0">
+                  <label className="avatar w-28 right-0 absolute">
                     <div className="rounded-full border-2 border-black">
                       <div>
                         <img src={singleJobseeker?.photoURL} alt="User Photo" />

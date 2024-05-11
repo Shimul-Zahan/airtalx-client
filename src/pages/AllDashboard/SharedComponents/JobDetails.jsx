@@ -7,13 +7,14 @@ import ReactHtmlParser from 'react-html-parser';
 const JobDetails = () => {
   const { user } = useContext(AuthContext);
   const jobDescription = useParams();
+  console.log("🚀 ~ JobDetails ~ jobDescription:", jobDescription.id)
   const [jobData, setJobData] = useState([]);
   useEffect(() => {
     const url = "http://localhost:5000/newJobPost";
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        const jobData = data.find((job) => job._id === jobDescription._id);
+        const jobData = data.find((job) => job._id === jobDescription.id);
         setJobData(jobData);
         console.log(jobData);
       })
@@ -105,13 +106,13 @@ const JobDetails = () => {
         <h4 className="text-5xl font-semibold text-center pt-8 pb-6">
           Job Description
         </h4>
-        <div className="first-letter:capitalize">{ReactHtmlParser(jobData.jobDescription)}</div>
+        <div className="first-letter:capitalize">{ReactHtmlParser(jobData?.jobDescription)}</div>
       </div>
       <div className="pb-12">
         <h4 className="text-5xl font-semibold text-center pt-8 pb-6">
           About Company
         </h4>
-        <div className="first-letter:capitalize">{ReactHtmlParser(jobData.aboutCompany)}</div>
+        <div className="first-letter:capitalize">{ReactHtmlParser(jobData?.aboutCompany)}</div>
       </div>
     </div>
   );

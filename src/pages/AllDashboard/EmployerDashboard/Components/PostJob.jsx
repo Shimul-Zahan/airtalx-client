@@ -8,11 +8,9 @@ const PostJob = () => {
     const [userData, setUserData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [defaultDate, setDefaultDate] = useState('');
-    const [content1, setContent1] = useState('');
-    const [content2, setContent2] = useState('');
+    const [content, setContent] = useState('');
 
-    const editor1 = useRef(null);
-    const editor2 = useRef(null);
+    const editor = useRef(null);
 
     useEffect(() => {
         const currentDate = new Date();
@@ -47,7 +45,7 @@ const PostJob = () => {
         const startingSalary = form.startingSalary.value;
         const endingSalary = form.endingSalary.value;
         const jobPostDate = defaultDate;
-        const jobDescription = content2;
+        const jobDescription = content;
         const photoURL = user?.photoURL;
         const memberSince = user?.memberSince;
         const company = user?.company;
@@ -123,7 +121,7 @@ const PostJob = () => {
                     <div className="w-full gap-5 mt-4">
                         {/* <textarea name='jobDescription' className="bg-gray-100 border border-gray-200 p-3 rounded-md w-full" id=""></textarea> */}
                         <div className="custom-class no-tailwind custom-ul custom-ol">
-                            <JoditEditor ref={editor2} value={content2} onChange={newContent => setContent2(newContent)} />
+                            <JoditEditor ref={editor} value={content} onChange={newContent => setContent(newContent)} />
                         </div>
                         {/* <input type="text" onChange={(e) => setContent(e.target.value)} />
                         <Markdown>{content}</Markdown> */}
