@@ -8,6 +8,7 @@ import { Navigate, useLocation } from "react-router";
 import { AiOutlineHome, AiOutlineProfile } from "react-icons/ai";
 import Users from "./Components/Users";
 import PostBlog from "./Components/PostBlog";
+import Chat from "../../../Components/Chat";
 
 const AdminDashboard = () => {
     const [activeTab, setActiveTab] = useState(0);
@@ -60,7 +61,7 @@ const AdminDashboard = () => {
                             <BsFilePerson className="text-xl absolute" />
                             {/* <span className="pl-7">Applicants</span> */}
                         </Tab>
-                        
+
                         <div
                             onClick={handleLogOut}
                             className="font-semibold cursor-pointer flex gap-2 items-center text-red-500"
@@ -111,10 +112,10 @@ const AdminDashboard = () => {
             <div className="lg:col-span-10 col-span-12">
                 <Tabs selectedIndex={activeTab}>
                     <TabPanel>
-                    <Users />
+                        <Users />
                     </TabPanel>
                     <TabPanel>
-                        <div>2</div>
+                        <Chat />
                     </TabPanel>
                     <TabPanel>
                         <PostBlog />

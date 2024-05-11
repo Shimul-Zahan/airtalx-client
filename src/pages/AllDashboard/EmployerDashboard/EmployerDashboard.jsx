@@ -13,6 +13,7 @@ import Alljobseekers from "./Components/Alljobseekers";
 import History from "./Components/History";
 import { FaHistory } from "react-icons/fa";
 import { Navigate, useLocation } from "react-router";
+import Chat from "../../../Components/Chat";
 const EmployerDashboard = () => {
   const [activeTab, setActiveTab] = useState(0);
   const { user, logOut } = useContext(AuthContext);
@@ -172,7 +173,7 @@ const EmployerDashboard = () => {
             <Dashboard />
           </TabPanel>
           <TabPanel>
-            <div>2</div>
+            <Chat />
           </TabPanel>
           <TabPanel>
             <PostJob />

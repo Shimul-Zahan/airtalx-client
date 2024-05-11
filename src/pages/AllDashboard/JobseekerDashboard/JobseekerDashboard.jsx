@@ -10,6 +10,7 @@ import MyRunningJobs from "./Components/MyRunningJobs";
 import { FaHistory, FaHome } from "react-icons/fa";
 import History from "./Components/History";
 import { Navigate, useLocation } from "react-router";
+import Chat from "../../../Components/Chat";
 
 const JobseekerDashboard = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -80,10 +81,10 @@ const JobseekerDashboard = () => {
             </div>
           </TabList>
         </div>
-        
+
       </div>
       <div className="col-span-2 pb-20 lg:pb-0 hidden lg:block">
-        
+
         <div className="col-span-1 flex flex-col my-6 ml-6 p-4 custom-shadow rounded-md">
           <TabList className="flex flex-col space-y-3">
             <Tab
@@ -142,7 +143,7 @@ const JobseekerDashboard = () => {
             <Dashboard />
           </TabPanel>
           <TabPanel>
-            <div>2</div>
+            <Chat />
           </TabPanel>
           <TabPanel>
             <AllJobs />
