@@ -47,11 +47,11 @@ export const router = createBrowserRouter([
         element: <OtpUI />,
       },
       {
-        path: '/jobseekerProfile/:_id',
+        path: '/jobseekerProfile/:name/:id',
         element: <PrivateRouter><UserProfile /></PrivateRouter>
       },
       {
-        path: '/employeProfile/:id',
+        path: '/employeProfile/:name/:id',
         element: <PrivateRouter><EmployeProfile /></PrivateRouter>
       },
       {
@@ -67,7 +67,7 @@ export const router = createBrowserRouter([
         element: <FindJob />,
       },
       {
-        path: "/findEmploye",
+        path: "/findEmployee",
         element: <FindEmployee />,
       },
       {
@@ -87,7 +87,7 @@ export const router = createBrowserRouter([
         element: <PrivateRouter><AdminDashboard /></PrivateRouter>,
       },
       {
-        path: "/jobdetails/:_id",
+        path: "/jobdetails/:jobTitle/:id",
         element: <JobDetails />,
       },
       {
@@ -119,7 +119,7 @@ export const router = createBrowserRouter([
         element: <Blogs />,
       },
       {
-        path: "/blogDetails/:_id",
+        path: "/blogDetails/:blogTitle/:id",
         element: <BlogDetails />,
       },
     ],

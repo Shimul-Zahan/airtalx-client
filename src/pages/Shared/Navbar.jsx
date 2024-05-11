@@ -37,7 +37,7 @@ const Navbar = () => {
               <Link to={"/admin/dashboard"}>Dashboard</Link>
             )}
             <Link to={"/findJob"}>Find Job</Link>
-            <Link to={"/findEmploye"}>Find Employee</Link>
+            <Link to={"/findEmployee"}>Find Employee</Link>
             {/* <Link to={"/blogs"}>Blogs</Link> */}
           </div>
           <div>
@@ -131,7 +131,6 @@ const Navbar = () => {
                 className="menu menu-sm dropdown-content font-semibold mt-3 z-10 p-2 shadow bg-base-100 rounded-box w-52"
               >
                 <Link>Home</Link>
-                <Link>Find Job</Link>
                 {user && user.role === "jobseeker" && (
                   <Link to={"/jobseeker/dashboard"}>Dashboard</Link>
                 )}
@@ -142,7 +141,7 @@ const Navbar = () => {
                   <Link to={"/admin/dashboard"}>Dashboard</Link>
                 )}
                 <Link to={"/findJob"}>Find Job</Link>
-                <Link to={"/findEmploye"}>Find Employee</Link>
+                <Link to={"/findEmployee"}>Find Employee</Link>
                 {/* <Link to={"/blogs"}>Blogs</Link> */}
               </div>
             </div>
