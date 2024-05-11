@@ -101,7 +101,7 @@ const AllJobs = () => {
                 </h3>
                 <p>
                   by{" "}
-                  <Link to={`/employeProfile/${singleJob._id}`}>
+                  <Link to={`/employeProfile/${singleJob.companyName ? singleJob.companyName : 'undefinedName'}/${singleJob._id}`}>
                     <span className="text-[#1d9cb5] capitalize font-semibold cursor-pointer">
                       {singleJob.companyName}
                     </span>
@@ -132,7 +132,7 @@ const AllJobs = () => {
               <p>
                 {ReactHtmlParser(singleJob.jobDescription.substring(0, 120))}...
                 <Link
-                  to={`/jobdetails/${singleJob._id}`}
+                  to={`/jobdetails/${singleJob.jobTitle ? singleJob.jobTitle : 'undefinedTitle'}/${singleJob._id}`}
                   className="text-[#1d9cb5]"
                 >
                   know more
